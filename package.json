@@ -1,0 +1,14 @@
+{
+  "name": "skill-tracking-scanner",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Autonomous tracking-defect scanner for Skill Tracking prospection",
+  "license": "UNLICENSED",
+  "scripts": {
+    "scan": "node scan.js candidates.json",
+    "test": "node test-scoring.js"
+  },
+  "dependencies": {
+    "playwright": "^1.47.0"
+  }
+}
