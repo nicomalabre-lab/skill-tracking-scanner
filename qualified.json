@@ -1,0 +1,1741 @@
+[
+ {
+  "name": "Bobbies",
+  "host": "bobbies.com",
+  "url": "https://www.bobbies.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-YB45SR3XD2"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": true,
+  "fbFire": [
+   "1652967908254652"
+  ],
+  "tt": true,
+  "pin": true,
+  "snap": true,
+  "crit": false,
+  "gtmIds": [
+   "GTM-MMTGQM3"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "none",
+  "cf": [],
+  "cmp": "?",
+  "shopify": false,
+  "title": "Bobbies - Maison parisienne de souliers et maroquinerie",
+  "nReq": 123,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1652967908254652",
+    "hook": "Votre pixel Meta (1652967908254652) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1652967908254652",
+   "hook": "Votre pixel Meta (1652967908254652) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Musier Paris",
+  "host": "musier-paris.com",
+  "url": "https://www.musier-paris.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-XT53M9181F"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G100"
+  ],
+  "awGads": false,
+  "fbFire": [
+   "1641212977148461"
+  ],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-MZJV26TS"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "analytics_storage",
+   "ad_user_data",
+   "ad_personalization",
+   "functionality_storage",
+   "personalization_storage",
+   "security_storage",
+   "wait_for_update"
+  ],
+  "cmp": "Axeptio",
+  "shopify": true,
+  "title": "MUSIER",
+  "nReq": 312,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1641212977148461",
+    "hook": "Votre pixel Meta (1641212977148461) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1641212977148461",
+   "hook": "Votre pixel Meta (1641212977148461) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Sessùn",
+  "host": "sessun.com",
+  "url": "https://www.sessun.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-XXXXXXXXXX",
+   "G-XXCTHH2J3J",
+   "G-VJZRGQMWLT"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G100"
+  ],
+  "awGads": false,
+  "fbFire": [],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-WN5ZWK4"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [
+   "sgtm.sessun.com"
+  ],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "analytics_storage",
+   "functionality_storage",
+   "personalization_storage",
+   "security_storage",
+   "ad_user_data",
+   "ad_personalization"
+  ],
+  "cmp": "Didomi",
+  "shopify": false,
+  "title": "Sessùn | Boutique en ligne officielle",
+  "nReq": 65,
+  "runsAds": false,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "DOUBLE_GA4",
+    "sev": 5,
+    "evidence": "3 propriétés GA4 reçoivent des hits: G-XXXXXXXXXX, G-XXCTHH2J3J, G-VJZRGQMWLT",
+    "hook": "Deux GA4 tournent en parallèle (G-XXXXXXXXXX + G-XXCTHH2J3J + G-VJZRGQMWLT) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+   }
+  ],
+  "top": {
+   "code": "DOUBLE_GA4",
+   "sev": 5,
+   "evidence": "3 propriétés GA4 reçoivent des hits: G-XXXXXXXXXX, G-XXCTHH2J3J, G-VJZRGQMWLT",
+   "hook": "Deux GA4 tournent en parallèle (G-XXXXXXXXXX + G-XXCTHH2J3J + G-VJZRGQMWLT) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+  }
+ },
+ {
+  "name": "Noyoco",
+  "host": "noyoco.com",
+  "url": "https://www.noyoco.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-47FH6SFMQ2"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": true,
+  "fbFire": [
+   "1466371170339048"
+  ],
+  "tt": false,
+  "pin": true,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-M8QDBRN"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "ad_user_data",
+   "ad_personalization",
+   "analytics_storage"
+  ],
+  "cmp": "Axeptio",
+  "shopify": true,
+  "title": "NOYOCO Studio Paris - Éditions Limitées, Production Responsable.",
+  "nReq": 346,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1466371170339048",
+    "hook": "Votre pixel Meta (1466371170339048) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1466371170339048",
+   "hook": "Votre pixel Meta (1466371170339048) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Panafrica",
+  "host": "panafrica-store.com",
+  "url": "https://www.panafrica-store.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-WQK8ZZETK7"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": true,
+  "fbFire": [
+   "582391461912335"
+  ],
+  "tt": true,
+  "pin": true,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-5VGVM7W"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [
+   "ssdata.panafrica-store.com"
+  ],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "wait_for_update"
+  ],
+  "cmp": "Axeptio",
+  "shopify": true,
+  "title": "PANAFRICA • Baskets éthiques & mode éco-responsable. A drop of summer",
+  "nReq": 427,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 582391461912335",
+    "hook": "Votre pixel Meta (582391461912335) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 582391461912335",
+   "hook": "Votre pixel Meta (582391461912335) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Edenly",
+  "host": "edenly.com",
+  "url": "https://www.edenly.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-8CPY8KXX7V",
+   "G-B3DRRR9VY0"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": true,
+  "fbFire": [],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-MD6PNV"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "none",
+  "cf": [],
+  "cmp": "?",
+  "shopify": false,
+  "title": "Edenly, bijoux or et diamants au meilleur prix !",
+  "nReq": 55,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "DOUBLE_GA4",
+    "sev": 5,
+    "evidence": "2 propriétés GA4 reçoivent des hits: G-8CPY8KXX7V, G-B3DRRR9VY0",
+    "hook": "Deux GA4 tournent en parallèle (G-8CPY8KXX7V + G-B3DRRR9VY0) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+   },
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "DOUBLE_GA4",
+   "sev": 5,
+   "evidence": "2 propriétés GA4 reçoivent des hits: G-8CPY8KXX7V, G-B3DRRR9VY0",
+   "hook": "Deux GA4 tournent en parallèle (G-8CPY8KXX7V + G-B3DRRR9VY0) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+  }
+ },
+ {
+  "name": "Atelier Paulin",
+  "host": "atelierpaulin.com",
+  "url": "https://www.atelierpaulin.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-6ZMSTTF6DE"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": true,
+  "fbFire": [
+   "1798470250369798"
+  ],
+  "tt": true,
+  "pin": true,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-M4337VX7"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "ad_user_data",
+   "ad_personalization",
+   "analytics_storage"
+  ],
+  "cmp": "ShopifyNative?",
+  "shopify": true,
+  "title": "Atelier Paulin | Bijoux personnalisés porte-paroles",
+  "nReq": 357,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1798470250369798",
+    "hook": "Votre pixel Meta (1798470250369798) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1798470250369798",
+   "hook": "Votre pixel Meta (1798470250369798) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Lou Yetu",
+  "host": "louyetu.fr",
+  "url": "https://www.louyetu.fr/",
+  "err": null,
+  "ga4Fire": [
+   "G-G7QZZML7G1"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": false,
+  "fbFire": [
+   "430955330632039"
+  ],
+  "tt": false,
+  "pin": true,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "ad_user_data",
+   "ad_personalization",
+   "analytics_storage"
+  ],
+  "cmp": "ShopifyNative?",
+  "shopify": true,
+  "title": "LÕU.YETU Paris",
+  "nReq": 292,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 430955330632039",
+    "hook": "Votre pixel Meta (430955330632039) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 430955330632039",
+   "hook": "Votre pixel Meta (430955330632039) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Stone Paris",
+  "host": "stoneparis.com",
+  "url": "https://www.stoneparis.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-KF1Y4LLCHB"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": true,
+  "fbFire": [
+   "1008559566402085"
+  ],
+  "tt": false,
+  "pin": true,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "ad_user_data",
+   "ad_personalization",
+   "analytics_storage"
+  ],
+  "cmp": "Axeptio",
+  "shopify": true,
+  "title": "Stone Paris - Joaillerie parisienne par Marie Poniatowski – StoneParis",
+  "nReq": 276,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1008559566402085",
+    "hook": "Votre pixel Meta (1008559566402085) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1008559566402085",
+   "hook": "Votre pixel Meta (1008559566402085) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Kadalys",
+  "host": "kadalys.com",
+  "url": "https://www.kadalys.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-K7RCN2J8HB"
+  ],
+  "uaFire": [],
+  "gcs": [],
+  "awGads": false,
+  "fbFire": [
+   "1168434736627550"
+  ],
+  "tt": true,
+  "pin": true,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-WFSZ6WTT"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "none",
+  "cf": [],
+  "cmp": "Cookiebot",
+  "shopify": true,
+  "title": "Kadalys Paris | Cosmétiques BIO | Boutique en ligne – KADALYS",
+  "nReq": 524,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1168434736627550",
+    "hook": "Votre pixel Meta (1168434736627550) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "CONSENT_MODE_MISSING",
+    "sev": 4,
+    "evidence": "CMP=Cookiebot présent mais aucun signal gcs / gtag consent default détecté alors que GA4 tire",
+    "hook": "Vous avez un bandeau Cookiebot, mais il n'est pas branché au Consent Mode de Google : aucun signal de consentement n'accompagne vos hits. Résultat : ni conformité propre, ni récupération des conversions consenties par modélisation."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1168434736627550",
+   "hook": "Votre pixel Meta (1168434736627550) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Puissante",
+  "host": "puissante.com",
+  "url": "https://www.puissante.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-7ZCBVN66W7",
+   "G-K0X81TXHYW"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": false,
+  "fbFire": [],
+  "tt": false,
+  "pin": true,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-N2JV7CW"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "ad_user_data",
+   "ad_personalization",
+   "analytics_storage"
+  ],
+  "cmp": "Axeptio",
+  "shopify": true,
+  "title": "Puissante - Le bien-être au féminin",
+  "nReq": 521,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "DOUBLE_GA4",
+    "sev": 5,
+    "evidence": "2 propriétés GA4 reçoivent des hits: G-7ZCBVN66W7, G-K0X81TXHYW",
+    "hook": "Deux GA4 tournent en parallèle (G-7ZCBVN66W7 + G-K0X81TXHYW) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+   },
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "DOUBLE_GA4",
+   "sev": 5,
+   "evidence": "2 propriétés GA4 reçoivent des hits: G-7ZCBVN66W7, G-K0X81TXHYW",
+   "hook": "Deux GA4 tournent en parallèle (G-7ZCBVN66W7 + G-K0X81TXHYW) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+  }
+ },
+ {
+  "name": "Oh My Cream",
+  "host": "ohmycream.com",
+  "url": "https://www.ohmycream.com/",
+  "err": null,
+  "ga4Fire": [],
+  "uaFire": [],
+  "gcs": [],
+  "awGads": true,
+  "fbFire": [
+   "1787168088173574"
+  ],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-ND46B6"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "ad_user_data",
+   "ad_personalization",
+   "analytics_storage"
+  ],
+  "cmp": "Axeptio",
+  "shopify": true,
+  "title": "Oh My Cream - L'eshop de la Beauté Clean",
+  "nReq": 454,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1787168088173574",
+    "hook": "Votre pixel Meta (1787168088173574) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1787168088173574",
+   "hook": "Votre pixel Meta (1787168088173574) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Christophe Robin",
+  "host": "christophe-robin.com",
+  "url": "https://www.christophe-robin.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-L6K30Q1M8S"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G100"
+  ],
+  "awGads": true,
+  "fbFire": [
+   "1493054460729588"
+  ],
+  "tt": true,
+  "pin": true,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-MRGBM39L"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "none",
+  "cf": [],
+  "cmp": "OneTrust",
+  "shopify": false,
+  "title": "Christophe Robin | Luxury Haircare | Official Site",
+  "nReq": 260,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1493054460729588",
+    "hook": "Votre pixel Meta (1493054460729588) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1493054460729588",
+   "hook": "Votre pixel Meta (1493054460729588) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Lamazuna",
+  "host": "lamazuna.com",
+  "url": "https://www.lamazuna.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-CC1Y7MSZQF"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G100"
+  ],
+  "awGads": false,
+  "fbFire": [
+   "1716694149260955"
+  ],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-T9VM727"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "wait_for_update"
+  ],
+  "cmp": "Axeptio",
+  "shopify": false,
+  "title": "Lamazuna - Site Officiel - Cosmétiques solides et bio",
+  "nReq": 174,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1716694149260955",
+    "hook": "Votre pixel Meta (1716694149260955) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1716694149260955",
+   "hook": "Votre pixel Meta (1716694149260955) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Pimpant",
+  "host": "pimpant.com",
+  "url": "https://www.pimpant.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-FPSV6GX54M"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": true,
+  "fbFire": [
+   "208450587514949"
+  ],
+  "tt": false,
+  "pin": true,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-NW3Q4TTF"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "wait_for_update"
+  ],
+  "cmp": "Axeptio",
+  "shopify": false,
+  "title": "Pimpant | Produits Rechargeables pour les Familles",
+  "nReq": 154,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 208450587514949",
+    "hook": "Votre pixel Meta (208450587514949) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 208450587514949",
+   "hook": "Votre pixel Meta (208450587514949) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Vitaline",
+  "host": "vitaline.shop",
+  "url": "https://www.vitaline.shop/",
+  "err": null,
+  "ga4Fire": [
+   "G-LPYE9R6CMZ"
+  ],
+  "uaFire": [
+   "UA-71559443-1"
+  ],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": true,
+  "fbFire": [
+   "1201940449852443"
+  ],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-NLJKH9"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "ad_user_data",
+   "ad_personalization",
+   "analytics_storage"
+  ],
+  "cmp": "Axeptio",
+  "shopify": true,
+  "title": "Vitaline",
+  "nReq": 347,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1201940449852443",
+    "hook": "Votre pixel Meta (1201940449852443) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   },
+   {
+    "code": "LEGACY_UA",
+    "sev": 3,
+    "evidence": "Universal Analytics tire encore: UA-71559443-1",
+    "hook": "Universal Analytics (UA-71559443-1) tire encore sur votre site alors que Google l'a coupé en 2023 : du code mort qui alourdit vos pages et trahit un tracking jamais revu."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1201940449852443",
+   "hook": "Votre pixel Meta (1201940449852443) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Le Petit Ballon",
+  "host": "lepetitballon.com",
+  "url": "https://www.lepetitballon.com/",
+  "err": null,
+  "ga4Fire": [],
+  "uaFire": [],
+  "gcs": [],
+  "awGads": false,
+  "fbFire": [
+   "1160398188396675"
+  ],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-W3R2SL8B"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "wait_for_update",
+   "analytics_storage",
+   "ad_storage",
+   "ad_user_data",
+   "ad_personalization"
+  ],
+  "cmp": "Axeptio",
+  "shopify": true,
+  "title": "Abonnement de box de vin et bière | Cadeaux et achat de vin en ligne – Le Petit Ballon",
+  "nReq": 381,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1160398188396675",
+    "hook": "Votre pixel Meta (1160398188396675) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1160398188396675",
+   "hook": "Votre pixel Meta (1160398188396675) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Poiscaille",
+  "host": "poiscaille.fr",
+  "url": "https://poiscaille.fr/",
+  "err": null,
+  "ga4Fire": [
+   "G-YNF389L48J"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G100"
+  ],
+  "awGads": true,
+  "fbFire": [
+   "149984145389340"
+  ],
+  "tt": true,
+  "pin": true,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-KVHR3S8"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "none",
+  "cf": [],
+  "cmp": "?",
+  "shopify": false,
+  "title": "Poiscaille : Commander poissons frais, poissonnerie en ligne",
+  "nReq": 151,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 149984145389340",
+    "hook": "Votre pixel Meta (149984145389340) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 149984145389340",
+   "hook": "Votre pixel Meta (149984145389340) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Hypnia",
+  "host": "hypnia.fr",
+  "url": "https://www.hypnia.fr/",
+  "err": null,
+  "ga4Fire": [],
+  "uaFire": [],
+  "gcs": [],
+  "awGads": false,
+  "fbFire": [
+   "1724091971186983"
+  ],
+  "tt": true,
+  "pin": true,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "analytics_storage",
+   "functionality_storage",
+   "personalization_storage",
+   "security_storage",
+   "ad_user_data",
+   "ad_personalization"
+  ],
+  "cmp": "Didomi",
+  "shopify": true,
+  "title": "Slome - Designed to chill - Slome ex-Hypnia",
+  "nReq": 335,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1724091971186983",
+    "hook": "Votre pixel Meta (1724091971186983) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1724091971186983",
+   "hook": "Votre pixel Meta (1724091971186983) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Kipli",
+  "host": "kipli.com",
+  "url": "https://kipli.com/fr/",
+  "err": null,
+  "ga4Fire": [
+   "G-LM59YPP62H",
+   "G-V5M05938M4"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G100"
+  ],
+  "awGads": false,
+  "fbFire": [
+   "1843112752432642",
+   "550916146715689"
+  ],
+  "tt": false,
+  "pin": true,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-N7F3BLR"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [
+   "ss.kipli.com"
+  ],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "wait_for_update"
+  ],
+  "cmp": "Axeptio",
+  "shopify": false,
+  "title": "Créateur de mobilier et literie durables - Kipli®",
+  "nReq": 170,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "DOUBLE_GA4",
+    "sev": 5,
+    "evidence": "2 propriétés GA4 reçoivent des hits: G-LM59YPP62H, G-V5M05938M4",
+    "hook": "Deux GA4 tournent en parallèle (G-LM59YPP62H + G-V5M05938M4) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+   },
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1843112752432642, 550916146715689",
+    "hook": "Votre pixel Meta (1843112752432642) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "DOUBLE_META",
+    "sev": 4,
+    "evidence": "2 pixels Meta: 1843112752432642, 550916146715689",
+    "hook": "Deux pixels Meta tirent sur la même page (1843112752432642 + 550916146715689) : déduplication cassée, événements comptés en double, budget optimisé sur des chiffres gonflés."
+   }
+  ],
+  "top": {
+   "code": "DOUBLE_GA4",
+   "sev": 5,
+   "evidence": "2 propriétés GA4 reçoivent des hits: G-LM59YPP62H, G-V5M05938M4",
+   "hook": "Deux GA4 tournent en parallèle (G-LM59YPP62H + G-V5M05938M4) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+  }
+ },
+ {
+  "name": "Polette",
+  "host": "polette.com",
+  "url": "https://www.polette.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-T16HCBHDSN"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G100"
+  ],
+  "awGads": false,
+  "fbFire": [
+   "8853161101429108"
+  ],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-PSP379X"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "ad_user_data",
+   "ad_personalization",
+   "analytics_storage"
+  ],
+  "cmp": "?",
+  "shopify": false,
+  "title": "polette: Affordable Glasses and Sunglasses Online in the US from $35",
+  "nReq": 97,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 8853161101429108",
+    "hook": "Votre pixel Meta (8853161101429108) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 8853161101429108",
+   "hook": "Votre pixel Meta (8853161101429108) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Withings",
+  "host": "withings.com",
+  "url": "https://www.withings.com/fr/fr/",
+  "err": null,
+  "ga4Fire": [
+   "G-BW1WZD42RQ"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": true,
+  "fbFire": [
+   "719755528111520"
+  ],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": true,
+  "gtmIds": [
+   "GTM-N6WT2SDF"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "analytics_storage",
+   "functionality_storage",
+   "personalization_storage",
+   "security_storage",
+   "ad_user_data",
+   "ad_personalization"
+  ],
+  "cmp": "Didomi",
+  "shopify": true,
+  "title": "Health Smartwatches, Smart Scales & Blood Pressure Monitors | Withings",
+  "nReq": 363,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 719755528111520",
+    "hook": "Votre pixel Meta (719755528111520) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 719755528111520",
+   "hook": "Votre pixel Meta (719755528111520) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Elmut",
+  "host": "elmut.fr",
+  "url": "https://www.elmut.fr/",
+  "err": null,
+  "ga4Fire": [
+   "G-J2GTPC1NY5"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": false,
+  "fbFire": [
+   "237946037074678"
+  ],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-NWGGP597"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [
+   "metrics.elmut.fr"
+  ],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "wait_for_update",
+   "analytics_storage",
+   "ad_storage",
+   "ad_user_data",
+   "ad_personalization"
+  ],
+  "cmp": "Axeptio",
+  "shopify": false,
+  "title": "Elmut - Alimentation fraîche pour chien et chat livrée chez vous",
+  "nReq": 172,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 237946037074678",
+    "hook": "Votre pixel Meta (237946037074678) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 237946037074678",
+   "hook": "Votre pixel Meta (237946037074678) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Asphalte",
+  "host": "asphalte.com",
+  "url": "https://www.asphalte.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-KVE0E7EGPX"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": false,
+  "fbFire": [],
+  "tt": true,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [],
+  "serverGtmHost": [
+   "load.hod.asphalte.com"
+  ],
+  "firstPartyCollect": [
+   "hod.asphalte.com"
+  ],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_personalization",
+   "ad_storage",
+   "ad_user_data",
+   "analytics_storage",
+   "functionality_storage",
+   "personalization_storage",
+   "security_storage",
+   "wait_for_update"
+  ],
+  "cmp": "Cookiebot",
+  "shopify": false,
+  "title": "Asphalte - Des bonnes fringues. Point.",
+  "nReq": 107,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   }
+  ],
+  "top": {
+   "code": "CONSENT_GRANTED_DEFAULT",
+   "sev": 4,
+   "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+   "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+  }
+ },
+ {
+  "name": "Loom",
+  "host": "loom.fr",
+  "url": "https://www.loom.fr/",
+  "err": null,
+  "ga4Fire": [
+   "G-K5CE91WJJT"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": false,
+  "fbFire": [],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "ad_user_data",
+   "ad_personalization",
+   "analytics_storage"
+  ],
+  "cmp": "ShopifyNative?",
+  "shopify": true,
+  "title": "Moins mais mieux · Loom",
+  "nReq": 273,
+  "runsAds": false,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   }
+  ],
+  "top": {
+   "code": "CONSENT_GRANTED_DEFAULT",
+   "sev": 4,
+   "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+   "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+  }
+ },
+ {
+  "name": "Nutri&Co",
+  "host": "nutriandco.com",
+  "url": "https://www.nutriandco.com/fr",
+  "err": null,
+  "ga4Fire": [
+   "G-YVG8SC1BLZ"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": true,
+  "fbFire": [],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-PQ5NK6S"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "wait_for_update",
+   "region",
+   "analytics_storage",
+   "ad_storage",
+   "ad_user_data",
+   "ad_personalization"
+  ],
+  "cmp": "Axeptio",
+  "shopify": false,
+  "title": "Erreur 404",
+  "nReq": 75,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "CONSENT_GRANTED_DEFAULT",
+   "sev": 4,
+   "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+   "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+  }
+ },
+ {
+  "name": "Dijo",
+  "host": "dijo.fr",
+  "url": "https://dijo.fr/",
+  "err": null,
+  "ga4Fire": [
+   "G-GB4MR9C8RK"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111",
+   "G100"
+  ],
+  "awGads": false,
+  "fbFire": [],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-NLHF9B4L"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [
+   "msr.dijo.fr"
+  ],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "analytics_storage",
+   "functionality_storage",
+   "personalization_storage",
+   "security_storage",
+   "ad_user_data",
+   "ad_personalization"
+  ],
+  "cmp": "Didomi",
+  "shopify": true,
+  "title": "DIJO ® : Probiotiques 100 % Naturels",
+  "nReq": 423,
+  "runsAds": false,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   }
+  ],
+  "top": {
+   "code": "CONSENT_GRANTED_DEFAULT",
+   "sev": 4,
+   "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+   "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+  }
+ },
+ {
+  "name": "Jules & Jenn",
+  "host": "julesjenn.com",
+  "url": "https://www.julesjenn.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-BXFXEKQ7WR"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G101"
+  ],
+  "awGads": false,
+  "fbFire": [],
+  "tt": false,
+  "pin": true,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-W2DQ28RD"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "none",
+  "cf": [],
+  "cmp": "ShopifyNative?",
+  "shopify": true,
+  "title": "JULES & JENN - Chaussures cuir & maroquinerie, Made in Europe",
+  "nReq": 329,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "NO_SERVER_SIDE",
+   "sev": 3,
+   "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+   "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+  }
+ },
+ {
+  "name": "Fleurance Nature",
+  "host": "fleurancenature.fr",
+  "url": "https://www.fleurancenature.fr/",
+  "err": null,
+  "ga4Fire": [],
+  "uaFire": [],
+  "gcs": [],
+  "awGads": false,
+  "fbFire": [],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": true,
+  "gtmIds": [],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_user_data",
+   "ad_personalization",
+   "ad_storage",
+   "analytics_storage"
+  ],
+  "cmp": "Didomi",
+  "shopify": false,
+  "title": "Spécialiste du Complément Alimentaire et de la Cosmétique Bio depuis 1972 - Fleurance Natu",
+  "nReq": 148,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "NO_SERVER_SIDE",
+   "sev": 3,
+   "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+   "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+  }
+ }
+]
