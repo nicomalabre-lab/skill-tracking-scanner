@@ -38,12 +38,11 @@
   ],
   "uaFire": [],
   "gcs": [
+   "G100",
    "G111"
   ],
   "awGads": false,
-  "fbFire": [
-   "1937728203198241"
-  ],
+  "fbFire": [],
   "tt": true,
   "pin": false,
   "snap": false,
@@ -74,16 +73,10 @@
   "cmp": "Cookiebot",
   "shopify": false,
   "title": "Asphalte - Vêtements de qualité.",
-  "nReq": 95,
+  "nReq": 94,
   "runsAds": true,
   "qualified": true,
   "defects": [
-   {
-    "code": "META_PRECONSENT",
-    "sev": 5,
-    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1937728203198241",
-    "hook": "Votre pixel Meta (1937728203198241) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
-   },
    {
     "code": "CONSENT_GRANTED_DEFAULT",
     "sev": 4,
@@ -92,10 +85,10 @@
    }
   ],
   "top": {
-   "code": "META_PRECONSENT",
-   "sev": 5,
-   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1937728203198241",
-   "hook": "Votre pixel Meta (1937728203198241) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   "code": "CONSENT_GRANTED_DEFAULT",
+   "sev": 4,
+   "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+   "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
   }
  },
  {
@@ -129,7 +122,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Le Slip Français - Sous-vêtements Made in France",
-  "nReq": 391,
+  "nReq": 378,
   "runsAds": true,
   "qualified": false,
   "defects": [],
@@ -167,7 +160,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "Moins mais mieux · Loom",
-  "nReq": 219,
+  "nReq": 241,
   "runsAds": false,
   "qualified": true,
   "defects": [
@@ -214,7 +207,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "JULES & JENN - Chaussures cuir & maroquinerie, Made in Europe",
-  "nReq": 317,
+  "nReq": 331,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -415,7 +408,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "MUSIER",
-  "nReq": 300,
+  "nReq": 305,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -534,7 +527,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "NOYOCO Studio Paris - Éditions Limitées, Production Responsable.",
-  "nReq": 360,
+  "nReq": 356,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -624,7 +617,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "Le Tanneur, Maître Maroquinier depuis 1898 - Site Officiel",
-  "nReq": 248,
+  "nReq": 261,
   "runsAds": false,
   "qualified": false,
   "defects": [],
@@ -665,7 +658,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Chaussures et accessoires haut de gamme femme | Jonak",
-  "nReq": 189,
+  "nReq": 192,
   "runsAds": false,
   "qualified": false,
   "defects": [],
@@ -710,7 +703,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "PANAFRICA • Baskets éthiques & mode éco-responsable. A drop of summer",
-  "nReq": 377,
+  "nReq": 339,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -887,7 +880,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "Atelier Paulin | Bijoux personnalisés porte-paroles",
-  "nReq": 280,
+  "nReq": 510,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -951,7 +944,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "LÕU.YETU Paris",
-  "nReq": 247,
+  "nReq": 281,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1015,7 +1008,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Stone Paris - Joaillerie parisienne par Marie Poniatowski – StoneParis",
-  "nReq": 240,
+  "nReq": 268,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1182,7 +1175,7 @@
   "cmp": "Cookiebot",
   "shopify": true,
   "title": "Kadalys Paris | Cosmétiques BIO | Boutique en ligne – KADALYS",
-  "nReq": 539,
+  "nReq": 553,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1259,7 +1252,7 @@
   "cmp": "?",
   "shopify": false,
   "title": "Un instant…",
-  "nReq": 236,
+  "nReq": 142,
   "runsAds": false,
   "qualified": false,
   "defects": [],
@@ -1300,7 +1293,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Puissante - Le bien-être au féminin",
-  "nReq": 491,
+  "nReq": 481,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1410,7 +1403,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Oh My Cream - L'eshop de la Beauté Clean",
-  "nReq": 440,
+  "nReq": 529,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1454,15 +1447,18 @@
   "stape": false,
   "consent": "default",
   "cf": [
-   "ad_user_data",
-   "ad_personalization",
    "ad_storage",
-   "analytics_storage"
+   "analytics_storage",
+   "functionality_storage",
+   "personalization_storage",
+   "security_storage",
+   "ad_user_data",
+   "ad_personalization"
   ],
   "cmp": "Didomi",
   "shopify": false,
   "title": "Spécialiste du Complément Alimentaire et de la Cosmétique Bio depuis 1972 - Fleurance Natu",
-  "nReq": 144,
+  "nReq": 138,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1537,7 +1533,7 @@
   "cmp": "OneTrust",
   "shopify": false,
   "title": "Christophe Robin Summer Sale | Up to 30% | Haircare Deals",
-  "nReq": 253,
+  "nReq": 270,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1560,18 +1556,12 @@
   "host": "leonorgreyl.com",
   "url": "https://www.leonorgreyl.com/",
   "err": null,
-  "ga4Fire": [
-   "G-40DT07MRHX"
-  ],
+  "ga4Fire": [],
   "uaFire": [],
-  "gcs": [
-   "G111"
-  ],
-  "awGads": true,
-  "fbFire": [
-   "941209453221792"
-  ],
-  "tt": true,
+  "gcs": [],
+  "awGads": false,
+  "fbFire": [],
+  "tt": false,
   "pin": false,
   "snap": false,
   "crit": false,
@@ -1583,43 +1573,23 @@
   "stape": false,
   "consent": "default",
   "cf": [
+   "ad_personalization",
    "ad_storage",
    "ad_user_data",
-   "ad_personalization",
-   "analytics_storage"
+   "analytics_storage",
+   "functionality_storage",
+   "personalization_storage",
+   "security_storage",
+   "wait_for_update"
   ],
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "Leonor Greyl - Soins et beauté du cheveu par les produits naturels",
-  "nReq": 374,
-  "runsAds": true,
-  "qualified": true,
-  "defects": [
-   {
-    "code": "META_PRECONSENT",
-    "sev": 5,
-    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 941209453221792",
-    "hook": "Votre pixel Meta (941209453221792) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
-   },
-   {
-    "code": "CONSENT_GRANTED_DEFAULT",
-    "sev": 4,
-    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
-    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
-   },
-   {
-    "code": "NO_SERVER_SIDE",
-    "sev": 3,
-    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
-    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
-   }
-  ],
-  "top": {
-   "code": "META_PRECONSENT",
-   "sev": 5,
-   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 941209453221792",
-   "hook": "Votre pixel Meta (941209453221792) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
-  }
+  "nReq": 373,
+  "runsAds": false,
+  "qualified": false,
+  "defects": [],
+  "top": null
  },
  {
   "name": "Le Baigneur",
@@ -1682,7 +1652,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Lamazuna - Site Officiel - Cosmétiques solides et bio",
-  "nReq": 179,
+  "nReq": 180,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1743,7 +1713,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Pimpant | Produits Rechargeables pour les Familles",
-  "nReq": 155,
+  "nReq": 156,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1852,7 +1822,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Vitaline",
-  "nReq": 320,
+  "nReq": 338,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1928,7 +1898,7 @@
   "cmp": "Didomi",
   "shopify": true,
   "title": "DIJO ® : Probiotiques 100 % Naturels",
-  "nReq": 442,
+  "nReq": 404,
   "runsAds": false,
   "qualified": true,
   "defects": [
@@ -1980,29 +1950,67 @@
   "host": "ericfavre.com",
   "url": "https://www.ericfavre.com/",
   "err": null,
-  "ga4Fire": [],
+  "ga4Fire": [
+   "G-BDPZZEH4YC"
+  ],
   "uaFire": [],
-  "gcs": [],
-  "awGads": false,
-  "fbFire": [],
-  "tt": false,
+  "gcs": [
+   "G111"
+  ],
+  "awGads": true,
+  "fbFire": [
+   "613564900787218"
+  ],
+  "tt": true,
   "pin": false,
-  "snap": false,
+  "snap": true,
   "crit": false,
-  "gtmIds": [],
+  "gtmIds": [
+   "GTM-K8V4NZL"
+  ],
   "serverGtmHost": [],
   "firstPartyCollect": [],
   "stape": false,
-  "consent": "none",
-  "cf": [],
+  "consent": "default",
+  "cf": [
+   "analytics_storage",
+   "ad_storage",
+   "ad_user_data",
+   "ad_personalization",
+   "wait_for_update"
+  ],
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Eric Favre | Nutrition Sportive & Compléments Alimentaires Santé.",
-  "nReq": 109,
-  "runsAds": false,
-  "qualified": false,
-  "defects": [],
-  "top": null
+  "nReq": 174,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 613564900787218",
+    "hook": "Votre pixel Meta (613564900787218) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 613564900787218",
+   "hook": "Votre pixel Meta (613564900787218) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
  },
  {
   "name": "Le Petit Ballon",
@@ -2012,7 +2020,7 @@
   "ga4Fire": [],
   "uaFire": [],
   "gcs": [],
-  "awGads": true,
+  "awGads": false,
   "fbFire": [
    "1160398188396675"
   ],
@@ -2037,7 +2045,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Abonnement de box de vin et bière | Cadeaux et achat de vin en ligne – Le Petit Ballon",
-  "nReq": 387,
+  "nReq": 408,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -2092,7 +2100,7 @@
   "cmp": "?",
   "shopify": false,
   "title": "Poiscaille : Commander poissons frais, poissonnerie en ligne",
-  "nReq": 156,
+  "nReq": 157,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -2190,7 +2198,7 @@
   "cmp": "Didomi",
   "shopify": true,
   "title": "Slome - Designed to chill - Slome ex-Hypnia",
-  "nReq": 367,
+  "nReq": 392,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -2249,7 +2257,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Créateur de mobilier et literie durables - Kipli®",
-  "nReq": 173,
+  "nReq": 174,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -2400,7 +2408,7 @@
   "cmp": "Didomi",
   "shopify": true,
   "title": "Appareils connectés pour améliorer votre santé | Withings",
-  "nReq": 335,
+  "nReq": 329,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -2475,7 +2483,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Elmut - Alimentation fraîche pour chien et chat livrée chez vous",
-  "nReq": 158,
+  "nReq": 160,
   "runsAds": true,
   "qualified": true,
   "defects": [
