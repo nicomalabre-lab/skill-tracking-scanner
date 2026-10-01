@@ -117,7 +117,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Le Slip Français - Sous-vêtements Made in France",
-  "nReq": 423,
+  "nReq": 431,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -173,7 +173,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "Moins mais mieux · Loom",
-  "nReq": 286,
+  "nReq": 254,
   "runsAds": false,
   "qualified": true,
   "defects": [
@@ -220,7 +220,7 @@
   "cmp": "ConsentManager",
   "shopify": true,
   "title": "JULES & JENN - Chaussures cuir & maroquinerie, Made in Europe",
-  "nReq": 367,
+  "nReq": 314,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -327,7 +327,7 @@
   "cmp": "?",
   "shopify": false,
   "title": "Bobbies | Maison Parisienne de Chaussures et Maroquinerie en cuir",
-  "nReq": 116,
+  "nReq": 126,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -421,7 +421,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "MUSIER",
-  "nReq": 342,
+  "nReq": 307,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -540,7 +540,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "NOYOCO | Vêtements en matières naturelles, confectionnés en Europe",
-  "nReq": 310,
+  "nReq": 279,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -595,7 +595,7 @@
   "cmp": "Cookiebot",
   "shopify": true,
   "title": "Ysé Paris – A wardrobe as free as women should be.",
-  "nReq": 148,
+  "nReq": 142,
   "runsAds": false,
   "qualified": false,
   "defects": [],
@@ -630,7 +630,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "Le Tanneur, Maître Maroquinier depuis 1898 - Site Officiel",
-  "nReq": 296,
+  "nReq": 264,
   "runsAds": false,
   "qualified": false,
   "defects": [],
@@ -671,7 +671,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Chaussures et accessoires haut de gamme femme | Jonak",
-  "nReq": 223,
+  "nReq": 183,
   "runsAds": false,
   "qualified": false,
   "defects": [],
@@ -711,7 +711,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "PANAFRICA • Baskets éthiques & mode éco-responsable. A drop of summer",
-  "nReq": 423,
+  "nReq": 384,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -786,7 +786,7 @@
   "cmp": "?",
   "shopify": false,
   "title": "Page introuvable",
-  "nReq": 55,
+  "nReq": 49,
   "runsAds": false,
   "qualified": false,
   "defects": [],
@@ -822,7 +822,7 @@
   "cmp": "?",
   "shopify": false,
   "title": "Edenly, bijoux or et diamants au meilleur prix !",
-  "nReq": 63,
+  "nReq": 66,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -890,7 +890,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "Atelier Paulin | Bijoux personnalisés porte-paroles",
-  "nReq": 346,
+  "nReq": 313,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -948,7 +948,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "LÕU.YETU Paris",
-  "nReq": 308,
+  "nReq": 254,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1012,7 +1012,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Stone Paris - Joaillerie parisienne par Marie Poniatowski – StoneParis",
-  "nReq": 322,
+  "nReq": 294,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1102,7 +1102,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Erreur 404",
-  "nReq": 85,
+  "nReq": 84,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1179,7 +1179,7 @@
   "cmp": "Cookiebot",
   "shopify": true,
   "title": "Kadalys Paris | Cosmétiques BIO | Boutique en ligne – KADALYS",
-  "nReq": 573,
+  "nReq": 500,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1253,10 +1253,10 @@
   "stape": false,
   "consent": "none",
   "cf": [],
-  "cmp": "?",
+  "cmp": "Axeptio",
   "shopify": false,
-  "title": "Un instant…",
-  "nReq": 18,
+  "title": "Aroma-Zone",
+  "nReq": 375,
   "runsAds": false,
   "qualified": false,
   "defects": [],
@@ -1268,8 +1268,8 @@
   "url": "https://www.puissante.com/",
   "err": null,
   "ga4Fire": [
-   "G-7ZCBVN66W7",
-   "G-K0X81TXHYW"
+   "G-K0X81TXHYW",
+   "G-7ZCBVN66W7"
   ],
   "uaFire": [],
   "gcs": [
@@ -1297,15 +1297,15 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Puissante - Le bien-être au féminin",
-  "nReq": 480,
+  "nReq": 459,
   "runsAds": true,
   "qualified": true,
   "defects": [
    {
     "code": "DOUBLE_GA4",
     "sev": 5,
-    "evidence": "2 propriétés GA4 reçoivent des hits: G-7ZCBVN66W7, G-K0X81TXHYW",
-    "hook": "Deux GA4 tournent en parallèle (G-7ZCBVN66W7 + G-K0X81TXHYW) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+    "evidence": "2 propriétés GA4 reçoivent des hits: G-K0X81TXHYW, G-7ZCBVN66W7",
+    "hook": "Deux GA4 tournent en parallèle (G-K0X81TXHYW + G-7ZCBVN66W7) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
    },
    {
     "code": "CONSENT_GRANTED_DEFAULT",
@@ -1323,8 +1323,8 @@
   "top": {
    "code": "DOUBLE_GA4",
    "sev": 5,
-   "evidence": "2 propriétés GA4 reçoivent des hits: G-7ZCBVN66W7, G-K0X81TXHYW",
-   "hook": "Deux GA4 tournent en parallèle (G-7ZCBVN66W7 + G-K0X81TXHYW) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+   "evidence": "2 propriétés GA4 reçoivent des hits: G-K0X81TXHYW, G-7ZCBVN66W7",
+   "hook": "Deux GA4 tournent en parallèle (G-K0X81TXHYW + G-7ZCBVN66W7) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
   }
  },
  {
@@ -1407,7 +1407,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Oh My Cream - L'eshop de la Beauté Clean",
-  "nReq": 442,
+  "nReq": 496,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1459,7 +1459,7 @@
   "cmp": "Didomi",
   "shopify": false,
   "title": "Spécialiste du Complément Alimentaire et de la Cosmétique Bio depuis 1972 - Fleurance Natu",
-  "nReq": 147,
+  "nReq": 148,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1534,7 +1534,7 @@
   "cmp": "OneTrust",
   "shopify": false,
   "title": "Christophe Robin | Luxury Haircare | Official Site",
-  "nReq": 251,
+  "nReq": 252,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1586,7 +1586,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "Leonor Greyl - Soins et beauté du cheveu par les produits naturels",
-  "nReq": 407,
+  "nReq": 367,
   "runsAds": false,
   "qualified": false,
   "defects": [],
@@ -1647,7 +1647,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Lamazuna - Site Officiel - Cosmétiques solides et bio",
-  "nReq": 178,
+  "nReq": 179,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1702,7 +1702,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Pimpant | Produits Rechargeables pour les Familles",
-  "nReq": 159,
+  "nReq": 157,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1737,9 +1737,13 @@
   "host": "nutripure.fr",
   "url": "https://www.nutripure.fr/",
   "err": null,
-  "ga4Fire": [],
+  "ga4Fire": [
+   "G-SSCONFIG"
+  ],
   "uaFire": [],
-  "gcs": [],
+  "gcs": [
+   "G100"
+  ],
   "awGads": false,
   "fbFire": [],
   "tt": false,
@@ -1747,15 +1751,19 @@
   "snap": false,
   "crit": false,
   "gtmIds": [],
-  "serverGtmHost": [],
-  "firstPartyCollect": [],
+  "serverGtmHost": [
+   "tss.nutripure.fr"
+  ],
+  "firstPartyCollect": [
+   "tss.nutripure.fr"
+  ],
   "stape": false,
   "consent": "none",
   "cf": [],
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Compléments alimentaires bio santé, sport et musculation",
-  "nReq": 129,
+  "nReq": 130,
   "runsAds": false,
   "qualified": false,
   "defects": [],
@@ -1799,7 +1807,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Vitaline",
-  "nReq": 361,
+  "nReq": 347,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1875,7 +1883,7 @@
   "cmp": "Didomi",
   "shopify": true,
   "title": "DIJO ® : Probiotiques 100 % Naturels",
-  "nReq": 436,
+  "nReq": 387,
   "runsAds": false,
   "qualified": true,
   "defects": [
@@ -1945,7 +1953,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Eric Favre | Nutrition Sportive & Compléments Alimentaires Santé.",
-  "nReq": 115,
+  "nReq": 113,
   "runsAds": false,
   "qualified": false,
   "defects": [],
@@ -1959,7 +1967,7 @@
   "ga4Fire": [],
   "uaFire": [],
   "gcs": [],
-  "awGads": false,
+  "awGads": true,
   "fbFire": [
    "1160398188396675"
   ],
@@ -1984,7 +1992,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Abonnement de box de vin et bière | Cadeaux et achat de vin en ligne – Le Petit Ballon",
-  "nReq": 424,
+  "nReq": 419,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -2041,7 +2049,7 @@
   "cmp": "?",
   "shopify": false,
   "title": "Poiscaille : Commander poissons frais, poissonnerie en ligne",
-  "nReq": 155,
+  "nReq": 160,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -2095,13 +2103,15 @@
   "host": "hypnia.fr",
   "url": "https://www.hypnia.fr/",
   "err": null,
-  "ga4Fire": [],
-  "uaFire": [],
-  "gcs": [],
-  "awGads": false,
-  "fbFire": [
-   "1724091971186983"
+  "ga4Fire": [
+   "G-Z197MGVGNB"
   ],
+  "uaFire": [],
+  "gcs": [
+   "G100"
+  ],
+  "awGads": false,
+  "fbFire": [],
   "tt": true,
   "pin": true,
   "snap": false,
@@ -2125,16 +2135,10 @@
   "cmp": "Didomi",
   "shopify": true,
   "title": "Slome - Designed to chill - Slome ex-Hypnia",
-  "nReq": 395,
+  "nReq": 382,
   "runsAds": true,
   "qualified": true,
   "defects": [
-   {
-    "code": "META_PRECONSENT",
-    "sev": 5,
-    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1724091971186983",
-    "hook": "Votre pixel Meta (1724091971186983) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
-   },
    {
     "code": "NO_SERVER_SIDE",
     "sev": 3,
@@ -2143,10 +2147,10 @@
    }
   ],
   "top": {
-   "code": "META_PRECONSENT",
-   "sev": 5,
-   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1724091971186983",
-   "hook": "Votre pixel Meta (1724091971186983) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   "code": "NO_SERVER_SIDE",
+   "sev": 3,
+   "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+   "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
   }
  },
  {
@@ -2184,7 +2188,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Créateur de mobilier et literie durables - Kipli®",
-  "nReq": 174,
+  "nReq": 173,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -2219,13 +2223,9 @@
   "host": "polette.com",
   "url": "https://www.polette.com/",
   "err": null,
-  "ga4Fire": [
-   "G-T16HCBHDSN"
-  ],
+  "ga4Fire": [],
   "uaFire": [],
-  "gcs": [
-   "G100"
-  ],
+  "gcs": [],
   "awGads": false,
   "fbFire": [],
   "tt": false,
@@ -2249,7 +2249,7 @@
   "cmp": "?",
   "shopify": false,
   "title": "polette: Affordable Glasses and Sunglasses Online in the US from $35",
-  "nReq": 96,
+  "nReq": 100,
   "runsAds": false,
   "qualified": false,
   "defects": [],
@@ -2319,7 +2319,7 @@
   "cmp": "Didomi",
   "shopify": true,
   "title": "Appareils connectés pour améliorer votre santé | Withings",
-  "nReq": 455,
+  "nReq": 461,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -2394,7 +2394,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Elmut - Alimentation fraîche pour chien et chat livrée chez vous",
-  "nReq": 166,
+  "nReq": 163,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -2423,9 +2423,13 @@
   "host": "mercimamanboutique.com",
   "url": "https://www.mercimamanboutique.com/",
   "err": null,
-  "ga4Fire": [],
+  "ga4Fire": [
+   "G-E8W59DGBGT"
+  ],
   "uaFire": [],
-  "gcs": [],
+  "gcs": [
+   "G100"
+  ],
   "awGads": false,
   "fbFire": [],
   "tt": false,
@@ -2433,8 +2437,12 @@
   "snap": false,
   "crit": false,
   "gtmIds": [],
-  "serverGtmHost": [],
-  "firstPartyCollect": [],
+  "serverGtmHost": [
+   "st.mercimamanboutique.com"
+  ],
+  "firstPartyCollect": [
+   "st.mercimamanboutique.com"
+  ],
   "stape": false,
   "consent": "none",
   "cf": [],
