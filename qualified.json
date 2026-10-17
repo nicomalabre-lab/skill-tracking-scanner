@@ -30,7 +30,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Le Slip Français - Sous-vêtements Made in France",
-  "nReq": 406,
+  "nReq": 405,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -85,7 +85,7 @@
   "cmp": "?",
   "shopify": false,
   "title": "Bobbies | Maison Parisienne de Chaussures et Maroquinerie en cuir",
-  "nReq": 133,
+  "nReq": 132,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -155,7 +155,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "MUSIER",
-  "nReq": 307,
+  "nReq": 374,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -274,7 +274,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "NOYOCO | Vêtements en matières naturelles, confectionnés en Europe",
-  "nReq": 309,
+  "nReq": 360,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -402,7 +402,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "Atelier Paulin | Bijoux personnalisés porte-paroles",
-  "nReq": 361,
+  "nReq": 376,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -460,7 +460,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "LÕU.YETU Paris",
-  "nReq": 297,
+  "nReq": 309,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -524,7 +524,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Stone Paris - Joaillerie parisienne par Marie Poniatowski – StoneParis",
-  "nReq": 299,
+  "nReq": 362,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -583,7 +583,7 @@
   "cmp": "Cookiebot",
   "shopify": true,
   "title": "Kadalys Paris | Cosmétiques BIO | Boutique en ligne – KADALYS",
-  "nReq": 521,
+  "nReq": 622,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -648,7 +648,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Puissante - Le bien-être au féminin",
-  "nReq": 475,
+  "nReq": 503,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -710,7 +710,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Oh My Cream - L'eshop de la Beauté Clean",
-  "nReq": 437,
+  "nReq": 459,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -767,7 +767,7 @@
   "cmp": "OneTrust",
   "shopify": false,
   "title": "Christophe Robin | Luxury Haircare | Official Site",
-  "nReq": 251,
+  "nReq": 250,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -816,7 +816,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Lamazuna - Site Officiel - Cosmétiques solides et bio",
-  "nReq": 181,
+  "nReq": 185,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -871,7 +871,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Pimpant | Produits Rechargeables pour les Familles",
-  "nReq": 160,
+  "nReq": 161,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -939,7 +939,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Vitaline",
-  "nReq": 343,
+  "nReq": 412,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1008,7 +1008,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Abonnement de box de vin et bière | Cadeaux et achat de vin en ligne – Le Petit Ballon",
-  "nReq": 410,
+  "nReq": 463,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1065,7 +1065,7 @@
   "cmp": "?",
   "shopify": false,
   "title": "Poiscaille : Commander poissons frais, poissonnerie en ligne",
-  "nReq": 155,
+  "nReq": 157,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1118,7 +1118,7 @@
   "cmp": "Didomi",
   "shopify": true,
   "title": "Slome - Designed to chill - Slome ex-Hypnia",
-  "nReq": 363,
+  "nReq": 407,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1186,7 +1186,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Créateur de mobilier et literie durables - Kipli®",
-  "nReq": 444,
+  "nReq": 440,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1220,6 +1220,63 @@
    "sev": 5,
    "evidence": "3 propriétés GA4 reçoivent des hits: G-LM59YPP62H, G-V5M05938M4, G-S84S1Y5MHH",
    "hook": "Deux GA4 tournent en parallèle (G-LM59YPP62H + G-V5M05938M4 + G-S84S1Y5MHH) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+  }
+ },
+ {
+  "name": "Polette",
+  "host": "polette.com",
+  "url": "https://www.polette.com/",
+  "err": null,
+  "ga4Fire": [],
+  "uaFire": [],
+  "gcs": [],
+  "awGads": false,
+  "fbFire": [
+   "8853161101429108"
+  ],
+  "tt": false,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-PSP379X"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "analytics_storage",
+   "ad_user_data",
+   "ad_personalization",
+   "region"
+  ],
+  "cmp": "?",
+  "shopify": false,
+  "title": "polette: Affordable Glasses and Sunglasses Online in the US from $35",
+  "nReq": 101,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 8853161101429108",
+    "hook": "Votre pixel Meta (8853161101429108) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 8853161101429108",
+   "hook": "Votre pixel Meta (8853161101429108) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
   }
  },
  {
@@ -1261,7 +1318,7 @@
   "cmp": "Didomi",
   "shopify": true,
   "title": "Appareils connectés pour améliorer votre santé | Withings",
-  "nReq": 455,
+  "nReq": 472,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1330,7 +1387,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Elmut - Alimentation fraîche pour chien et chat livrée chez vous",
-  "nReq": 168,
+  "nReq": 165,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1394,7 +1451,7 @@
   "cmp": "Cookiebot",
   "shopify": false,
   "title": "Asphalte - Vêtements de qualité.",
-  "nReq": 94,
+  "nReq": 93,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1444,7 +1501,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "Moins mais mieux · Loom",
-  "nReq": 274,
+  "nReq": 345,
   "runsAds": false,
   "qualified": true,
   "defects": [
@@ -1496,7 +1553,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "PANAFRICA • Baskets éthiques & mode éco-responsable. A drop of summer",
-  "nReq": 393,
+  "nReq": 456,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1620,7 +1677,7 @@
   "cmp": "Didomi",
   "shopify": true,
   "title": "DIJO ® : Probiotiques 100 % Naturels",
-  "nReq": 410,
+  "nReq": 476,
   "runsAds": false,
   "qualified": true,
   "defects": [
@@ -1667,7 +1724,7 @@
   "cmp": "ConsentManager",
   "shopify": true,
   "title": "JULES & JENN - Chaussures cuir & maroquinerie, Made in Europe",
-  "nReq": 380,
+  "nReq": 406,
   "runsAds": true,
   "qualified": true,
   "defects": [
