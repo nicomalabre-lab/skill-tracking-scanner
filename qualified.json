@@ -96,7 +96,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Le Slip Français - Sous-vêtements Made in France",
-  "nReq": 396,
+  "nReq": 402,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -151,7 +151,7 @@
   "cmp": "?",
   "shopify": false,
   "title": "Bobbies | Maison Parisienne de Chaussures et Maroquinerie en cuir",
-  "nReq": 135,
+  "nReq": 132,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -221,7 +221,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "MUSIER",
-  "nReq": 326,
+  "nReq": 292,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -252,8 +252,8 @@
   "err": null,
   "ga4Fire": [
    "G-XXXXXXXXXX",
-   "G-XXCTHH2J3J",
-   "G-VJZRGQMWLT"
+   "G-VJZRGQMWLT",
+   "G-XXCTHH2J3J"
   ],
   "uaFire": [],
   "gcs": [
@@ -286,22 +286,22 @@
   "cmp": "Didomi",
   "shopify": false,
   "title": "Sessùn | Boutique en ligne officielle",
-  "nReq": 63,
+  "nReq": 64,
   "runsAds": false,
   "qualified": true,
   "defects": [
    {
     "code": "DOUBLE_GA4",
     "sev": 5,
-    "evidence": "3 propriétés GA4 reçoivent des hits: G-XXXXXXXXXX, G-XXCTHH2J3J, G-VJZRGQMWLT",
-    "hook": "Deux GA4 tournent en parallèle (G-XXXXXXXXXX + G-XXCTHH2J3J + G-VJZRGQMWLT) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+    "evidence": "3 propriétés GA4 reçoivent des hits: G-XXXXXXXXXX, G-VJZRGQMWLT, G-XXCTHH2J3J",
+    "hook": "Deux GA4 tournent en parallèle (G-XXXXXXXXXX + G-VJZRGQMWLT + G-XXCTHH2J3J) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
    }
   ],
   "top": {
    "code": "DOUBLE_GA4",
    "sev": 5,
-   "evidence": "3 propriétés GA4 reçoivent des hits: G-XXXXXXXXXX, G-XXCTHH2J3J, G-VJZRGQMWLT",
-   "hook": "Deux GA4 tournent en parallèle (G-XXXXXXXXXX + G-XXCTHH2J3J + G-VJZRGQMWLT) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+   "evidence": "3 propriétés GA4 reçoivent des hits: G-XXXXXXXXXX, G-VJZRGQMWLT, G-XXCTHH2J3J",
+   "hook": "Deux GA4 tournent en parallèle (G-XXXXXXXXXX + G-VJZRGQMWLT + G-XXCTHH2J3J) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
   }
  },
  {
@@ -340,7 +340,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "NOYOCO | Vêtements en matières naturelles, confectionnés en Europe",
-  "nReq": 328,
+  "nReq": 336,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -408,7 +408,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "PANAFRICA • Baskets éthiques & mode éco-responsable. A drop of summer",
-  "nReq": 421,
+  "nReq": 402,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -462,7 +462,7 @@
   "cmp": "?",
   "shopify": false,
   "title": "Edenly, bijoux or et diamants au meilleur prix !",
-  "nReq": 55,
+  "nReq": 57,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -530,7 +530,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "Atelier Paulin | Bijoux personnalisés porte-paroles",
-  "nReq": 348,
+  "nReq": 309,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -588,7 +588,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "LÕU.YETU Paris",
-  "nReq": 309,
+  "nReq": 272,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -652,7 +652,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Stone Paris - Joaillerie parisienne par Marie Poniatowski – StoneParis",
-  "nReq": 366,
+  "nReq": 298,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -711,7 +711,7 @@
   "cmp": "Cookiebot",
   "shopify": true,
   "title": "Kadalys Paris | Cosmétiques BIO | Boutique en ligne – KADALYS",
-  "nReq": 460,
+  "nReq": 474,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -747,8 +747,8 @@
   "url": "https://www.puissante.com/",
   "err": null,
   "ga4Fire": [
-   "G-K0X81TXHYW",
-   "G-7ZCBVN66W7"
+   "G-7ZCBVN66W7",
+   "G-K0X81TXHYW"
   ],
   "uaFire": [],
   "gcs": [
@@ -776,15 +776,15 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Puissante - Le bien-être au féminin",
-  "nReq": 526,
+  "nReq": 488,
   "runsAds": true,
   "qualified": true,
   "defects": [
    {
     "code": "DOUBLE_GA4",
     "sev": 5,
-    "evidence": "2 propriétés GA4 reçoivent des hits: G-K0X81TXHYW, G-7ZCBVN66W7",
-    "hook": "Deux GA4 tournent en parallèle (G-K0X81TXHYW + G-7ZCBVN66W7) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+    "evidence": "2 propriétés GA4 reçoivent des hits: G-7ZCBVN66W7, G-K0X81TXHYW",
+    "hook": "Deux GA4 tournent en parallèle (G-7ZCBVN66W7 + G-K0X81TXHYW) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
    },
    {
     "code": "CONSENT_GRANTED_DEFAULT",
@@ -802,8 +802,8 @@
   "top": {
    "code": "DOUBLE_GA4",
    "sev": 5,
-   "evidence": "2 propriétés GA4 reçoivent des hits: G-K0X81TXHYW, G-7ZCBVN66W7",
-   "hook": "Deux GA4 tournent en parallèle (G-K0X81TXHYW + G-7ZCBVN66W7) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+   "evidence": "2 propriétés GA4 reçoivent des hits: G-7ZCBVN66W7, G-K0X81TXHYW",
+   "hook": "Deux GA4 tournent en parallèle (G-7ZCBVN66W7 + G-K0X81TXHYW) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
   }
  },
  {
@@ -838,7 +838,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Oh My Cream - L'eshop de la Beauté Clean",
-  "nReq": 461,
+  "nReq": 537,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -895,7 +895,7 @@
   "cmp": "OneTrust",
   "shopify": false,
   "title": "Christophe Robin | Luxury Haircare | Official Site",
-  "nReq": 260,
+  "nReq": 259,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -911,6 +911,72 @@
    "sev": 5,
    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1493054460729588",
    "hook": "Votre pixel Meta (1493054460729588) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+  }
+ },
+ {
+  "name": "Leonor Greyl",
+  "host": "leonorgreyl.com",
+  "url": "https://www.leonorgreyl.com/",
+  "err": null,
+  "ga4Fire": [
+   "G-40DT07MRHX"
+  ],
+  "uaFire": [],
+  "gcs": [
+   "G111"
+  ],
+  "awGads": true,
+  "fbFire": [
+   "941209453221792"
+  ],
+  "tt": true,
+  "pin": false,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-58NZWD9C"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "ad_user_data",
+   "ad_personalization",
+   "analytics_storage"
+  ],
+  "cmp": "ShopifyNative?",
+  "shopify": true,
+  "title": "Leonor Greyl - Soins et beauté du cheveu par les produits naturels",
+  "nReq": 381,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "META_PRECONSENT",
+    "sev": 5,
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 941209453221792",
+    "hook": "Votre pixel Meta (941209453221792) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   },
+   {
+    "code": "CONSENT_GRANTED_DEFAULT",
+    "sev": 4,
+    "evidence": "GA4 /collect envoyé avec gcs=G111 (granted) sur un chargement sans consentement",
+    "hook": "Votre Consent Mode démarre en \"granted\" par défaut : GA4 collecte avant que l'utilisateur ait accepté. Non conforme, et Google le sait — le Consent Mode v2 mal réglé dégrade la modélisation des conversions."
+   },
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "META_PRECONSENT",
+   "sev": 5,
+   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 941209453221792",
+   "hook": "Votre pixel Meta (941209453221792) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
   }
  },
  {
@@ -944,7 +1010,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Lamazuna - Site Officiel - Cosmétiques solides et bio",
-  "nReq": 181,
+  "nReq": 176,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -999,7 +1065,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Pimpant | Produits Rechargeables pour les Familles",
-  "nReq": 161,
+  "nReq": 133,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1067,7 +1133,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Vitaline",
-  "nReq": 361,
+  "nReq": 340,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1136,7 +1202,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Abonnement de box de vin et bière | Cadeaux et achat de vin en ligne – Le Petit Ballon",
-  "nReq": 391,
+  "nReq": 421,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1193,7 +1259,7 @@
   "cmp": "?",
   "shopify": false,
   "title": "Poiscaille : Commander poissons frais, poissonnerie en ligne",
-  "nReq": 156,
+  "nReq": 157,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1209,65 +1275,6 @@
    "sev": 5,
    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 149984145389340",
    "hook": "Votre pixel Meta (149984145389340) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
-  }
- },
- {
-  "name": "Hypnia",
-  "host": "hypnia.fr",
-  "url": "https://www.hypnia.fr/",
-  "err": null,
-  "ga4Fire": [],
-  "uaFire": [],
-  "gcs": [],
-  "awGads": false,
-  "fbFire": [
-   "1724091971186983"
-  ],
-  "tt": true,
-  "pin": true,
-  "snap": false,
-  "crit": false,
-  "gtmIds": [
-   "GTM-W8K75ND"
-  ],
-  "serverGtmHost": [],
-  "firstPartyCollect": [],
-  "stape": false,
-  "consent": "default",
-  "cf": [
-   "ad_storage",
-   "analytics_storage",
-   "functionality_storage",
-   "personalization_storage",
-   "security_storage",
-   "ad_user_data",
-   "ad_personalization"
-  ],
-  "cmp": "Didomi",
-  "shopify": true,
-  "title": "Slome - Designed to chill - Slome ex-Hypnia",
-  "nReq": 384,
-  "runsAds": true,
-  "qualified": true,
-  "defects": [
-   {
-    "code": "META_PRECONSENT",
-    "sev": 5,
-    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1724091971186983",
-    "hook": "Votre pixel Meta (1724091971186983) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
-   },
-   {
-    "code": "NO_SERVER_SIDE",
-    "sev": 3,
-    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
-    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
-   }
-  ],
-  "top": {
-   "code": "META_PRECONSENT",
-   "sev": 5,
-   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1724091971186983",
-   "hook": "Votre pixel Meta (1724091971186983) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
   }
  },
  {
@@ -1287,8 +1294,8 @@
   ],
   "awGads": true,
   "fbFire": [
-   "550916146715689",
-   "1843112752432642"
+   "1843112752432642",
+   "550916146715689"
   ],
   "tt": false,
   "pin": true,
@@ -1314,7 +1321,7 @@
   "cmp": "Axeptio",
   "shopify": true,
   "title": "Créateur de mobilier et literie durables - Kipli®",
-  "nReq": 418,
+  "nReq": 420,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1327,14 +1334,14 @@
    {
     "code": "META_PRECONSENT",
     "sev": 5,
-    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 550916146715689, 1843112752432642",
-    "hook": "Votre pixel Meta (550916146715689) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+    "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 1843112752432642, 550916146715689",
+    "hook": "Votre pixel Meta (1843112752432642) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
    },
    {
     "code": "DOUBLE_META",
     "sev": 4,
-    "evidence": "2 pixels Meta: 550916146715689, 1843112752432642",
-    "hook": "Deux pixels Meta tirent sur la même page (550916146715689 + 1843112752432642) : déduplication cassée, événements comptés en double, budget optimisé sur des chiffres gonflés."
+    "evidence": "2 pixels Meta: 1843112752432642, 550916146715689",
+    "hook": "Deux pixels Meta tirent sur la même page (1843112752432642 + 550916146715689) : déduplication cassée, événements comptés en double, budget optimisé sur des chiffres gonflés."
    },
    {
     "code": "CONSENT_GRANTED_DEFAULT",
@@ -1356,7 +1363,8 @@
   "url": "https://www.withings.com/fr/fr/",
   "err": null,
   "ga4Fire": [
-   "G-BW1WZD42RQ"
+   "G-BW1WZD42RQ",
+   "G-PNPB2TXVNT"
   ],
   "uaFire": [],
   "gcs": [
@@ -1389,10 +1397,16 @@
   "cmp": "Didomi",
   "shopify": true,
   "title": "Appareils connectés pour améliorer votre santé | Withings",
-  "nReq": 445,
+  "nReq": 490,
   "runsAds": true,
   "qualified": true,
   "defects": [
+   {
+    "code": "DOUBLE_GA4",
+    "sev": 5,
+    "evidence": "2 propriétés GA4 reçoivent des hits: G-BW1WZD42RQ, G-PNPB2TXVNT",
+    "hook": "Deux GA4 tournent en parallèle (G-BW1WZD42RQ + G-PNPB2TXVNT) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
+   },
    {
     "code": "META_PRECONSENT",
     "sev": 5,
@@ -1413,10 +1427,10 @@
    }
   ],
   "top": {
-   "code": "META_PRECONSENT",
+   "code": "DOUBLE_GA4",
    "sev": 5,
-   "evidence": "facebook.com/tr a émis dès le chargement (sans consentement), pixel(s): 719755528111520",
-   "hook": "Votre pixel Meta (719755528111520) se déclenche AVANT le moindre consentement — au chargement de la page, requête à facebook.com/tr partie. C'est à la fois un risque CNIL et un signal que Meta va finir par filtrer."
+   "evidence": "2 propriétés GA4 reçoivent des hits: G-BW1WZD42RQ, G-PNPB2TXVNT",
+   "hook": "Deux GA4 tournent en parallèle (G-BW1WZD42RQ + G-PNPB2TXVNT) : chaque événement est compté deux fois, vos taux de conversion et votre ROAS sont faux dans les deux propriétés."
   }
  },
  {
@@ -1458,7 +1472,7 @@
   "cmp": "Axeptio",
   "shopify": false,
   "title": "Elmut - Alimentation fraîche pour chien et chat livrée chez vous",
-  "nReq": 203,
+  "nReq": 195,
   "runsAds": true,
   "qualified": true,
   "defects": [
@@ -1514,7 +1528,7 @@
   "cmp": "ShopifyNative?",
   "shopify": true,
   "title": "Moins mais mieux · Loom",
-  "nReq": 295,
+  "nReq": 266,
   "runsAds": false,
   "qualified": true,
   "defects": [
@@ -1623,7 +1637,7 @@
   "cmp": "Didomi",
   "shopify": true,
   "title": "DIJO ® : Probiotiques 100 % Naturels",
-  "nReq": 360,
+  "nReq": 416,
   "runsAds": false,
   "qualified": true,
   "defects": [
@@ -1646,9 +1660,13 @@
   "host": "julesjenn.com",
   "url": "https://www.julesjenn.com/",
   "err": null,
-  "ga4Fire": [],
+  "ga4Fire": [
+   "G-BXFXEKQ7WR"
+  ],
   "uaFire": [],
-  "gcs": [],
+  "gcs": [
+   "G101"
+  ],
   "awGads": false,
   "fbFire": [],
   "tt": false,
@@ -1666,7 +1684,58 @@
   "cmp": "ConsentManager",
   "shopify": true,
   "title": "JULES & JENN - Chaussures cuir & maroquinerie, Made in Europe",
-  "nReq": 393,
+  "nReq": 382,
+  "runsAds": true,
+  "qualified": true,
+  "defects": [
+   {
+    "code": "NO_SERVER_SIDE",
+    "sev": 3,
+    "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+    "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+   }
+  ],
+  "top": {
+   "code": "NO_SERVER_SIDE",
+   "sev": 3,
+   "evidence": "Aucun endpoint server-side / first-party détecté (GTM chargé depuis googletagmanager.com), alors que des pixels publicitaires tirent",
+   "hook": "Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre ITP/Safari, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais : vos algos optimisent sur une donnée tronquée."
+  }
+ },
+ {
+  "name": "Hypnia",
+  "host": "hypnia.fr",
+  "url": "https://www.hypnia.fr/",
+  "err": null,
+  "ga4Fire": [],
+  "uaFire": [],
+  "gcs": [],
+  "awGads": false,
+  "fbFire": [],
+  "tt": true,
+  "pin": true,
+  "snap": false,
+  "crit": false,
+  "gtmIds": [
+   "GTM-W8K75ND"
+  ],
+  "serverGtmHost": [],
+  "firstPartyCollect": [],
+  "stape": false,
+  "consent": "default",
+  "cf": [
+   "ad_storage",
+   "analytics_storage",
+   "functionality_storage",
+   "personalization_storage",
+   "security_storage",
+   "ad_user_data",
+   "ad_personalization"
+  ],
+  "cmp": "Didomi",
+  "shopify": true,
+  "title": "Slome - Designed to chill - Slome ex-Hypnia",
+  "nReq": 357,
   "runsAds": true,
   "qualified": true,
   "defects": [
