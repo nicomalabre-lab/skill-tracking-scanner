@@ -125,25 +125,47 @@ async function launch() {
   return chromium.launch({ headless: true, args: LAUNCH_ARGS, ...(proxy ? { proxy: { server: proxy } } : {}) });
 }
 
+// Cron quotidien : scan PROFOND (deep.js) de chaque marque, 3 en parallèle.
+// `node scan.js candidates.json --quick` = ancien scan rapide (page d'accueil seule).
 async function run() {
-  const candidates = JSON.parse(fs.readFileSync(process.argv[2] || 'candidates.json', 'utf8'));
+  const args = process.argv.slice(2);
+  const quick = args.includes('--quick');
+  const file = args.find(a => !a.startsWith('--')) || 'candidates.json';
+  const candidates = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const conc = Math.max(1, Number(process.env.SCAN_CONCURRENCY) || 3);
   const browser = await launch();
-  const out = [];
-  for (const c of candidates) {
-    const rec = await scanSite(browser, c);
-    out.push(rec);
-    console.log(`${rec.qualified ? '✓' : '·'} ${c.name} — ${rec.defects.map(d => d.code).join(',') || (rec.err ? 'ERR ' + rec.err.slice(0, 40) : 'clean')}`);
-  }
+  const { deepScan } = require('./deep.js');
+  const { toRecord } = require('./controls.js');
+  const out = new Array(candidates.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < candidates.length) {
+      const i = next++, c = candidates[i];
+      let rec;
+      try {
+        if (quick) rec = await scanSite(browser, c);
+        else rec = toRecord(await Promise.race([deepScan(browser, c), new Promise((_, ko) => setTimeout(() => ko(new Error('timeout 300 s')), 300000))]));
+      } catch (e) {
+        // repli : au minimum le scan rapide, pour ne jamais perdre une marque
+        try { rec = await scanSite(browser, c); rec.deepErr = String(e.message || e).slice(0, 140); } catch (e2) { rec = { name: c.name, url: c.url, host: c.url, err: String(e2.message || e2).slice(0, 140), defects: [], qualified: false }; }
+      }
+      rec.name = c.name;
+      out[i] = rec;
+      console.log(`${rec.qualified ? '✓' : '·'} ${c.name} — ${(rec.defects || []).map(d => d.code).join(',') || (rec.err ? 'ERR ' + rec.err.slice(0, 40) : 'clean')}${rec.durationS ? ` (${rec.durationS}s)` : ''}`);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(conc, candidates.length) }, worker));
   await browser.close();
 
-  const qualified = out.filter(r => r.qualified).sort((a, b) => (b.top ? b.top.sev : 0) - (a.top ? a.top.sev : 0));
+  const slim = r => { const x = { ...r }; delete x.payloads; return x; };   // payloads complets : uniquement dans latest-full.json
+  const qualified = out.filter(r => r && r.qualified).sort((a, b) => (b.top ? b.top.sev : 0) - (a.top ? a.top.sev : 0) || (b.defects || []).length - (a.defects || []).length);
   fs.writeFileSync('latest-full.json', JSON.stringify(out, null, 1));
-  fs.writeFileSync('qualified.json', JSON.stringify(qualified, null, 1));
+  fs.writeFileSync('qualified.json', JSON.stringify(qualified.map(slim), null, 1));
   try { fs.mkdirSync('history', { recursive: true }); } catch (_) {}
   const stamp = new Date().toISOString().slice(0, 10);
-  fs.writeFileSync(path.join('history', stamp + '.json'), JSON.stringify(qualified, null, 1));
+  fs.writeFileSync(path.join('history', stamp + '.json'), JSON.stringify(qualified.map(slim), null, 1));
   require('./build-index.js').buildIndex();
-  console.log(`\nScanned ${out.length} · qualified ${qualified.length} · errors ${out.filter(r => r.err).length}`);
+  console.log(`\nScanned ${out.length} · qualified ${qualified.length} · errors ${out.filter(r => r && r.err).length}`);
 }
 
 module.exports = { scoreDefects, scanSite, launch };
