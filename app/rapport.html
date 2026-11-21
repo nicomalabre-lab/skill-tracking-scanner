@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rapport tracking · Skill Tracking</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" href="/app/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/app/style.css">
+<style>
+.mag{display:grid;grid-template-columns:1.1fr 1fr;gap:22px;align-items:center}
+@media(max-width:760px){.mag{grid-template-columns:1fr}}
+.big-eur{font-family:'Instrument Serif',serif;font-size:clamp(44px,7vw,72px);line-height:1;color:var(--gold);text-shadow:0 0 30px rgba(245,197,24,.35);white-space:nowrap}
+.big-eur small{font-size:.42em;color:var(--mut)}
+.range{width:100%;accent-color:var(--gold);margin:12px 0 4px}
+.budget{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14px;color:var(--mut)}
+.budget b{color:#fff;font-size:20px;font-weight:700}
+.lever{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}
+.lever:first-child{border-top:0}
+.lever .pct{flex:none;min-width:56px;text-align:center;font-family:'Instrument Serif',serif;font-size:28px;line-height:1;color:var(--gold)}
+.lever .src{font-size:12.5px;color:var(--mut2);margin-top:3px}
+.lever .src a{color:var(--mut);text-decoration:underline}
+.alert{border:1px solid rgba(255,90,90,.35);background:rgba(255,90,90,.06);border-radius:14px;padding:14px 16px;margin-top:14px;font-size:14.5px;color:#ffd2d2}
+.alert b{color:#fff}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;margin-top:22px}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"></div>
+<div class="stars" aria-hidden="true"></div>
+<header class="top"><div class="wrap">
+  <a class="brand" href="https://skilltracking.fr/" target="_blank" rel="noopener"><img src="/app/logo.png" alt=""><span class="wm">SKILL<span>TRACKING</span></span></a>
+  <a class="btn btn-sm" style="margin-left:auto" href="https://calendly.com/nicomalabre/30min?utm_source=rapport" target="_blank" rel="noopener">Réserver un diagnostic</a>
+</div></header>
+<main class="wrap" id="root"><div class="hero center"><div class="st-load" style="justify-content:center;display:flex;gap:12px;color:var(--glow)"><span class="st-log2"><span class="ln" style="opacity:1"><span class="sp"></span>Chargement du rapport…</span></span></div></div></main>
+<footer class="foot"><div class="wrap">Rapport généré par le détecteur Skill Tracking · Il ouvre le site comme un visiteur, sans rien modifier, et ne passe jamais de commande. · <a href="https://skilltracking.fr/" style="color:var(--gold);text-decoration:none">skilltracking.fr</a></div></footer>
+<script src="/app/rapport.js"></script>
+</body>
+</html>

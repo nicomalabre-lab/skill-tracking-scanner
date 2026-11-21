@@ -42,6 +42,11 @@ const HOOK = {
   REFUSE_BUTTON_MISSING: d => `Votre bandeau ${d.cmp} ne propose pas de bouton « Refuser » au même niveau que « Accepter » : la CNIL exige que refuser soit aussi simple qu'accepter.`,
   ANALYTICS_PRECONSENT: d => `${d.vendors} enregistre${d.n > 1 ? 'nt' : ''} vos visiteurs avant leur accord.`,
   JSONLD_PRODUCT: d => `Vos fiches produit n'exposent pas de données structurées Produit complètes (${d.what}) : Google Shopping et Merchant Center s'appuient dessus.`,
+  CLICKID_STRIPPED: d => `J'ai ouvert votre site comme après un clic sur une pub (${d.ids} dans l'adresse) : votre site les efface en route. Google et Meta ne peuvent plus relier ces visites à vos campagnes.`,
+  GCLID_NOT_STORED: () => `Un visiteur arrive d'une pub Google et accepte les cookies… mais le cookie _gcl_aw n'est jamais créé. Ses achats ne seront pas rattachés à votre campagne : Google Ads apprend sans voir vos ventes.`,
+  FBC_NOT_STORED: () => `Un visiteur arrive d'une pub Meta (fbclid) et accepte les cookies, mais le cookie _fbc n'est jamais créé. C'est l'un des signaux que Meta juge prioritaires pour relier une vente à une pub.`,
+  CONSENT_MODE_BASIC: () => `Votre Consent Mode est en mode « basique » : avant l'accord, Google ne reçoit rien du tout. En mode avancé, Google indique récupérer en moyenne environ deux fois plus de conversions perdues par modélisation.`,
+  COOKIE_ITP: () => `Vos cookies de mesure sont posés en JavaScript, pas par votre serveur : Safari peut raccourcir leur durée de vie, et un visiteur iPhone qui revient acheter plus tard devient un « nouveau » visiteur.`,
   NO_SERVER_SIDE: () => `Tout votre tracking part côté navigateur — aucune collecte server-side détectée. Entre Safari/ITP, les adblockers et le consentement, une part croissante de vos conversions Meta & Google n'arrive jamais.`
 };
 const CONSEQ = {
@@ -69,6 +74,11 @@ const CONSEQ = {
   CONSENT_V2_INCOMPLETE: 'Google Ads ne peut pas modéliser les conversions post-consentement.',
   REFUSE_BUTTON_MISSING: 'Refuser doit être aussi simple qu\'accepter (CNIL).',
   JSONLD_PRODUCT: 'Données produit incomplètes pour Google Shopping.',
+  CLICKID_STRIPPED: 'Les visites payées perdent leur identifiant de clic : attribution cassée.',
+  GCLID_NOT_STORED: 'Les ventes issues de Google Ads ne sont pas rattachées aux clics.',
+  FBC_NOT_STORED: 'Meta rapproche moins bien les ventes de ses pubs : coût par résultat plus élevé.',
+  CONSENT_MODE_BASIC: 'Moins de conversions récupérées par la modélisation de Google.',
+  COOKIE_ITP: 'Visiteurs Safari « oubliés » au bout de quelques jours : retours et achats différés mal attribués.',
   NO_SERVER_SIDE: 'Une part croissante des conversions n\'arrive jamais aux plateformes.'
 };
 
@@ -319,6 +329,37 @@ function diagnose(res) {
     else if (v.seen.length) ctl(list, 'DL_SCHEMA', 'vert', 0, `dataLayer e-commerce conforme au schéma GA4 (${v.seen.join(', ')}).`);
   }
 
+  // ---------------------------------------------------------- 5b. identifiants de clic, cookies, Consent Mode
+  const CI = C && C.clickIds;
+  const awPresent = allHits.some(h => (h.kind === 'gtag' && /^AW-/.test(h.id || '')) || (h.kind === 'ads' && h.vendor === 'Google Ads'));
+  if (CI && C.accept !== undefined) {
+    const lost = Object.entries(CI.kept || {}).filter(([k, v]) => !v && (k !== 'ttclid' || adVendors.includes('TikTok')) && (k !== 'fbclid' || metaIds.length) && (k !== 'gclid' || awPresent || ga4Ids.length)).map(([k]) => k);
+    if (lost.length) ctl(list, 'CLICKID_STRIPPED', 'rouge', 4, `Votre site efface ${lost.join(', ')} de l'adresse à l'arrivée : les visites payées perdent leur identifiant de clic.`, `arrivée sur …?${lost.map(k => k + '=…').join('&')} → ${short(CI.landedUrl)}`, { ids: lost.join(', ') });
+    const cookieNames = new Set([...(CI.cookies || []), ...((C.finalCookies) || [])].map(k => k.name));
+    if (consentOk && accepted !== false) {
+      if (awPresent && (CI.kept || {}).gclid) {
+        if (![...cookieNames].some(n => /^_gcl_(aw|gb|ag)/.test(n))) ctl(list, 'GCLID_NOT_STORED', 'rouge', 4, 'Après un clic Google Ads et « Accepter », le cookie _gcl_aw n\'est jamais créé.', 'arrivée avec gclid=…, accord donné, aucun cookie _gcl_aw / _gcl_gb', {});
+        else ctl(list, 'GCLID_NOT_STORED', 'vert', 0, 'Le clic Google Ads est bien mémorisé (_gcl_aw).');
+      }
+      if (metaIds.length && (CI.kept || {}).fbclid) {
+        if (!cookieNames.has('_fbc')) ctl(list, 'FBC_NOT_STORED', 'orange', 3, 'Après un clic Meta (fbclid) et « Accepter », le cookie _fbc n\'est jamais créé.', 'arrivée avec fbclid=…, accord donné, aucun cookie _fbc', {});
+        else ctl(list, 'FBC_NOT_STORED', 'vert', 0, 'Le clic Meta est bien mémorisé (_fbc).');
+      }
+    }
+    // cookies d'identité posés par le serveur (Set-Cookie) ou seulement en JavaScript ?
+    const sc = C.serverCookies || [];
+    const siteHost = (() => { try { return new URL(res.finalUrl || res.url).hostname.split('.').slice(-2).join('.'); } catch (_) { return ''; } })();
+    const allCk = [...(CI.cookies || []), ...(C.finalCookies || [])];
+    // un cookie HttpOnly ne peut être posé QUE par un serveur ; FPID/FPLC = cookies server-side de Google
+    const idServer = allCk.some(k => k.name === 'FPID' || k.name === 'FPLC' || (k.httpOnly && /^(_ga|_fbp|_gcl_aw|_ga_)/.test(k.name))) || sc.some(x => /^(FPID|_ga|_fbp|_gcl_aw|FPLC|_ga_[A-Z0-9]+)@/.test(x) && x.endsWith(siteHost));
+    if (runsAds && cookieNames.has('_ga') && !idServer) ctl(list, 'COOKIE_ITP', 'orange', 2, 'Vos cookies de mesure (_ga, _fbp…) sont posés en JavaScript : Safari peut raccourcir leur durée de vie.', 'aucun en-tête Set-Cookie serveur pour _ga / FPID / _fbp sur le domaine du site', {});
+    else if (idServer) ctl(list, 'COOKIE_ITP', 'vert', 0, 'Cookies de mesure posés par votre serveur (résistent mieux à Safari/ITP).');
+  }
+  // Consent Mode basique : CMP + GA4 actif après accord, mais AUCUN ping avant accord
+  if (cmp && ga4Ids.length && !preGa4.length && postC.some(h => h.kind === 'ga4') && accepted) {
+    ctl(list, 'CONSENT_MODE_BASIC', 'orange', 3, 'Consent Mode « basique » : avant l\'accord, Google ne reçoit aucun signal anonyme.', 'zéro requête GA4 avant accord, GA4 actif après « Accepter »', {});
+  }
+
   // ---------------------------------------------------------- 6. héritage & architecture
   const ua = allHits.find(h => h.kind === 'ua');
   if (ua) ctl(list, 'LEGACY_UA', 'orange', 3, 'L\'ancien Google Analytics (Universal) tire encore.', `tid=${ua.id}`, { id: ua.id });
@@ -346,12 +387,40 @@ function diagnose(res) {
   return { controles: list, defects, top: defects[0] || null, qualified, runsAds, serverSide, metaIds, ga4Ids, adVendors };
 }
 
+// ============================================================================
+// MANQUE À GAGNER — ordres de grandeur tirés UNIQUEMENT de chiffres publiés par Meta et Google.
+// Chaque levier = % de performance publicitaire (conversions mesurées / coût par résultat) récupérable.
+const LEVERS = [
+  { id: 'capi', codes: ['NO_SERVER_SIDE', 'META_DEDUP'], need: r => r.metaIds.length, pct: 13, label: 'Conversions API Meta + Pixel (dédupliqués)',
+    source: 'Meta : −13 % de coût par acquisition en moyenne (28 tests A/B, 2022)', url: 'https://developers.facebook.com/docs/marketing-api/conversions-api' },
+  { id: 'firstparty', codes: ['NO_SERVER_SIDE', 'COOKIE_ITP'], need: r => r.ga4Ids.length || r.awPresent, pct: 14, label: 'Mesure Google en first-party (tag gateway / server-side)',
+    source: 'Google : +14 % de conversions observées en moyenne avec Google tag gateway', url: 'https://support.google.com/google-ads/answer/16214371' },
+  { id: 'consent', codes: ['CONSENT_MODE_MISSING', 'CONSENT_MODE_BASIC', 'CONSENT_UPDATE_MISSING', 'CONSENT_V2_INCOMPLETE'], need: r => r.ga4Ids.length, pct: 10, label: 'Consent Mode v2 avancé',
+    source: 'Google : la modélisation récupère plus de 70 % des parcours clic→conversion perdus au refus des cookies (≈2× plus en mode avancé). 10 % = hypothèse prudente Skill Tracking selon le taux de refus', url: 'https://support.google.com/google-ads/answer/11954524' },
+  { id: 'clickid', codes: ['CLICKID_STRIPPED', 'GCLID_NOT_STORED', 'FBC_NOT_STORED'], need: () => true, pct: 10, label: 'Identifiants de clic conservés (gclid, fbclid → _gcl_aw, _fbc)',
+    source: 'Meta : fbc est un paramètre prioritaire de la qualité de correspondance (EMQ) ; Google : sans gclid, la vente n\'est pas reliée au clic. 10 % = estimation Skill Tracking', url: 'https://developers.facebook.com/docs/marketing-api/conversions-api/parameters/fbp-and-fbc' },
+  { id: 'funnel', codes: ['ADD_TO_CART_MISSING', 'BEGIN_CHECKOUT_MISSING', 'VIEW_ITEM_MISSING', 'DL_NOT_SENT', 'ECOM_PARAMS', 'DL_SCHEMA'], need: () => true, pct: 8, label: 'Tunnel e-commerce complet (vue produit, panier, checkout, valeur)',
+    source: 'Sans ces signaux, les campagnes optimisent sur moins d\'étapes et sans valeur (ordre de grandeur Skill Tracking)', url: null }
+];
+// Doublons : ce n'est pas un « manque », c'est un pilotage faussé → signalé à part.
+function estimateImpact(d, extra = {}) {
+  const codes = new Set(d.defects.map(x => x.code));
+  const r = { metaIds: d.metaIds, ga4Ids: d.ga4Ids, awPresent: !!extra.awPresent };
+  const levers = LEVERS.filter(l => l.need(r) && l.codes.some(c => codes.has(c))).map(l => ({ id: l.id, label: l.label, pct: l.pct, source: l.source, url: l.url, codes: l.codes.filter(c => codes.has(c)) }));
+  // effets combinés multiplicativement (pas additionnés), fourchette basse = moitié de l'effet publié
+  const comb = f => Math.round((1 - levers.reduce((acc, l) => acc * (1 - f * l.pct / 100), 1)) * 100);
+  const inflated = ['DOUBLE_GA4', 'DOUBLE_META', 'EVENT_DUPLICATED'].filter(c => codes.has(c));
+  const legal = ['META_PRECONSENT', 'ADS_PRECONSENT', 'REFUSE_IGNORED', 'NO_CMP', 'CONSENT_GRANTED_DEFAULT'].filter(c => codes.has(c));
+  return { levers, low: comb(0.5), high: comb(1), inflated, legal, note: 'Ordre de grandeur : effets moyens publiés par Meta et Google, combinés sans double compte. Le chiffre réel dépend du site et des campagnes.' };
+}
+
 // Format compatible avec l'app / qualified.json (champs « plats » pour les puces)
 function toRecord(res) {
   const A = res.phases.A || { hits: [] }, C = res.phases.C || {};
   const all = [...(A.hits || []), ...((res.phases.B && res.phases.B.hits) || []), ...(C.hits || [])];
   const d = diagnose(res);
   const vendors = d.adVendors;
+  const awPresent = all.some(h => (h.kind === 'gtag' && /^AW-/.test(h.id || '')) || (h.kind === 'ads' && h.vendor === 'Google Ads'));
   const host = (() => { try { return new URL(res.url).hostname.replace(/^www\./, ''); } catch (_) { return res.url; } })();
   const def = consentDefaultFromDl(A.dl) || (A.page && A.page.consentDefault);
   const p = A.page || {};
@@ -369,6 +438,8 @@ function toRecord(res) {
     platform: p.shopify ? 'Shopify' : p.woo ? 'WooCommerce' : p.presta ? 'PrestaShop' : p.magento ? 'Magento' : p.wix ? 'Wix' : null,
     shopify: !!p.shopify, title: p.title, nReq: A.nReq,
     runsAds: d.runsAds, qualified: d.qualified, defects: d.defects, top: d.top, controles: d.controles,
+    impact: estimateImpact(d, { awPresent }),
+    clickIds: C.clickIds ? { kept: C.clickIds.kept, cookies: U([...(C.clickIds.cookies || []), ...(C.finalCookies || [])].map(k => k.name)) } : null,
     parcours: {
       refus: res.phases.B ? !!(res.phases.B.refuse && res.phases.B.refuse.ok) : null,
       acceptation: C.accept ? !!C.accept.ok : null,
@@ -383,4 +454,4 @@ function toRecord(res) {
   };
 }
 
-module.exports = { diagnose, toRecord, validateEcom, productLd, gcsAd, gcsAn };
+module.exports = { diagnose, toRecord, validateEcom, productLd, gcsAd, gcsAn, estimateImpact, LEVERS };

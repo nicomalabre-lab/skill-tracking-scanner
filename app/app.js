@@ -54,12 +54,15 @@
   }
 
   // ---------- outbound ----------
+  const reportUrl = r => r.reportId ? `${S.publicBase || location.origin}/r/${r.reportId}` : null;
   function emailE1(r) {
     const ctl = controlsOf(r).filter(c => c.sev);
     const top = r.top || ctl[0];
     const others = ctl.filter(c => c.code !== top.code).slice(0, 2);
     const extra = others.length ? `\n\nEt ce n'est pas le seul point : ${others.map(c => c.phrase.replace(/\.$/, '').toLowerCase()).join(' ; ')}.` : '';
-    return `Objet : ${r.name} — une panne de tracking repérée sur votre site\n\nBonjour,\n\nJ'ai passé ${r.host} au détecteur de pannes de tracking : il ouvre la boutique comme un visiteur, refuse puis accepte les cookies, et va jusqu'au panier.\n\n${top.hook}${extra}\n\nJ'ai les preuves (requêtes observées, horodatées). Je vous les envoie ? Je corrige ce type de panne sous 48h.\n\nBonne journée,\nNicolas — Skill Tracking\nhttps://skilltracking.fr`;
+    const imp = r.impact && r.impact.high > 0 ? `\n\nOrdre de grandeur : ${r.impact.low} à ${r.impact.high} % de votre budget pub travaille sur des données incomplètes (d'après les chiffres publiés par Meta et Google).` : '';
+    const link = reportUrl(r) ? `\n\nLe rapport complet, avec les preuves et le calcul sur votre budget : ${reportUrl(r)}` : `\n\nJ'ai les preuves (requêtes observées, horodatées). Je vous les envoie ?`;
+    return `Objet : ${r.name} — une panne de tracking repérée sur votre site\n\nBonjour,\n\nJ'ai passé ${r.host} au détecteur de pannes de tracking : il ouvre la boutique comme un visiteur, refuse puis accepte les cookies, et va jusqu'au panier.\n\n${top.hook}${extra}${imp}${link}\n\nJe corrige ce type de panne sous 48h.\n\nBonne journée,\nNicolas — Skill Tracking\nhttps://skilltracking.fr`;
   }
 
   // ---------- rendering ----------
@@ -110,7 +113,8 @@
       f && f.streak[r.host] > 1 ? `<span class="pill" title="jours consécutifs avec panne">${f.streak[r.host]} j en panne</span>` : '',
       r.deep ? '<span class="pill deep">scan profond</span>' : '',
       r.err && !probs.length ? '<span class="pill red">site illisible</span>' : '',
-      r.runsAds ? '<span class="pill">fait de la pub</span>' : ''
+      r.runsAds ? '<span class="pill">fait de la pub</span>' : '',
+      r.impact && r.impact.high > 0 ? `<span class="pill red" title="Part du budget pub qui travaille sur des données incomplètes (Meta / Google)">manque à gagner ${r.impact.low}–${r.impact.high} %</span>` : ''
     ].join('');
     const title = probs.length ? `${nR ? nR + (nR > 1 ? ' pannes' : ' panne') : ''}${nR && nO ? ' + ' : ''}${nO ? nO + ' à renforcer' : ''}` : (r.err ? 'Je n\'ai pas pu lire ce site' : 'Rien à signaler');
     const statusSel = opts.live ? '' : `<select class="inp sm" data-act="status" data-host="${esc(r.host)}" aria-label="Statut">${S.statuses.map(s => `<option value="${s}" ${(p.status || 'a_contacter') === s ? 'selected' : ''}>${STATUS_LABEL[s] || s}</option>`).join('')}</select>`;
@@ -130,6 +134,7 @@
       ${top && top.hook ? `<div class="hook">${esc(top.hook)}</div>` : ''}
       <div class="actions">
         ${top && top.hook ? `<button class="btn btn-xs" data-act="hook" data-host="${esc(r.host)}">Copier l'accroche</button><button class="btn btn-ghost btn-xs" data-act="email" data-host="${esc(r.host)}">Copier l'email E1</button>` : ''}
+        ${reportUrl(r) ? `<button class="btn btn-ghost btn-xs" data-act="report" data-host="${esc(r.host)}">Copier le lien du rapport</button><a class="btn btn-ghost btn-xs" href="${esc(reportUrl(r))}" target="_blank" rel="noopener">Voir le rapport ↗</a>` : ''}
         ${opts.live ? `<button class="btn btn-ghost btn-xs" data-act="add" data-host="${esc(r.host)}">Ajouter aux marques</button>` : statusSel}
         ${r.scannedAt ? `<span class="fine">scanné le ${new Date(r.scannedAt).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}</span>` : ''}
       </div>
@@ -238,6 +243,7 @@
     const top = r && (r.top || controlsOf(r).find(c => c.sev));
     if (act === 'hook' && top) copy(top.hook);
     if (act === 'email' && r) copy(emailE1(r));
+    if (act === 'report' && r) copy(reportUrl(r));
     if (act === 'add' && r) { try { const j = await call('POST', '/api/candidates', { name: r.name, url: r.url }); S.candidates = j.candidates; renderCandidates(); toast('Ajoutée aux marques ✓'); } catch (err) { toast(err.message); } }
     if (act === 'del') { if (!confirm('Retirer cette marque du scan quotidien ?')) return; try { const j = await call('DELETE', '/api/candidates?url=' + encodeURIComponent(b.dataset.url)); S.candidates = j.candidates; renderCandidates(); toast('Retirée'); } catch (err) { toast(err.message); } }
   });
