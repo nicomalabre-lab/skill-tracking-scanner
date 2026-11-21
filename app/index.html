@@ -2,72 +2,118 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Skill Tracking — Radar</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Radar · Skill Tracking</title>
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" href="logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23e5484d'/><circle cx='16' cy='16' r='6' fill='white'/></svg>">
 </head>
 <body>
-<header class="top">
-  <div class="brand"><span class="dot"></span><strong>Skill Tracking</strong><span class="muted">Radar</span></div>
-  <nav id="tabs">
+<div class="aurora" aria-hidden="true"></div>
+<div class="stars" aria-hidden="true"></div>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="#" data-goto="prospects"><img src="logo.png" alt=""><span class="wm">SKILL<span>TRACKING</span></span></a>
+  <nav class="tabs" id="tabs" aria-label="Sections">
     <button data-tab="prospects" class="on">Prospects</button>
-    <button data-tab="detecteur">Détecteur live</button>
+    <button data-tab="detecteur">Détecteur</button>
     <button data-tab="tendances">Tendances</button>
     <button data-tab="marques">Marques</button>
   </nav>
-  <div id="mode" class="muted small"></div>
-</header>
+  <span class="mode" id="mode"><b></b><span>…</span></span>
+</div></header>
 
 <main>
   <!-- PROSPECTS -->
   <section id="tab-prospects" class="tab on">
-    <div class="kpis" id="kpis"></div>
-    <div class="filters">
-      <input id="q" type="search" placeholder="Rechercher une marque…">
-      <select id="fCode"><option value="">Tous les défauts</option></select>
-      <select id="fStatus"><option value="">Tous les statuts</option></select>
-      <label class="chk"><input type="checkbox" id="fNew"> Nouveaux seulement</label>
-      <button id="exportCsv" class="ghost">Exporter CSV</button>
+    <div class="wrap">
+      <div class="hero center">
+        <div class="krow"><span class="eyebrow"><span>✦</span> Radar · scan quotidien</span></div>
+        <h1>Les boutiques dont le tracking <em>a une panne</em></h1>
+        <p class="lead">Chaque matin, le scanner ouvre chaque boutique comme un visiteur : sans clic, puis en refusant, puis en acceptant et en allant jusqu'au paiement. Seul ce qui est observé remonte.</p>
+      </div>
+      <div class="stats" id="kpis"></div>
+      <div class="filters">
+        <input id="q" class="inp sm grow" type="search" placeholder="Rechercher une marque…" aria-label="Rechercher">
+        <select id="fCode" class="inp sm" aria-label="Filtrer par panne"><option value="">Toutes les pannes</option></select>
+        <select id="fStatus" class="inp sm" aria-label="Filtrer par statut"><option value="">Tous les statuts</option></select>
+        <label class="chk"><input type="checkbox" id="fNew"> Nouveaux</label>
+        <button id="exportCsv" class="btn btn-ghost btn-sm" type="button">Exporter CSV</button>
+      </div>
+      <div id="list" class="list"></div>
     </div>
-    <div id="list" class="cards"></div>
   </section>
 
   <!-- DETECTEUR -->
   <section id="tab-detecteur" class="tab">
-    <form id="scanForm" class="panel row">
-      <input id="scanUrl" placeholder="https://www.marque.fr" required>
-      <input id="scanName" placeholder="Nom (optionnel)">
-      <button type="submit" id="scanBtn">Scanner</button>
-    </form>
-    <p class="muted small" id="scanHint">Charge la home dans un navigateur neuf (sans consentement), capture le vrai trafic réseau, et ne remonte que des défauts observés. ~10 s.</p>
-    <div id="scanResult"></div>
-    <h3>Derniers scans live</h3>
-    <div id="liveList" class="cards"></div>
+    <div class="wrap">
+      <div class="hero center">
+        <div class="krow"><span class="eyebrow"><span>✦</span> Scan profond · ~2 minutes</span></div>
+        <h1>Votre tracking a-t-il <em>une panne</em> ?</h1>
+        <p class="lead">Tapez l'adresse de la boutique. Le détecteur l'ouvre comme un visiteur, clique « Refuser » puis « Accepter », ouvre un produit, l'ajoute au panier et va jusqu'au paiement. Il vous montre ce qui part trop tôt, ce qui est compté en double et ce qui ne mesure plus rien.</p>
+      </div>
+      <div class="console" style="max-width:760px;margin:0 auto">
+        <div class="console-bar"><i></i><i></i><i></i><span class="u">détecteur · tracking</span><span class="live" id="detLive"><b></b>prêt</span></div>
+        <div class="console-body">
+          <form class="field" id="scanForm" aria-label="Tester une boutique">
+            <input id="scanUrl" type="text" inputmode="url" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="votre-boutique.fr" aria-label="Adresse de la boutique" required>
+            <button id="scanBtn" class="btn" type="submit">Tester la boutique</button>
+          </form>
+          <p class="fine center" id="scanHint" style="margin-top:14px">Aucun accès aux comptes · Ne passe jamais de commande · Ne remplit aucun formulaire</p>
+          <div id="scanResult" aria-live="polite"></div>
+        </div>
+      </div>
+      <div class="sec" style="margin-top:44px">
+        <div class="center"><div class="krow"><span class="eyebrow"><span>✦</span> Derniers scans</span></div></div>
+        <div id="liveList" class="list" style="margin-top:18px"></div>
+      </div>
+    </div>
   </section>
 
   <!-- TENDANCES -->
   <section id="tab-tendances" class="tab">
-    <div class="panel"><h3>Prospects qualifiés par jour</h3><div id="chartTrend"></div></div>
-    <div class="grid2">
-      <div class="panel"><h3>Défauts — dernier scan</h3><div id="chartCodes"></div></div>
-      <div class="panel"><h3>Mouvements vs veille</h3><div id="moves"></div></div>
+    <div class="wrap">
+      <div class="hero center">
+        <div class="krow"><span class="eyebrow"><span>✦</span> Tendances</span></div>
+        <h1>Ce qui <em>bouge</em> dans le marché</h1>
+      </div>
+      <div class="console">
+        <div class="console-bar"><i></i><i></i><i></i><span class="u">prospects qualifiés · par jour</span><span class="live"><b></b>60 derniers jours</span></div>
+        <div class="console-body" id="chartTrend"></div>
+      </div>
+      <div class="grid2 sec">
+        <div class="console"><div class="console-bar"><i></i><i></i><i></i><span class="u">pannes · dernier scan</span></div><div class="console-body" id="chartCodes"></div></div>
+        <div class="console"><div class="console-bar"><i></i><i></i><i></i><span class="u">mouvements · vs veille</span></div><div class="console-body" id="moves"></div></div>
+      </div>
     </div>
   </section>
 
   <!-- MARQUES -->
   <section id="tab-marques" class="tab">
-    <form id="addForm" class="panel row">
-      <input id="addName" placeholder="Nom de la marque" required>
-      <input id="addUrl" placeholder="https://www.marque.fr" required>
-      <button type="submit">Ajouter</button>
-    </form>
-    <p class="muted small">Les marques ajoutées seront scannées au prochain passage du cron (08:00). Pense à commit/push <code>candidates.json</code>.</p>
-    <div class="panel"><table id="candTable"><thead><tr><th>Marque</th><th>Dernier scan</th><th>Défauts</th><th></th></tr></thead><tbody></tbody></table></div>
+    <div class="wrap">
+      <div class="hero center">
+        <div class="krow"><span class="eyebrow"><span>✦</span> Marques surveillées</span></div>
+        <h1>Le <em>carburant</em> du radar</h1>
+        <p class="lead">Chaque marque de cette liste est scannée en profondeur tous les matins. Après un ajout, envoie <code>candidates.json</code> sur GitHub.</p>
+      </div>
+      <div class="console" style="max-width:760px;margin:0 auto 22px">
+        <div class="console-body">
+          <form class="field" id="addForm">
+            <input id="addName" placeholder="Nom de la marque" required aria-label="Nom">
+            <input id="addUrl" placeholder="marque.fr" required aria-label="Adresse">
+            <button type="submit" class="btn">Ajouter</button>
+          </form>
+        </div>
+      </div>
+      <div class="console sec" style="margin-bottom:60px"><div class="console-body" style="padding-top:6px"><table id="candTable"><thead><tr><th>Marque</th><th>Dernier scan</th><th class="hide-sm">Pannes</th><th></th></tr></thead><tbody></tbody></table></div></div>
+    </div>
   </section>
 </main>
 
-<div id="toast"></div>
+<footer class="foot"><div class="wrap">© Skill Tracking · Radar interne · Le détecteur ne voit pas les achats : cette partie se vérifie à la main.</div></footer>
+<div id="toast" role="status"></div>
 <script src="app.js"></script>
 </body>
 </html>

@@ -14,7 +14,7 @@ const PIPELINE = path.join(ROOT, 'pipeline.json');
 const CANDIDATES = path.join(ROOT, 'candidates.json');
 const STATUSES = ['a_contacter', 'contacte', 'relance', 'repondu', 'rdv', 'signe', 'perdu'];
 
-const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml' };
+const MIME = { '.png': 'image/png', '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml' };
 const PUBLIC_JSON = new Set(['/qualified.json', '/latest-full.json', '/candidates.json', '/history/index.json']);
 
 const readJSON = (f, d) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch (_) { return d; } };
@@ -64,19 +64,31 @@ async function normalizeUrl(raw) {
 
 const hostOf = url => { try { return new URL(url).hostname.replace(/^www\./, ''); } catch (_) { return url; } };
 
-// ---- Live scan: one shared browser, one scan at a time ----
+// ---- Live scan (scan PROFOND) : un navigateur partagé, un scan à la fois ----
 let browserP = null;
 let queue = Promise.resolve();
-function liveScan(c) {
+let busy = false;
+function liveScan(c, onStep) {
   const job = queue.then(async () => {
-    const { scanSite, launch } = require('./scan.js');
+    busy = true;
+    const { launch } = require('./scan.js');
+    const { deepScan } = require('./deep.js');
+    const { toRecord } = require('./controls.js');
     if (!browserP) browserP = launch().catch(e => { browserP = null; throw e; });
     const browser = await browserP;
-    try { return await scanSite(browser, c); }
-    catch (e) { browserP = null; try { await browser.close(); } catch (_) {} throw e; }
+    try {
+      const raw = await withTimeout(deepScan(browser, c, { onStep }), 300000);
+      return toRecord(raw);
+    } catch (e) { browserP = null; try { await browser.close(); } catch (_) {} throw e; }
+    finally { busy = false; }
   });
   queue = job.catch(() => {});
   return job;
+}
+const withTimeout = (p, ms) => Promise.race([p, new Promise((_, ko) => setTimeout(() => ko(new Error('Scan trop long (> 5 min), abandonné')), ms))]);
+function logLive(rec) {
+  const log = readJSON(path.join(ROOT, 'live-scans.json'), []);
+  log.unshift(rec); writeJSON(path.join(ROOT, 'live-scans.json'), log.slice(0, 100));
 }
 
 // ---- API ----
@@ -99,10 +111,24 @@ async function api(req, res, url) {
     const b = await body(req);
     const target = await normalizeUrl(b.url);
     const rec = await liveScan({ name: (b.name || '').slice(0, 80) || hostOf(target), url: target });
-    // keep a log of live scans (useful for outbound: "j'ai scanné votre site le …")
-    const log = readJSON(path.join(ROOT, 'live-scans.json'), []);
-    log.unshift(rec); writeJSON(path.join(ROOT, 'live-scans.json'), log.slice(0, 200));
+    logLive(rec);
     return send(res, 200, rec);
+  }
+
+  // Scan profond avec étapes en direct (Server-Sent Events)
+  if (req.method === 'GET' && p === '/api/scan/stream') {
+    res.writeHead(200, { 'Content-Type': 'text/event-stream; charset=utf-8', 'Cache-Control': 'no-store', Connection: 'keep-alive', 'X-Accel-Buffering': 'no' });
+    const ev = (name, data) => { try { res.write(`event: ${name}\ndata: ${JSON.stringify(data)}\n\n`); } catch (_) {} };
+    const ping = setInterval(() => { try { res.write(': ping\n\n'); } catch (_) {} }, 15000);
+    try {
+      const target = await normalizeUrl(url.searchParams.get('url'));
+      if (busy) ev('step', { msg: 'Un autre scan est en cours, mise en file d\'attente…' });
+      const rec = await liveScan({ name: (url.searchParams.get('name') || '').slice(0, 80) || hostOf(target), url: target }, (k, msg) => ev('step', { k, msg }));
+      logLive(rec);
+      ev('result', rec);
+    } catch (e) { ev('fail', { error: String(e.message || e).slice(0, 200) }); }
+    clearInterval(ping);
+    return res.end();
   }
 
   if (req.method === 'GET' && p === '/api/live-scans') return send(res, 200, readJSON(path.join(ROOT, 'live-scans.json'), []));
