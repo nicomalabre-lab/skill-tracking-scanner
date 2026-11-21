@@ -6,7 +6,9 @@
   "license": "UNLICENSED",
   "scripts": {
     "scan": "node scan.js candidates.json",
-    "test": "node test-scoring.js"
+    "app": "node server.js",
+    "index": "node build-index.js",
+    "test": "node test-scoring.js && node test-app.js"
   },
   "dependencies": {
     "playwright": "^1.47.0"
