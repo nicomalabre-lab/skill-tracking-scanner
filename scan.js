@@ -3,7 +3,6 @@
 // For each candidate: loads the homepage in a FRESH context (no consent given),
 // records the real network requests + runtime dataLayer, and flags ONLY defects
 // that are actually observed. Never infers a defect that isn't in the evidence.
-const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
 
@@ -59,66 +58,81 @@ function scoreDefects(r) {
   return { defects, runsAds, qualified, top: defects[0] || null };
 }
 
+const LAUNCH_ARGS = ['--no-sandbox', '--disable-dev-shm-usage', '--disable-blink-features=AutomationControlled'];
+
+// Scan ONE site in a fresh context (no consent given). Reused by the daily cron AND the live app detector.
+async function scanSite(browser, c) {
+  const ctx = await browser.newContext({ userAgent: UA, locale: 'fr-FR', viewport: { width: 1366, height: 900 }, ignoreHTTPSErrors: true });
+  const page = await ctx.newPage();
+  const reqs = [];
+  page.on('request', q => reqs.push(q.url()));
+  let err = null;
+  try {
+    await page.goto(c.url, { waitUntil: 'domcontentloaded', timeout: 25000 });
+    await page.waitForTimeout(4500);
+  } catch (e) { err = String(e.message || e).slice(0, 140); }
+
+  const grab = re => U(reqs.map(u => { const x = u.match(re); return x ? x[1] : null; }).filter(Boolean));
+  const ga4Fire = grab(/[?&]tid=(G-[A-Z0-9]{7,12})/i);
+  const uaFire = grab(/[?&]tid=(UA-\d+-\d+)/i);
+  const gaReqs = reqs.filter(u => /google-analytics\.com\/g\/collect|\/g\/collect\?/.test(u));
+  const gcs = U(gaReqs.map(u => { const x = u.match(/[?&]gcs=([^&]+)/); return x ? x[1] : null; }).filter(Boolean));
+  const awGads = reqs.some(u => /googleads\.g\.doubleclick\.net|googleadservices\.com\/pagead\/conversion|google\.com\/pagead|\/pagead\/1p-conversion/.test(u));
+  const fbFire = U(reqs.filter(u => /facebook\.com\/tr/.test(u)).map(u => { const x = u.match(/[?&]id=(\d{6,})/); return x ? x[1] : null; }).filter(Boolean));
+  const tt = reqs.some(u => /analytics\.tiktok\.com/.test(u));
+  const pin = reqs.some(u => /ct\.pinterest\.com|pinterest\.com\/ct/.test(u));
+  const snap = reqs.some(u => /tr\.snapchat\.com|sc-static\.net/.test(u));
+  const crit = reqs.some(u => /criteo\.(com|net)/.test(u));
+  const gtmIds = grab(/[?&]id=(GTM-[A-Z0-9]{5,9})/);
+  const gtmReqs = reqs.filter(u => /gtm\.js\?id=|gtag\/js\?id=/.test(u));
+  const gtmHosts = U(gtmReqs.map(u => { try { return new URL(u).hostname; } catch (_) { return null; } }).filter(Boolean));
+  const serverGtmHost = gtmHosts.filter(h => !/googletagmanager\.com/.test(h));
+  const host = (() => { try { return new URL(c.url).hostname.replace(/^www\./, ''); } catch (_) { return c.url; } })();
+  const rootDomain = host.split('.').slice(-2).join('.');
+  const firstPartyCollect = U(reqs.filter(u => { try { const H = new URL(u).hostname; return H.includes(rootDomain) && /\/g\/collect|\/collect\?|\/gtm\.js|\/tr\b|\/mp\/collect|\/j\/collect/.test(u) && !/googletagmanager|google-analytics|facebook|doubleclick/.test(H); } catch (_) { return false; } }).map(u => { try { return new URL(u).hostname; } catch (_) { return null; } }).filter(Boolean));
+  const stape = reqs.some(u => /stape\.io/.test(u));
+
+  let pd = {};
+  try {
+    pd = await page.evaluate(() => {
+      const dl = window.dataLayer || [];
+      let consent = 'none', cf = [];
+      try { for (const e of dl) { if (e && (e[0] === 'consent') && (e[1] === 'default')) { consent = 'default'; cf = Object.keys(e[2] || {}); } } } catch (_) {}
+      let fbIds = [];
+      try { if (window.fbq && fbq.instance && fbq.instance.pixelsByID) fbIds = Object.keys(fbq.instance.pixelsByID); } catch (_) {}
+      const h = document.documentElement.innerHTML;
+      const cmp = /axeptio/i.test(h) ? 'Axeptio' : /didomi/i.test(h) ? 'Didomi' : /cookiebot/i.test(h) ? 'Cookiebot' : /onetrust|otSDK/i.test(h) ? 'OneTrust' : /consentmanager/i.test(h) ? 'ConsentManager' : /tarteaucitron/i.test(h) ? 'tarteaucitron' : (window.Shopify ? 'ShopifyNative?' : '?');
+      return { consent, cf, fbIds, cmp, shopify: !!window.Shopify, title: (document.title || '').slice(0, 90) };
+    });
+  } catch (e) { pd = { evalErr: String(e.message || e).slice(0, 80) }; }
+
+  const rec = {
+    name: c.name || host, host, url: c.url, err,
+    ga4Fire, uaFire, gcs, awGads, fbFire: U([...(fbFire), ...((pd.fbIds) || [])]),
+    tt, pin, snap, crit, gtmIds, serverGtmHost, firstPartyCollect, stape,
+    consent: pd.consent, cf: pd.cf, cmp: pd.cmp, shopify: pd.shopify, title: pd.title, nReq: reqs.length
+  };
+  const s = scoreDefects(rec);
+  rec.runsAds = s.runsAds; rec.qualified = s.qualified; rec.defects = s.defects; rec.top = s.top;
+  rec.scannedAt = new Date().toISOString();
+  await ctx.close();
+  return rec;
+}
+
+async function launch() {
+  const { chromium } = require('playwright');
+  const proxy = process.env.HTTPS_PROXY || process.env.https_proxy;
+  return chromium.launch({ headless: true, args: LAUNCH_ARGS, ...(proxy ? { proxy: { server: proxy } } : {}) });
+}
+
 async function run() {
   const candidates = JSON.parse(fs.readFileSync(process.argv[2] || 'candidates.json', 'utf8'));
-  const browser = await chromium.launch({ headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-blink-features=AutomationControlled'] });
+  const browser = await launch();
   const out = [];
   for (const c of candidates) {
-    const ctx = await browser.newContext({ userAgent: UA, locale: 'fr-FR', viewport: { width: 1366, height: 900 }, ignoreHTTPSErrors: true });
-    const page = await ctx.newPage();
-    const reqs = [];
-    page.on('request', q => reqs.push(q.url()));
-    let err = null;
-    try {
-      await page.goto(c.url, { waitUntil: 'domcontentloaded', timeout: 25000 });
-      await page.waitForTimeout(4500);
-    } catch (e) { err = String(e.message || e).slice(0, 140); }
-
-    const grab = re => U(reqs.map(u => { const x = u.match(re); return x ? x[1] : null; }).filter(Boolean));
-    const ga4Fire = grab(/[?&]tid=(G-[A-Z0-9]{7,12})/i);
-    const uaFire = grab(/[?&]tid=(UA-\d+-\d+)/i);
-    const gaReqs = reqs.filter(u => /google-analytics\.com\/g\/collect|\/g\/collect\?/.test(u));
-    const gcs = U(gaReqs.map(u => { const x = u.match(/[?&]gcs=([^&]+)/); return x ? x[1] : null; }).filter(Boolean));
-    const awGads = reqs.some(u => /googleads\.g\.doubleclick\.net|googleadservices\.com\/pagead\/conversion|google\.com\/pagead|\/pagead\/1p-conversion/.test(u));
-    const fbFire = U(reqs.filter(u => /facebook\.com\/tr/.test(u)).map(u => { const x = u.match(/[?&]id=(\d{6,})/); return x ? x[1] : null; }).filter(Boolean));
-    const tt = reqs.some(u => /analytics\.tiktok\.com/.test(u));
-    const pin = reqs.some(u => /ct\.pinterest\.com|pinterest\.com\/ct/.test(u));
-    const snap = reqs.some(u => /tr\.snapchat\.com|sc-static\.net/.test(u));
-    const crit = reqs.some(u => /criteo\.(com|net)/.test(u));
-    const gtmIds = grab(/[?&]id=(GTM-[A-Z0-9]{5,9})/);
-    const gtmReqs = reqs.filter(u => /gtm\.js\?id=|gtag\/js\?id=/.test(u));
-    const gtmHosts = U(gtmReqs.map(u => { try { return new URL(u).hostname; } catch (_) { return null; } }).filter(Boolean));
-    const serverGtmHost = gtmHosts.filter(h => !/googletagmanager\.com/.test(h));
-    const host = (() => { try { return new URL(c.url).hostname.replace(/^www\./, ''); } catch (_) { return c.url; } })();
-    const rootDomain = host.split('.').slice(-2).join('.');
-    const firstPartyCollect = U(reqs.filter(u => { try { const H = new URL(u).hostname; return H.includes(rootDomain) && /\/g\/collect|\/collect\?|\/gtm\.js|\/tr\b|\/mp\/collect|\/j\/collect/.test(u) && !/googletagmanager|google-analytics|facebook|doubleclick/.test(H); } catch (_) { return false; } }).map(u => { try { return new URL(u).hostname; } catch (_) { return null; } }).filter(Boolean));
-    const stape = reqs.some(u => /stape\.io/.test(u));
-
-    let pd = {};
-    try {
-      pd = await page.evaluate(() => {
-        const dl = window.dataLayer || [];
-        let consent = 'none', cf = [];
-        try { for (const e of dl) { if (e && (e[0] === 'consent') && (e[1] === 'default')) { consent = 'default'; cf = Object.keys(e[2] || {}); } } } catch (_) {}
-        let fbIds = [];
-        try { if (window.fbq && fbq.instance && fbq.instance.pixelsByID) fbIds = Object.keys(fbq.instance.pixelsByID); } catch (_) {}
-        const h = document.documentElement.innerHTML;
-        const cmp = /axeptio/i.test(h) ? 'Axeptio' : /didomi/i.test(h) ? 'Didomi' : /cookiebot/i.test(h) ? 'Cookiebot' : /onetrust|otSDK/i.test(h) ? 'OneTrust' : /consentmanager/i.test(h) ? 'ConsentManager' : /tarteaucitron/i.test(h) ? 'tarteaucitron' : (window.Shopify ? 'ShopifyNative?' : '?');
-        return { consent, cf, fbIds, cmp, shopify: !!window.Shopify, title: (document.title || '').slice(0, 90) };
-      });
-    } catch (e) { pd = { evalErr: String(e.message || e).slice(0, 80) }; }
-
-    const rec = {
-      name: c.name, host, url: c.url, err,
-      ga4Fire, uaFire, gcs, awGads, fbFire: U([...(fbFire), ...((pd.fbIds) || [])]),
-      tt, pin, snap, crit, gtmIds, serverGtmHost, firstPartyCollect, stape,
-      consent: pd.consent, cf: pd.cf, cmp: pd.cmp, shopify: pd.shopify, title: pd.title, nReq: reqs.length
-    };
-    const s = scoreDefects(rec);
-    rec.runsAds = s.runsAds; rec.qualified = s.qualified; rec.defects = s.defects; rec.top = s.top;
+    const rec = await scanSite(browser, c);
     out.push(rec);
-    console.log(`${s.qualified ? '✓' : '·'} ${c.name} — ${s.defects.map(d => d.code).join(',') || (err ? 'ERR ' + err.slice(0, 40) : 'clean')}`);
-    await ctx.close();
+    console.log(`${rec.qualified ? '✓' : '·'} ${c.name} — ${rec.defects.map(d => d.code).join(',') || (rec.err ? 'ERR ' + rec.err.slice(0, 40) : 'clean')}`);
   }
   await browser.close();
 
@@ -128,8 +142,9 @@ async function run() {
   try { fs.mkdirSync('history', { recursive: true }); } catch (_) {}
   const stamp = new Date().toISOString().slice(0, 10);
   fs.writeFileSync(path.join('history', stamp + '.json'), JSON.stringify(qualified, null, 1));
+  require('./build-index.js').buildIndex();
   console.log(`\nScanned ${out.length} · qualified ${qualified.length} · errors ${out.filter(r => r.err).length}`);
 }
 
-module.exports = { scoreDefects };
+module.exports = { scoreDefects, scanSite, launch };
 if (require.main === module) run().catch(e => { console.error('FATAL', e); process.exit(1); });

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill Tracking — Radar</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23e5484d'/><circle cx='16' cy='16' r='6' fill='white'/></svg>">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="dot"></span><strong>Skill Tracking</strong><span class="muted">Radar</span></div>
+  <nav id="tabs">
+    <button data-tab="prospects" class="on">Prospects</button>
+    <button data-tab="detecteur">Détecteur live</button>
+    <button data-tab="tendances">Tendances</button>
+    <button data-tab="marques">Marques</button>
+  </nav>
+  <div id="mode" class="muted small"></div>
+</header>
+
+<main>
+  <!-- PROSPECTS -->
+  <section id="tab-prospects" class="tab on">
+    <div class="kpis" id="kpis"></div>
+    <div class="filters">
+      <input id="q" type="search" placeholder="Rechercher une marque…">
+      <select id="fCode"><option value="">Tous les défauts</option></select>
+      <select id="fStatus"><option value="">Tous les statuts</option></select>
+      <label class="chk"><input type="checkbox" id="fNew"> Nouveaux seulement</label>
+      <button id="exportCsv" class="ghost">Exporter CSV</button>
+    </div>
+    <div id="list" class="cards"></div>
+  </section>
+
+  <!-- DETECTEUR -->
+  <section id="tab-detecteur" class="tab">
+    <form id="scanForm" class="panel row">
+      <input id="scanUrl" placeholder="https://www.marque.fr" required>
+      <input id="scanName" placeholder="Nom (optionnel)">
+      <button type="submit" id="scanBtn">Scanner</button>
+    </form>
+    <p class="muted small" id="scanHint">Charge la home dans un navigateur neuf (sans consentement), capture le vrai trafic réseau, et ne remonte que des défauts observés. ~10 s.</p>
+    <div id="scanResult"></div>
+    <h3>Derniers scans live</h3>
+    <div id="liveList" class="cards"></div>
+  </section>
+
+  <!-- TENDANCES -->
+  <section id="tab-tendances" class="tab">
+    <div class="panel"><h3>Prospects qualifiés par jour</h3><div id="chartTrend"></div></div>
+    <div class="grid2">
+      <div class="panel"><h3>Défauts — dernier scan</h3><div id="chartCodes"></div></div>
+      <div class="panel"><h3>Mouvements vs veille</h3><div id="moves"></div></div>
+    </div>
+  </section>
+
+  <!-- MARQUES -->
+  <section id="tab-marques" class="tab">
+    <form id="addForm" class="panel row">
+      <input id="addName" placeholder="Nom de la marque" required>
+      <input id="addUrl" placeholder="https://www.marque.fr" required>
+      <button type="submit">Ajouter</button>
+    </form>
+    <p class="muted small">Les marques ajoutées seront scannées au prochain passage du cron (08:00). Pense à commit/push <code>candidates.json</code>.</p>
+    <div class="panel"><table id="candTable"><thead><tr><th>Marque</th><th>Dernier scan</th><th>Défauts</th><th></th></tr></thead><tbody></tbody></table></div>
+  </section>
+</main>
+
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>

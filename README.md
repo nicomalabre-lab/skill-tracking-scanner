@@ -26,6 +26,9 @@ Aucune des deux moitiés ne dépend du PC de Nicolas.
 | `scan.js` | Le scanner (Playwright + scoring des défauts). |
 | `candidates.json` | Le carburant : marques à auditer (`{name, url}`). **Ajoute des marques ici.** |
 | `test-scoring.js` | Tests unitaires de la logique de scoring (`npm test`). |
+| `server.js` + `app/` | L'application Radar (`npm run app`). |
+| `build-index.js` | Génère `history/index.json` pour les tendances. |
+| `test-app.js` | Tests de l'app (sécurité URL, API). |
 | `.github/workflows/scan.yml` | Le cron GitHub Actions. |
 | `qualified.json` | *(généré)* prospects qualifiés, triés par sévérité. |
 | `latest-full.json` | *(généré)* tous les résultats bruts (debug). |
@@ -45,6 +48,26 @@ Aucune des deux moitiés ne dépend du PC de Nicolas.
 | `NO_SERVER_SIDE` | 3 | Aucune collecte server-side détectée alors que des pubs tournent. |
 
 Un prospect est **qualifié** s'il a ≥1 défaut ET qu'il fait de la pub (ou un défaut de sévérité ≥4).
+
+## L'application — Radar (dashboard + détecteur live)
+
+```bash
+npm install
+npm run app        # → http://localhost:3000
+```
+
+| Onglet | Ce que tu fais |
+|---|---|
+| **Prospects** | KPIs, filtres (défaut, statut, nouveaux), accroche + **email E1 en 1 clic**, statut pipeline + notes, export CSV. |
+| **Détecteur live** | Colle une URL → scan réel en ~10 s (même moteur que le cron) → « Ajouter aux marques ». |
+| **Tendances** | Courbe des qualifiés / S5 par jour, défauts les plus fréquents, marques entrées/sorties vs veille. |
+| **Marques** | Liste de `candidates.json` avec état du dernier scan, ajout / retrait. |
+
+- Statuts + notes → `pipeline.json` (local, non commité : données prospects).
+- Scans live → `live-scans.json` (local, non commité).
+- **Mode lecture** : `app/` ouvert sur un hébergement statique (ex. GitHub Pages) lit les JSON du repo ; détecteur désactivé, statuts gardés dans le navigateur.
+- Sécurité : le détecteur refuse localhost / IP privées ; le serveur écoute sur `127.0.0.1` (changer avec `HOST=` / `PORT=`).
+- `history/index.json` (timeline compacte) est régénéré à chaque scan (`npm run index` pour le refaire à la main).
 
 ## Lancer à la main
 
