@@ -122,5 +122,24 @@ check('accord forcé sans effet : gris', () => { const f = diagnose(forced); ass
 const noAcc = JSON.parse(JSON.stringify(clean)); noAcc.phases.C.accept = { ok: false }; noAcc.phases.C.hits = [H({ sess: 'C', step: 'fiche produit', kind: 'ga4', id: 'G-CLEAN01', ev: 'page_view', gcs: 'G100' })];
 check('« Accepter » introuvable : aucun verdict rouge sur la mesure', () => { const f = diagnose(noAcc); assert(!has(f, 'CONSENT_UPDATE_MISSING')); assert(has(f, 'ACCEPT_NO_MEASURE', 'gris')); });
 
+// identifiants de clic & manque à gagner
+const { estimateImpact } = require('./controls.js');
+const ci = JSON.parse(JSON.stringify(clean));
+ci.phases.A.hits.push(H({ kind: 'gtag', id: 'AW-123456', host: 'www.googletagmanager.com' }));
+ci.phases.C.clickIds = { landedUrl: 'https://propre.fr/', kept: { gclid: false, fbclid: true, ttclid: false }, cookies: [{ name: '_ga' }] };
+ci.phases.C.finalCookies = [{ name: '_ga' }];
+ci.phases.C.serverCookies = [];
+const dci = diagnose(ci);
+check('gclid effacé à l\'arrivée = CLICKID_STRIPPED rouge', () => assert(has(dci, 'CLICKID_STRIPPED', 'rouge')));
+check('fbclid gardé mais pas de _fbc = FBC_NOT_STORED orange', () => assert(has(dci, 'FBC_NOT_STORED', 'orange')));
+check('_ga posé en JS seulement = COOKIE_ITP orange', () => assert(has(dci, 'COOKIE_ITP', 'orange')));
+const fp = JSON.parse(JSON.stringify(ci)); fp.phases.C.finalCookies = [{ name: '_ga' }, { name: 'FPID', httpOnly: true }];
+check('cookie FPID (HttpOnly serveur) = COOKIE_ITP vert', () => assert(has(diagnose(fp), 'COOKIE_ITP', 'vert')));
+const imp = estimateImpact(dci, { awPresent: true });
+check('manque à gagner : fourchette cohérente', () => { assert(imp.high > imp.low && imp.low > 0 && imp.high < 60, JSON.stringify(imp)); assert(imp.levers.every(l => l.source)); });
+check('site sans panne = manque à gagner nul', () => { const z = estimateImpact(diagnose(clean)); assert.strictEqual(z.high, 0); });
+const basic = JSON.parse(JSON.stringify(clean)); basic.phases.A.hits = [];
+check('aucun ping GA4 avant accord = CONSENT_MODE_BASIC', () => assert(has(diagnose(basic), 'CONSENT_MODE_BASIC', 'orange')));
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

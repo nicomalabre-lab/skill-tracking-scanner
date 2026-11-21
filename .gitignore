@@ -1,3 +1,4 @@
 node_modules/
 pipeline.json
 live-scans.json
+reports/

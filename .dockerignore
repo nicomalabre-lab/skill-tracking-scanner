@@ -1,0 +1,7 @@
+node_modules
+.git
+history
+live-scans.json
+pipeline.json
+reports
+*.patch

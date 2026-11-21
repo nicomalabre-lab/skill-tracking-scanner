@@ -150,6 +150,8 @@ async function run() {
         try { rec = await scanSite(browser, c); rec.deepErr = String(e.message || e).slice(0, 140); } catch (e2) { rec = { name: c.name, url: c.url, host: c.url, err: String(e2.message || e2).slice(0, 140), defects: [], qualified: false }; }
       }
       rec.name = c.name;
+      // identifiant de rapport public stable pour la journée (lien envoyé au prospect : /r/<id>)
+      rec.reportId = require('crypto').createHash('sha256').update((rec.host || c.url) + '|' + new Date().toISOString().slice(0, 10) + '|' + (process.env.REPORT_SALT || 'skilltracking')).digest('hex').slice(0, 12);
       out[i] = rec;
       console.log(`${rec.qualified ? '✓' : '·'} ${c.name} — ${(rec.defects || []).map(d => d.code).join(',') || (rec.err ? 'ERR ' + rec.err.slice(0, 40) : 'clean')}${rec.durationS ? ` (${rec.durationS}s)` : ''}`);
     }

@@ -122,7 +122,16 @@ async function openSession(browser, label) {
     } catch (_) {}
   });
   const page = await ctx.newPage();
-  const s = { label, ctx, page, t0: Date.now(), step: 'ouverture', log: [], hits: [], urls: [], dl: [], payloads: [] };
+  const s = { label, ctx, page, t0: Date.now(), step: 'ouverture', log: [], hits: [], urls: [], dl: [], payloads: [], serverCookies: new Set() };
+  // cookies posés par un serveur (en-tête Set-Cookie) : seuls ceux-là échappent au plafond de Safari/ITP
+  page.on('response', resp => {
+    try {
+      const sc = resp.headers()['set-cookie'];
+      if (!sc) return;
+      const host = new URL(resp.url()).hostname;
+      for (const line of sc.split(/\n/)) { const name = line.split('=')[0].trim(); if (name) s.serverCookies.add(name + '@' + host); }
+    } catch (_) {}
+  });
   page.on('request', req => { try { onReq(req); } catch (_) { /* une requête illisible ne doit jamais casser le scan */ } });
   const onReq = req => {
     const url = req.url();
@@ -444,12 +453,18 @@ async function deepScan(browser, c, opts = {}) {
   say('C', 'Clic sur « Accepter »');
   const C = await openSession(browser, 'C');
   await mark(C, 'accueil');
-  await goto(C, c.url, 3500);
+  // arrivée « comme depuis une pub » : identifiants de clic Google / Meta / TikTok + UTM
+  const CLICK = { gclid: 'STtestGCLID123', fbclid: 'STtestFBCLID123', ttclid: 'STtestTTCLID123' };
+  const landing = (() => { try { const u = new URL(c.url); Object.entries(CLICK).forEach(([k, v]) => u.searchParams.set(k, v)); u.searchParams.set('utm_source', 'skilltracking'); u.searchParams.set('utm_medium', 'audit'); return u.toString(); } catch (_) { return c.url; } })();
+  await goto(C, landing, 3500);
+  const landedUrl = C.page.url();
   const accept = await clickConsent(C.page, 'accept', cmp);
   await mark(C, 'après acceptation');
   await sleep(4500);
   await scroll(C.page);
   const pC = await readPage(C.page);
+  const readCookies = async () => { try { return (await C.ctx.cookies()).map(k => ({ name: k.name, value: String(k.value).slice(0, 80), domain: k.domain, expires: k.expires, httpOnly: k.httpOnly })); } catch (_) { return []; } };
+  const clickIds = { landedUrl: landedUrl.slice(0, 300), kept: Object.fromEntries(Object.keys(CLICK).map(k => [k, landedUrl.includes(CLICK[k])])), cookies: (await readCookies()).filter(k => /^(_gcl_|_fbc$|_fbp$|_ttp$|ttclid|_ga$|_ga_|FPID|FPLC|_uetmsclkid)/.test(k.name)) };
   const funnel = { category: null, product: null, addToCart: null, cart: null, checkout: null };
 
   if (nav.cat) { say('C', 'Visite d\'une page catégorie'); await mark(C, 'catégorie'); funnel.category = { url: nav.cat, err: await goto(C, nav.cat, 3500) }; await scroll(C.page); }
@@ -478,7 +493,8 @@ async function deepScan(browser, c, opts = {}) {
     if (funnel.checkout.ok) { try { await C.page.waitForLoadState('domcontentloaded', { timeout: 15000 }); } catch (_) {} await sleep(6000); funnel.checkout.url = C.page.url().slice(0, 200); }
   }
   await drain(C);
-  res.phases.C = { accept, hits: C.hits, page: pC, funnel, log: C.log, dl: C.dl, payloads: C.payloads };
+  const finalCookies = (await readCookies()).filter(k => /^(_gcl_|_fbc$|_fbp$|_ttp$|_ga$|_ga_|FPID|FPLC)/.test(k.name));
+  res.phases.C = { accept, hits: C.hits, page: pC, funnel, log: C.log, dl: C.dl, payloads: C.payloads, clickIds, finalCookies, serverCookies: [...C.serverCookies].slice(0, 200) };
   await C.ctx.close();
   } catch (e) { res.phases.C = res.phases.C || { accept: { ok: false }, hits: [], funnel: {}, err: String(e.message || e).slice(0, 140) }; }
   say('D', 'Analyse de ce qui part, et quand');

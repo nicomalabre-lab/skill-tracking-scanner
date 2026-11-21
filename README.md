@@ -78,6 +78,11 @@ Si le bandeau ne s'affiche pas (géolocalisation hors UE, cas des serveurs GitHu
 | `LEGACY_UA` | 🟠 S3 | Universal Analytics tire encore |
 | `NO_SERVER_SIDE` | 🟠 S3 | pub active, aucune collecte server-side / first-party |
 | `JSONLD_PRODUCT` | 🟠 S2 | JSON-LD Produit absent, invalide ou incomplet |
+| `CLICKID_STRIPPED` | 🔴 S4 | arrivée avec `gclid` / `fbclid` / `ttclid` : le site les efface (redirection) |
+| `GCLID_NOT_STORED` | 🔴 S4 | Google Ads présent, accord donné, aucun cookie `_gcl_aw` |
+| `FBC_NOT_STORED` | 🟠 S3 | Meta présent, accord donné, aucun cookie `_fbc` |
+| `CONSENT_MODE_BASIC` | 🟠 S3 | aucun ping GA4 avant accord (mode basique : ~2× moins de modélisation que l'avancé) |
+| `COOKIE_ITP` | 🟠 S2 | cookies de mesure posés en JavaScript seulement (pas de `FPID` / cookie serveur) : Safari peut les raccourcir |
 
 Ce qui n'a pas pu être testé (bandeau introuvable, produit en rupture, site anti-robot) sort **en gris, jamais en rouge**.
 Un prospect est **qualifié** s'il a ≥ 1 panne ET fait de la pub (ou une panne S4+).
@@ -102,6 +107,31 @@ npm run app        # → http://localhost:3000
 - **Mode lecture** : `app/` ouvert sur un hébergement statique (ex. GitHub Pages) lit les JSON du repo ; détecteur désactivé, statuts gardés dans le navigateur.
 - Sécurité : le détecteur refuse localhost / IP privées ; le serveur écoute sur `127.0.0.1` (changer avec `HOST=` / `PORT=`).
 - `history/index.json` (timeline compacte) est régénéré à chaque scan (`npm run index` pour le refaire à la main).
+
+## Hébergement en ligne (radar.skilltracking.fr)
+
+Le serveur sait tourner sur **Google Cloud Run en Europe** (`europe-west1`, comme le détecteur actuel) : le robot scanne alors depuis une IP européenne, et les bandeaux cookies s'affichent comme pour un vrai visiteur français.
+
+| URL | Accès | Rôle |
+|---|---|---|
+| `/app/` | 🔒 mot de passe (`RADAR_PASSWORD`) | le Radar interne : prospects, notes, statuts, détecteur |
+| `/r/<id>` | public, lien non devinable, `noindex` | **le rapport envoyé au prospect** : feux + preuves + calculateur de manque à gagner + boutons « Corriger 35 € » / Calendly |
+| `POST /scan` | public, CORS limité à skilltracking.fr, 3 scans/h/IP | même contrat JSON que l'ancien moteur → `skilltracking.fr/detecteur` peut pointer dessus sans changer la page |
+
+Déploiement (depuis un Mac avec `gcloud` connecté au projet GCP du détecteur) :
+```bash
+RADAR_PASSWORD='choisis-un-mot-de-passe' ./deploy/cloudrun.sh
+```
+Puis, dans Cloudflare : un enregistrement `CNAME radar → ghs.googlehosted.com` après `gcloud beta run domain-mappings create --service skilltracking-radar --domain radar.skilltracking.fr --region europe-west1`.
+
+Variables : `DATA_DIR` (stockage persistant, un bucket monté), `GITHUB_DATA_REPO` (données du cron lues sur GitHub), `PUBLIC_BASE_URL`, `PUBLIC_ORIGINS`, `PUBLIC_SCANS_PER_HOUR`, `REPORT_SALT`.
+
+### Manque à gagner (rapport prospect)
+Fourchette = effets moyens **publiés par Meta et Google**, combinés sans double compte (fourchette basse = moitié de l'effet publié) :
+- Conversions API Meta + Pixel : −13 % de coût par acquisition (Meta, 28 tests A/B, 2022)
+- Mesure Google first-party (tag gateway / server-side) : +14 % de conversions observées (Google)
+- Consent Mode avancé : > 70 % des parcours perdus récupérés par modélisation (Google) — 10 % retenu, hypothèse prudente
+- Identifiants de clic (gclid / fbclid → `_gcl_aw` / `_fbc`) et tunnel e-commerce : estimations Skill Tracking, signalées comme telles
 
 ## Lancer à la main
 
