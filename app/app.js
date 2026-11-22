@@ -226,7 +226,7 @@
   }
 
   // ---------- prospects chauds (signaux venant des rapports) ----------
-  const EVL = { open: 'ouvert', revisit: 'revenu', budget: 'budget réglé', proofs: 'preuves lues', calendly: 'clic RDV', comeup: 'clic correction 35 €', mailto: 'clic email' };
+  const EVL = { lead: 'lead entrant', open: 'ouvert', revisit: 'revenu', budget: 'budget réglé', proofs: 'preuves lues', calendly: 'clic RDV', comeup: 'clic correction 35 €', mailto: 'clic email' };
   const ago = t => { const m = Math.round((Date.now() - new Date(t)) / 60000); return m < 1 ? 'à l’instant' : m < 60 ? `il y a ${m} min` : m < 1440 ? `il y a ${Math.round(m / 60)} h` : `il y a ${Math.round(m / 1440)} j`; };
   function renderHot() {
     const el = $('#hot'); if (!el) return;
@@ -236,7 +236,7 @@
     el.innerHTML = `<div class="console" style="margin-bottom:18px"><div class="console-bar"><i></i><i></i><i></i><span class="u">prospects chauds · ils ont ouvert leur rapport</span><span class="live"><b></b>en direct</span></div><div class="console-body" style="padding-top:6px;padding-bottom:6px">${list.map(h => {
       const [dot, lab] = TEMP[h.temp];
       const acts = Object.entries(h.counts).map(([k, n]) => EVL[k] + (n > 1 ? ' ×' + n : '')).join(' · ');
-      return `<div class="lamp"><span class="dot ${dot}"></span><div style="flex:1"><b>${esc(h.name)}</b> <span class="pill ${h.temp === 'brulant' ? 'red' : h.temp === 'chaud' ? 'new' : ''}">${lab} · ${h.score}</span><div class="fine" style="margin-top:4px">${esc(acts)}${h.budget ? ' · budget ' + h.budget.toLocaleString('fr-FR') + ' €/mois' : ''} · ${ago(h.last)}</div></div><a class="btn btn-ghost btn-xs" href="${esc((S.publicBase || location.origin) + '/r/' + h.id)}?preview=1" target="_blank" rel="noopener">Rapport ↗</a></div>`;
+      return `<div class="lamp"><span class="dot ${dot}"></span><div style="flex:1"><b>${esc(h.name)}</b> <span class="pill ${h.temp === 'brulant' ? 'red' : h.temp === 'chaud' ? 'new' : ''}">${lab} · ${h.score}</span><div class="fine" style="margin-top:4px">${esc(acts)}${h.budget ? ' · budget ' + h.budget.toLocaleString('fr-FR') + ' €/mois' : ''} · ${ago(h.last)}${h.contact ? `<br><b style="color:var(--glow)">${esc(h.contact)}</b>` : ''}</div></div><a class="btn btn-ghost btn-xs" href="${esc((S.publicBase || location.origin) + '/r/' + h.id)}?preview=1" target="_blank" rel="noopener">Rapport ↗</a></div>`;
     }).join('')}</div></div>`;
   }
 

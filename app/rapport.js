@@ -85,6 +85,8 @@
     const range = document.getElementById('range');
     let budT = null, budSent = null;
     if (range) {
+      const preB = +(new URLSearchParams(location.search).get('b') || 0);
+      if (preB >= 1000 && preB <= 100000) { range.value = preB; budSent = preB; }
       range.addEventListener('input', () => { clearTimeout(budT); budT = setTimeout(() => { if (+range.value !== budSent) { budSent = +range.value; track('budget', budSent); } }, 1500); });
       const upd = () => { const b = +range.value; document.getElementById('bud').textContent = eur(b); document.getElementById('eur').innerHTML = `${eur(Math.round(b * imp.low / 100 / 50) * 50)} – ${eur(Math.round(b * imp.high / 100 / 50) * 50)}<small> / mois</small>`; };
       range.addEventListener('input', upd); upd();

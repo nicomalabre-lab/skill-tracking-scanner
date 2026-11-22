@@ -126,6 +126,14 @@ Puis, dans Cloudflare : un enregistrement `CNAME radar → ghs.googlehosted.com`
 
 Variables : `DATA_DIR` (stockage persistant, un bucket monté), `GITHUB_DATA_REPO` (données du cron lues sur GitHub), `PUBLIC_BASE_URL`, `PUBLIC_ORIGINS`, `PUBLIC_SCANS_PER_HOUR`, `REPORT_SALT`.
 
+### Détecteur public (visiteurs) : `/detecteur`
+- Le visiteur tape son adresse : scan profond (~2 min) avec les étapes en direct.
+- Il voit **gratuitement** le verdict (nombre de pannes, 3 premiers feux, outils détectés).
+- Le **rapport complet** (points masqués, preuves, calcul du manque à gagner) se débloque avec prénom + email + budget pub + accord RGPD.
+- Chaque demande crée un **lead** (`leads.json`, visible dans le Radar) et déclenche une alerte « NOUVEAU LEAD ».
+- Lancement direct possible : `/detecteur?url=boutique.fr` (pour un bouton sur skilltracking.fr).
+- Limite : 3 tests par heure et par visiteur, un scan à la fois.
+
 ### Alertes « prospect chaud »
 Le rapport public envoie des signaux (sans cookie) : ouverture, retour un autre jour, budget réglé, preuves lues, clic « Réserver un diagnostic » / « Corriger 35 € » / email.
 - Le Radar affiche un bloc **Prospects chauds** (score : tiède < 4, chaud ≥ 4, brûlant ≥ 8).

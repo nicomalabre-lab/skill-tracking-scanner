@@ -432,12 +432,14 @@ async function deepScan(browser, c, opts = {}) {
 
   // B — refus
   try {
-  say('B', 'Recherche du bandeau cookies et clic sur « Refuser »');
+  say('B', 'Deuxième visite : je cherche le bandeau cookies');
   const B = await openSession(browser, 'B');
   await mark(B, 'accueil');
   await goto(B, c.url, 3500);
   const before = B.hits.length;
+  say('B', cmp ? `Bandeau ${cmp} repéré, recherche du bouton « Refuser »` : 'Aucun bandeau cookies repéré pour l’instant, je vérifie encore');
   const refuse = await clickConsent(B.page, 'refuse', cmp);
+  say('B', refuse.ok ? 'Clic sur « Refuser » fait, j’observe ce qui part encore' : 'Pas de bouton « Refuser » trouvé, je continue');
   await mark(B, 'après refus');
   await sleep(4000);
   await scroll(B.page);
@@ -450,7 +452,7 @@ async function deepScan(browser, c, opts = {}) {
 
   // C — acceptation + parcours d'achat
   try {
-  say('C', 'Clic sur « Accepter »');
+  say('C', 'Troisième visite : clic sur « Accepter » puis parcours d’achat');
   const C = await openSession(browser, 'C');
   await mark(C, 'accueil');
   // arrivée « comme depuis une pub » : identifiants de clic Google / Meta / TikTok + UTM
@@ -458,7 +460,9 @@ async function deepScan(browser, c, opts = {}) {
   const landing = (() => { try { const u = new URL(c.url); Object.entries(CLICK).forEach(([k, v]) => u.searchParams.set(k, v)); u.searchParams.set('utm_source', 'skilltracking'); u.searchParams.set('utm_medium', 'audit'); return u.toString(); } catch (_) { return c.url; } })();
   await goto(C, landing, 3500);
   const landedUrl = C.page.url();
+  say('C', 'J’arrive comme depuis une publicité Google et Meta (identifiants de clic)');
   const accept = await clickConsent(C.page, 'accept', cmp);
+  say('C', accept.ok ? 'Clic sur « Accepter » fait, je vérifie que la mesure démarre' : 'Pas de bouton « Accepter » trouvé, je continue');
   await mark(C, 'après acceptation');
   await sleep(4500);
   await scroll(C.page);
@@ -479,7 +483,7 @@ async function deepScan(browser, c, opts = {}) {
     await mark(C, 'ajout panier');
     funnel.addToCart = await addToCart(C.page);
     await sleep(5000);
-    say('C', 'Panier puis début de commande');
+    say('C', funnel.addToCart && funnel.addToCart.ok ? 'Produit ajouté au panier, j’ouvre le panier' : 'Ajout au panier impossible sur ce produit, j’ouvre le panier');
     await mark(C, 'panier');
     let cartErr = null;
     if (pA.shopify) cartErr = await goto(C, origin + '/cart', 3500);
@@ -488,6 +492,7 @@ async function deepScan(browser, c, opts = {}) {
       cartErr = await goto(C, cl, 3500);
     }
     funnel.cart = { err: cartErr };
+    say('C', 'Passage à l’étape paiement (sans jamais commander)');
     await mark(C, 'checkout');
     funnel.checkout = await goCheckout(C.page);
     if (funnel.checkout.ok) { try { await C.page.waitForLoadState('domcontentloaded', { timeout: 15000 }); } catch (_) {} await sleep(6000); funnel.checkout.url = C.page.url().slice(0, 200); }
@@ -497,6 +502,7 @@ async function deepScan(browser, c, opts = {}) {
   res.phases.C = { accept, hits: C.hits, page: pC, funnel, log: C.log, dl: C.dl, payloads: C.payloads, clickIds, finalCookies, serverCookies: [...C.serverCookies].slice(0, 200) };
   await C.ctx.close();
   } catch (e) { res.phases.C = res.phases.C || { accept: { ok: false }, hits: [], funnel: {}, err: String(e.message || e).slice(0, 140) }; }
+  say('D', 'Lecture des données envoyées (dataLayer, Meta, Google, cookies)');
   say('D', 'Analyse de ce qui part, et quand');
   res.finishedAt = new Date().toISOString();
   return res;
