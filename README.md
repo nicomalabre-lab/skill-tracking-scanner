@@ -134,9 +134,19 @@ Variables : `DATA_DIR` (stockage persistant, un bucket monté), `GITHUB_DATA_REP
 - Lancement direct possible : `/detecteur?url=boutique.fr` (pour un bouton sur skilltracking.fr).
 - Limite : 3 tests par heure et par visiteur, un scan à la fois.
 
+### Filtre anti-curieux
+Lead **qualifié** = pub détectée sur le site + budget déclaré ≥ 5 000 €/mois + au moins une panne rouge → alerte prioritaire (+ email) et rapport qui met en avant le diagnostic offert (`?hot=1`). Sinon lead **tiède** : enregistré, alerte discrète, rapport qui met en avant la correction à 35 €. Les emails Gmail/Hotmail… sont signalés.
+
+### Sourcing : marques qui font de la pub Meta (`source-meta.js`)
+Chaque lundi 05:30 UTC (workflow `sourcing-meta`), jusqu'à 30 nouvelles boutiques e-commerce FR avec des pubs Meta **actives** sont ajoutées à `candidates.json` (vérifiées : vraie boutique, francophone, pas déjà dans la liste). Détail dans `sourcing/meta-AAAA-MM-JJ.json`.
+- Voie fiable : jeton de l'API officielle de la bibliothèque publicitaire dans le secret GitHub `META_ADLIB_TOKEN`.
+- Sans jeton : lecture de la page publique, que Facebook bride vite.
+- À la main : `npm run source -- --dry` (test sans rien ajouter).
+
 ### Alertes « prospect chaud »
 Le rapport public envoie des signaux (sans cookie) : ouverture, retour un autre jour, budget réglé, preuves lues, clic « Réserver un diagnostic » / « Corriger 35 € » / email.
 - Le Radar affiche un bloc **Prospects chauds** (score : tiède < 4, chaud ≥ 4, brûlant ≥ 8).
+- Email : variable `NOTIFY_EMAIL` (ex. nicolas@skilltracking.fr) → copie par email des alertes importantes (lead qualifié, clic RDV/correction).
 - Notification téléphone : installer l'app gratuite **ntfy**, s'abonner à un nom de sujet secret, et mettre ce nom dans la variable `NTFY_TOPIC` du service Cloud Run (ou `WEBHOOK_URL` pour Slack/Make/Zapier).
 - Le bouton « Voir le rapport » du Radar ajoute `?preview=1` : tes propres visites ne comptent pas.
 - Le lien Calendly du rapport porte `utm_campaign=<domaine>` et `utm_content=<id du rapport>`.

@@ -18,7 +18,8 @@ const RADAR_PASSWORD = process.env.RADAR_PASSWORD || '';       // protège le Ra
 const PUBLIC_ORIGINS = (process.env.PUBLIC_ORIGINS || 'https://skilltracking.fr,https://www.skilltracking.fr').split(',').map(x => x.trim()).filter(Boolean);
 const PUBLIC_SCANS_PER_HOUR = Number(process.env.PUBLIC_SCANS_PER_HOUR) || 3;
 const NTFY_TOPIC = process.env.NTFY_TOPIC || '';           // notifications téléphone via l'app gratuite ntfy (ntfy.sh)
-const WEBHOOK_URL = process.env.WEBHOOK_URL || '';         // ou n'importe quel webhook (Slack, Make, Zapier…)
+const WEBHOOK_URL = process.env.WEBHOOK_URL || '';
+const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || '';        // ex. nicolas@skilltracking.fr : copie email des alertes importantes (via ntfy)         // ou n'importe quel webhook (Slack, Make, Zapier…)
 try { fs.mkdirSync(path.join(DATA_DIR, 'reports'), { recursive: true }); } catch (_) {}
 const PIPELINE = path.join(DATA_DIR, 'pipeline.json');
 const CANDIDATES = path.join(DATA_DIR === ROOT ? ROOT : DATA_DIR, 'candidates.json');
@@ -153,7 +154,10 @@ const evHits = new Map();
 const lastNotif = new Map();
 async function notify(title, msg, url, prio) {
   const jobs = [];
-  if (NTFY_TOPIC) jobs.push(fetch('https://ntfy.sh/' + encodeURIComponent(NTFY_TOPIC), { method: 'POST', body: msg, headers: { Title: title.replace(/[^\x20-\x7E]/g, ''), Priority: String(prio || 3), Tags: 'fire', ...(url ? { Click: url } : {}) } }).catch(() => {}));
+  // ntfy : push téléphone, et pour les alertes importantes (priorité 5 : lead, clic RDV) une copie par email
+  const ascii = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\x20-\x7E]/g, '');
+  const topic = NTFY_TOPIC || (NOTIFY_EMAIL ? 'skilltracking-' + crypto.createHash('sha256').update(NOTIFY_EMAIL + (process.env.RADAR_PASSWORD || '')).digest('hex').slice(0, 16) : '');
+  if (topic) jobs.push(fetch('https://ntfy.sh/' + encodeURIComponent(topic), { method: 'POST', body: msg + (url ? '\n\nRapport : ' + url : ''), headers: { Title: ascii(title), Priority: String(prio || 3), Tags: 'fire', ...(url ? { Click: url } : {}), ...(NOTIFY_EMAIL && (prio || 3) >= 5 ? { Email: NOTIFY_EMAIL } : {}) } }).catch(() => {}));
   if (WEBHOOK_URL) jobs.push(fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title, text: msg, url }) }).catch(() => {}));
   await Promise.all(jobs);
   return jobs.length;
@@ -163,7 +167,8 @@ function heatOf(events) {
   for (const e of events) {
     const h = by[e.id] = by[e.id] || { id: e.id, host: e.host, name: e.name, score: 0, first: e.t, last: e.t, counts: {}, budget: null, days: new Set() };
     h.counts[e.type] = (h.counts[e.type] || 0) + 1;
-    if (h.counts[e.type] === 1 || e.type === 'revisit') h.score += EV_TYPES[e.type] || 0;
+    if (h.counts[e.type] === 1 || e.type === 'revisit') h.score += e.type === 'lead' ? (e.qualified === false ? 3 : 8) : (EV_TYPES[e.type] || 0);
+    if (e.type === 'lead') h.qualified = e.qualified !== false;
     if ((e.type === 'budget' || e.type === 'lead') && e.value) h.budget = e.value;
     if (e.type === 'lead' && e.contact) h.contact = e.contact;
     h.last = e.t > h.last ? e.t : h.last; h.days.add(e.t.slice(0, 10));
@@ -230,15 +235,23 @@ async function createLead(req, b) {
   if (b.consent !== true) return { code: 400, error: 'Merci de cocher la case pour recevoir votre rapport.' };
   const budget = BUDGETS[b.budget] ?? 0;
   const rep = await loadReport(id);
+  // filtre anti-curieux : pub réellement détectée + budget déclaré ≥ 5 000 €/mois + au moins une panne rouge
+  const FREE = /@(gmail|googlemail|hotmail|outlook|live|yahoo|icloud|me|orange|free|wanadoo|laposte|sfr|neuf|aol|proton|protonmail|gmx)\./i;
+  const nRougeRep = rep ? (rep.controles || []).filter(c => c.color === 'rouge').length : 0;
+  const qualified = !!(rep && rep.runsAds && budget >= 5000 && nRougeRep >= 1);
+  const proEmail = !FREE.test(email);
   const leads = readJSON(LEADS, []);
-  const lead = { t: new Date().toISOString(), reportId: id, host: rep ? rep.host : null, prenom, email, budgetTranche: b.budget || null, budget, site: rep ? rep.url : null, nRouge: rep ? (rep.controles || []).filter(c => c.color === 'rouge').length : null };
+  const lead = { t: new Date().toISOString(), reportId: id, host: rep ? rep.host : null, prenom, email, budgetTranche: b.budget || null, budget, site: rep ? rep.url : null, nRouge: nRougeRep, runsAds: !!(rep && rep.runsAds), qualified, proEmail };
   leads.push(lead); writeJSON(LEADS, leads.slice(-5000));
   // signal « lead » dans les prospects chauds + alerte immédiate
   const all = readJSON(EVENTS, []);
-  all.push({ t: lead.t, id, host: lead.host, name: lead.host, type: 'lead', value: budget || null, contact: `${prenom} · ${email}` });
+  all.push({ t: lead.t, id, host: lead.host, name: lead.host, type: 'lead', value: budget || null, contact: `${prenom} · ${email}`, qualified, proEmail });
   writeJSON(EVENTS, all.slice(-5000));
-  await notify('NOUVEAU LEAD : ' + (lead.host || ''), `${prenom} (${email}) a testé ${lead.host} : ${lead.nRouge} panne(s) rouge(s), budget pub ${BUDGET_LABEL[b.budget] || 'non précisé'}/mois. Appelle-le aujourd’hui.`, `${process.env.PUBLIC_BASE_URL || ''}/r/${id}?preview=1`, 5);
-  return { code: 200, ok: true, reportUrl: `/r/${id}${budget ? '?b=' + budget : ''}` };
+  const why = `${lead.nRouge} panne(s) rouge(s), pub ${lead.runsAds ? 'détectée' : 'non détectée'}, budget ${BUDGET_LABEL[b.budget] || 'non précisé'}/mois${proEmail ? '' : ', email perso'}`;
+  if (qualified) await notify('NOUVEAU LEAD QUALIFIE : ' + (lead.host || ''), `${prenom} (${email}) a testé ${lead.host} : ${why}. Appelle-le aujourd’hui.`, `${process.env.PUBLIC_BASE_URL || ''}/r/${id}?preview=1`, 5);
+  else await notify('Lead tiede : ' + (lead.host || ''), `${prenom} (${email}) a testé ${lead.host} : ${why}. Pas prioritaire.`, `${process.env.PUBLIC_BASE_URL || ''}/r/${id}?preview=1`, 2);
+  const qs = [budget ? 'b=' + budget : null, qualified ? 'hot=1' : null].filter(Boolean).join('&');
+  return { code: 200, ok: true, qualified, reportUrl: `/r/${id}${qs ? '?' + qs : ''}` };
 }
 
 const hostOf = url => { try { return new URL(url).hostname.replace(/^www\./, ''); } catch (_) { return url; } };
@@ -294,7 +307,7 @@ async function api(req, res, url) {
       const target = await normalizeUrl(url.searchParams.get('url'));
       if (!allowPublic(req)) throw new Error('Vous avez déjà lancé plusieurs tests cette heure-ci. Réessayez un peu plus tard.');
       if (busy) ev('step', { msg: 'Un autre test est en cours, le vôtre démarre juste après…' });
-      const rec = await liveScan({ name: hostOf(target), url: target }, (k, msg) => ev('step', { k, msg }));
+      const rec = await liveScan({ name: hostOf(target), url: target }, (k, msg, pct) => ev('step', { k, msg, pct }));
       logLive(rec);
       const token = crypto.randomBytes(12).toString('base64url');
       const tokens = readJSON(TOKENS, {}); tokens[token] = rec.reportId;
@@ -348,7 +361,7 @@ async function api(req, res, url) {
     try {
       const target = await normalizeUrl(url.searchParams.get('url'));
       if (busy) ev('step', { msg: 'Un autre scan est en cours, mise en file d\'attente…' });
-      const rec = await liveScan({ name: (url.searchParams.get('name') || '').slice(0, 80) || hostOf(target), url: target }, (k, msg) => ev('step', { k, msg }));
+      const rec = await liveScan({ name: (url.searchParams.get('name') || '').slice(0, 80) || hostOf(target), url: target }, (k, msg, pct) => ev('step', { k, msg, pct }));
       logLive(rec);
       ev('result', rec);
     } catch (e) { ev('fail', { error: String(e.message || e).slice(0, 200) }); }
