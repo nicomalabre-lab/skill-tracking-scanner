@@ -19,7 +19,7 @@ const PUBLIC_ORIGINS = (process.env.PUBLIC_ORIGINS || 'https://skilltracking.fr,
 const PUBLIC_SCANS_PER_HOUR = Number(process.env.PUBLIC_SCANS_PER_HOUR) || 3;
 const NTFY_TOPIC = process.env.NTFY_TOPIC || '';           // notifications téléphone via l'app gratuite ntfy (ntfy.sh)
 const WEBHOOK_URL = process.env.WEBHOOK_URL || '';
-const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || '';        // ex. nicolas@skilltracking.fr : copie email des alertes importantes (via ntfy)         // ou n'importe quel webhook (Slack, Make, Zapier…)
+const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || '';        // destinataire des emails d'alerte (envoyés par le webhook Google Apps Script, voir deploy/alertes-email.gs)         // ou n'importe quel webhook (Slack, Make, Zapier…)
 try { fs.mkdirSync(path.join(DATA_DIR, 'reports'), { recursive: true }); } catch (_) {}
 const PIPELINE = path.join(DATA_DIR, 'pipeline.json');
 const CANDIDATES = path.join(DATA_DIR === ROOT ? ROOT : DATA_DIR, 'candidates.json');
@@ -154,11 +154,10 @@ const evHits = new Map();
 const lastNotif = new Map();
 async function notify(title, msg, url, prio) {
   const jobs = [];
-  // ntfy : push téléphone, et pour les alertes importantes (priorité 5 : lead, clic RDV) une copie par email
+  // ntfy : push téléphone (sans email : ntfy.sh refuse les emails anonymes)
   const ascii = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\x20-\x7E]/g, '');
-  const topic = NTFY_TOPIC || (NOTIFY_EMAIL ? 'skilltracking-' + crypto.createHash('sha256').update(NOTIFY_EMAIL + (process.env.RADAR_PASSWORD || '')).digest('hex').slice(0, 16) : '');
-  if (topic) jobs.push(fetch('https://ntfy.sh/' + encodeURIComponent(topic), { method: 'POST', body: msg + (url ? '\n\nRapport : ' + url : ''), headers: { Title: ascii(title), Priority: String(prio || 3), Tags: 'fire', ...(url ? { Click: url } : {}), ...(NOTIFY_EMAIL && (prio || 3) >= 5 ? { Email: NOTIFY_EMAIL } : {}) } }).catch(() => {}));
-  if (WEBHOOK_URL) jobs.push(fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title, text: msg, url }) }).catch(() => {}));
+  if (NTFY_TOPIC) jobs.push(fetch('https://ntfy.sh/' + encodeURIComponent(NTFY_TOPIC), { method: 'POST', body: msg + (url ? '\n\nRapport : ' + url : ''), headers: { Title: ascii(title), Priority: String(prio || 3), Tags: 'fire', ...(url ? { Click: url } : {}) } }).catch(() => {}));
+  if (WEBHOOK_URL) jobs.push(fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title, text: msg, url, prio: prio || 3, email: NOTIFY_EMAIL || null, key: process.env.WEBHOOK_KEY || null }) }).catch(() => {}));
   await Promise.all(jobs);
   return jobs.length;
 }

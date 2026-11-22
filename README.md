@@ -146,7 +146,7 @@ Chaque lundi 05:30 UTC (workflow `sourcing-meta`), jusqu'à 30 nouvelles boutiqu
 ### Alertes « prospect chaud »
 Le rapport public envoie des signaux (sans cookie) : ouverture, retour un autre jour, budget réglé, preuves lues, clic « Réserver un diagnostic » / « Corriger 35 € » / email.
 - Le Radar affiche un bloc **Prospects chauds** (score : tiède < 4, chaud ≥ 4, brûlant ≥ 8).
-- Email : variable `NOTIFY_EMAIL` (ex. nicolas@skilltracking.fr) → copie par email des alertes importantes (lead qualifié, clic RDV/correction).
+- Email : script Google Apps Script `deploy/alertes-email.gs` (dans le compte nicolas@skilltracking.fr), son URL dans `WEBHOOK_URL`, la même clé dans `WEBHOOK_KEY`, et le destinataire dans `NOTIFY_EMAIL`. ntfy.sh n'envoie plus d'emails anonymes.
 - Notification téléphone : installer l'app gratuite **ntfy**, s'abonner à un nom de sujet secret, et mettre ce nom dans la variable `NTFY_TOPIC` du service Cloud Run (ou `WEBHOOK_URL` pour Slack/Make/Zapier).
 - Le bouton « Voir le rapport » du Radar ajoute `?preview=1` : tes propres visites ne comptent pas.
 - Le lien Calendly du rapport porte `utm_campaign=<domaine>` et `utm_content=<id du rapport>`.
