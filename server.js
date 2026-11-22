@@ -17,6 +17,8 @@ const GH_REPO = process.env.GITHUB_DATA_REPO || '';            // ex. nicomalabr
 const RADAR_PASSWORD = process.env.RADAR_PASSWORD || '';       // protège le Radar interne (prospects, notes)
 const PUBLIC_ORIGINS = (process.env.PUBLIC_ORIGINS || 'https://skilltracking.fr,https://www.skilltracking.fr').split(',').map(x => x.trim()).filter(Boolean);
 const PUBLIC_SCANS_PER_HOUR = Number(process.env.PUBLIC_SCANS_PER_HOUR) || 3;
+const NTFY_TOPIC = process.env.NTFY_TOPIC || '';           // notifications téléphone via l'app gratuite ntfy (ntfy.sh)
+const WEBHOOK_URL = process.env.WEBHOOK_URL || '';         // ou n'importe quel webhook (Slack, Make, Zapier…)
 try { fs.mkdirSync(path.join(DATA_DIR, 'reports'), { recursive: true }); } catch (_) {}
 const PIPELINE = path.join(DATA_DIR, 'pipeline.json');
 const CANDIDATES = path.join(DATA_DIR === ROOT ? ROOT : DATA_DIR, 'candidates.json');
@@ -143,6 +145,102 @@ function toDetectorFormat(rec, base) {
 }
 const baseUrl = req => process.env.PUBLIC_BASE_URL || `${req.headers['x-forwarded-proto'] || 'http'}://${req.headers.host}`;
 
+// ---- Signaux d'intérêt des prospects (rapport ouvert, budget réglé, clic RDV) ----
+const EVENTS = path.join(DATA_DIR, 'events.json');
+const EV_TYPES = { lead: 8, open: 1, revisit: 2, budget: 3, proofs: 1, calendly: 6, comeup: 6, mailto: 5 };
+const EV_LABEL = { lead: 'a demandé son rapport complet (lead entrant)', open: 'a ouvert son rapport', revisit: 'est revenu sur son rapport', budget: 'a réglé son budget pub', proofs: 'a ouvert les preuves techniques', calendly: 'a cliqué sur « Réserver un diagnostic »', comeup: 'a cliqué sur « Corriger mon tracking » (35 €)', mailto: 'a cliqué sur « Écrivez-moi »' };
+const evHits = new Map();
+const lastNotif = new Map();
+async function notify(title, msg, url, prio) {
+  const jobs = [];
+  if (NTFY_TOPIC) jobs.push(fetch('https://ntfy.sh/' + encodeURIComponent(NTFY_TOPIC), { method: 'POST', body: msg, headers: { Title: title.replace(/[^\x20-\x7E]/g, ''), Priority: String(prio || 3), Tags: 'fire', ...(url ? { Click: url } : {}) } }).catch(() => {}));
+  if (WEBHOOK_URL) jobs.push(fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title, text: msg, url }) }).catch(() => {}));
+  await Promise.all(jobs);
+  return jobs.length;
+}
+function heatOf(events) {
+  const by = {};
+  for (const e of events) {
+    const h = by[e.id] = by[e.id] || { id: e.id, host: e.host, name: e.name, score: 0, first: e.t, last: e.t, counts: {}, budget: null, days: new Set() };
+    h.counts[e.type] = (h.counts[e.type] || 0) + 1;
+    if (h.counts[e.type] === 1 || e.type === 'revisit') h.score += EV_TYPES[e.type] || 0;
+    if ((e.type === 'budget' || e.type === 'lead') && e.value) h.budget = e.value;
+    if (e.type === 'lead' && e.contact) h.contact = e.contact;
+    h.last = e.t > h.last ? e.t : h.last; h.days.add(e.t.slice(0, 10));
+  }
+  return Object.values(by).map(h => ({ ...h, days: h.days.size, temp: h.score >= 8 ? 'brulant' : h.score >= 4 ? 'chaud' : 'tiede' })).sort((a, b) => b.score - a.score || (b.last > a.last ? 1 : -1));
+}
+async function recordEvent(req, b) {
+  const ip = String(req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
+  const now = Date.now(), arr = (evHits.get(ip) || []).filter(t => now - t < 3600000);
+  if (arr.length >= 60) return { ok: false, code: 429 };
+  arr.push(now); evHits.set(ip, arr);
+  const id = String(b.id || ''), type = String(b.type || '');
+  if (!/^[A-Za-z0-9]{6,20}$/.test(id) || !(type in EV_TYPES)) return { ok: false, code: 400 };
+  const rep = await loadReport(id);
+  if (!rep) return { ok: false, code: 404 };
+  const value = type === 'budget' ? Math.max(0, Math.min(10000000, Math.round(Number(b.value) || 0))) : null;
+  const all = readJSON(EVENTS, []);
+  const mine = all.filter(e => e.id === id);
+  let t = type;
+  if (type === 'open' && mine.some(e => e.type === 'open' || e.type === 'revisit')) t = 'revisit';
+  const ev = { t: new Date().toISOString(), id, host: rep.host, name: rep.name || rep.host, type: t, value };
+  all.push(ev); writeJSON(EVENTS, all.slice(-5000));
+  // notification : 1re ouverture, retour un autre jour, budget, et chaque clic d'action ; anti-spam 1 h par type
+  const key = id + '|' + t, last = lastNotif.get(key) || 0;
+  const revisitNewDay = t === 'revisit' && !mine.some(e => e.t.slice(0, 10) === ev.t.slice(0, 10));
+  const worth = t === 'open' || revisitNewDay || t === 'budget' || ['calendly', 'comeup', 'mailto'].includes(t);
+  let notified = 0;
+  if (worth && now - last > 3600000) {
+    lastNotif.set(key, now);
+    const h = heatOf([...mine, ev])[0];
+    const hot = ['calendly', 'comeup', 'mailto'].includes(t);
+    const title = (hot ? 'PROSPECT BRULANT : ' : 'Prospect chaud : ') + ev.name;
+    const msg = `${ev.name === ev.host ? ev.host : ev.name + ' (' + ev.host + ')'} ${EV_LABEL[t]}${value ? ' : ' + value.toLocaleString('fr-FR') + ' €/mois' : ''}. Score ${h.score}.${hot ? ' Rappelle-le aujourd’hui.' : ''}`;
+    notified = await notify(title, msg, `${process.env.PUBLIC_BASE_URL || ''}/r/${id}?preview=1`, hot ? 5 : 4);
+  }
+  return { ok: true, type: t, notified };
+}
+
+// ---- Détecteur public (visiteurs de skilltracking.fr) : verdict gratuit, rapport complet contre email ----
+const TOKENS = path.join(DATA_DIR, 'lead-tokens.json');
+const LEADS = path.join(DATA_DIR, 'leads.json');
+const BUDGET_LABEL = { 'moins-2k': 'moins de 2 000 €', '2k-5k': '2 000 à 5 000 €', '5k-10k': '5 000 à 10 000 €', '10k-30k': '10 000 à 30 000 €', '30k-plus': 'plus de 30 000 €', nsp: 'ne sait pas' };
+const BUDGETS = { 'moins-2k': 1500, '2k-5k': 3500, '5k-10k': 7500, '10k-30k': 20000, '30k-plus': 40000, 'nsp': 0 };
+function publicSummary(rec, token) {
+  const ctl = rec.controles || [];
+  return {
+    token, host: rec.host, err: rec.err && !ctl.some(c => c.sev) ? rec.err : null,
+    nRouge: ctl.filter(c => c.color === 'rouge').length, nOrange: ctl.filter(c => c.color === 'orange').length,
+    nOk: ctl.filter(c => c.color === 'vert').length,
+    // le verdict gratuit : les phrases, sans les preuves ni le calcul
+    feux: ctl.filter(c => c.color === 'rouge' || c.color === 'orange').map(c => ({ color: c.color, phrase: c.phrase })),
+    outils: [rec.platform, (rec.ga4Fire || []).length && 'Google Analytics 4', (rec.fbFire || []).length && 'Pixel Meta', rec.awGads && 'Google Ads', rec.tt && 'TikTok', rec.pin && 'Pinterest', ...(rec.otherAds || [])].filter(Boolean),
+    cmp: rec.cmp && rec.cmp !== '?' ? rec.cmp : null, impactHigh: rec.impact ? rec.impact.high : 0
+  };
+}
+async function createLead(req, b) {
+  const tokens = readJSON(TOKENS, {});
+  const id = tokens[String(b.token || '')];
+  if (!id) return { code: 404, error: 'Rapport introuvable, relancez le test.' };
+  const email = String(b.email || '').trim().toLowerCase().slice(0, 120);
+  const prenom = String(b.prenom || '').trim().slice(0, 60);
+  if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(email)) return { code: 400, error: 'Adresse email invalide.' };
+  if (!prenom) return { code: 400, error: 'Indiquez votre prénom.' };
+  if (b.consent !== true) return { code: 400, error: 'Merci de cocher la case pour recevoir votre rapport.' };
+  const budget = BUDGETS[b.budget] ?? 0;
+  const rep = await loadReport(id);
+  const leads = readJSON(LEADS, []);
+  const lead = { t: new Date().toISOString(), reportId: id, host: rep ? rep.host : null, prenom, email, budgetTranche: b.budget || null, budget, site: rep ? rep.url : null, nRouge: rep ? (rep.controles || []).filter(c => c.color === 'rouge').length : null };
+  leads.push(lead); writeJSON(LEADS, leads.slice(-5000));
+  // signal « lead » dans les prospects chauds + alerte immédiate
+  const all = readJSON(EVENTS, []);
+  all.push({ t: lead.t, id, host: lead.host, name: lead.host, type: 'lead', value: budget || null, contact: `${prenom} · ${email}` });
+  writeJSON(EVENTS, all.slice(-5000));
+  await notify('NOUVEAU LEAD : ' + (lead.host || ''), `${prenom} (${email}) a testé ${lead.host} : ${lead.nRouge} panne(s) rouge(s), budget pub ${BUDGET_LABEL[b.budget] || 'non précisé'}/mois. Appelle-le aujourd’hui.`, `${process.env.PUBLIC_BASE_URL || ''}/r/${id}?preview=1`, 5);
+  return { code: 200, ok: true, reportUrl: `/r/${id}${budget ? '?b=' + budget : ''}` };
+}
+
 const hostOf = url => { try { return new URL(url).hostname.replace(/^www\./, ''); } catch (_) { return url; } };
 
 // ---- Live scan (scan PROFOND) : un navigateur partagé, un scan à la fois ----
@@ -182,8 +280,45 @@ async function api(req, res, url) {
   const rm = p.match(/^\/api\/report\/([A-Za-z0-9]+)$/);
   if (req.method === 'GET' && rm) { const r = await loadReport(rm[1]); return r ? send(res, 200, r) : send(res, 404, { error: 'Rapport introuvable' }); }
 
+  if (req.method === 'POST' && p === '/api/lead') {
+    const r = await createLead(req, await body(req, 3000));
+    return send(res, r.code, r);
+  }
+
+  // Détecteur public : étapes en direct, verdict gratuit, jeton pour débloquer le rapport complet
+  if (req.method === 'GET' && p === '/api/public/scan') {
+    res.writeHead(200, { 'Content-Type': 'text/event-stream; charset=utf-8', 'Cache-Control': 'no-store', Connection: 'keep-alive', 'X-Accel-Buffering': 'no' });
+    const ev = (name, data) => { try { res.write(`event: ${name}\ndata: ${JSON.stringify(data)}\n\n`); } catch (_) {} };
+    const ping = setInterval(() => { try { res.write(': ping\n\n'); } catch (_) {} }, 15000);
+    try {
+      const target = await normalizeUrl(url.searchParams.get('url'));
+      if (!allowPublic(req)) throw new Error('Vous avez déjà lancé plusieurs tests cette heure-ci. Réessayez un peu plus tard.');
+      if (busy) ev('step', { msg: 'Un autre test est en cours, le vôtre démarre juste après…' });
+      const rec = await liveScan({ name: hostOf(target), url: target }, (k, msg) => ev('step', { k, msg }));
+      logLive(rec);
+      const token = crypto.randomBytes(12).toString('base64url');
+      const tokens = readJSON(TOKENS, {}); tokens[token] = rec.reportId;
+      const keys = Object.keys(tokens); if (keys.length > 3000) keys.slice(0, keys.length - 3000).forEach(k => delete tokens[k]);
+      writeJSON(TOKENS, tokens);
+      ev('result', publicSummary(rec, token));
+    } catch (e) { ev('fail', { error: String(e.message || e).slice(0, 200) }); }
+    clearInterval(ping);
+    return res.end();
+  }
+
+  if (req.method === 'POST' && p === '/api/event') {
+    const b = await body(req, 2000);
+    if (b.preview) return send(res, 204, '');
+    const r = await recordEvent(req, b);
+    return send(res, r.ok ? 200 : r.code, r);
+  }
+
   // ---------- PRIVÉ (Radar) ----------
   if (!authed(req)) return askAuth(res);
+
+  if (req.method === 'GET' && p === '/api/leads') return send(res, 200, readJSON(LEADS, []).slice().reverse());
+  if (req.method === 'GET' && p === '/api/heat') return send(res, 200, heatOf(readJSON(EVENTS, [])));
+  if (req.method === 'POST' && p === '/api/notify-test') { const n = await notify('Test Radar Skill Tracking', 'Les alertes prospects chauds fonctionnent.', null, 3); return send(res, 200, { ok: true, channels: n }); }
 
   if (req.method === 'GET' && p === '/api/data') {
     return send(res, 200, {
@@ -259,10 +394,11 @@ async function api(req, res, url) {
 
 // ---- Static ----
 function file(res, f) { fs.readFile(f, (e, buf) => e ? send(res, 404, 'not found', 'text/plain') : send(res, 200, buf, MIME[path.extname(f)] || 'application/octet-stream')); }
-const PUBLIC_ASSETS = new Set(['style.css', 'logo.png', 'rapport.js', 'rapport.html']);
+const PUBLIC_ASSETS = new Set(['style.css', 'logo.png', 'rapport.js', 'rapport.html', 'detecteur.js']);
 function serveStatic(req, res, url) {
   let p = decodeURIComponent(url.pathname);
   if (/^\/r\/[A-Za-z0-9]+\/?$/.test(p)) return file(res, path.join(ROOT, 'app', 'rapport.html'));      // rapport public
+  if (p === '/detecteur' || p === '/detecteur/') return file(res, path.join(ROOT, 'app', 'detecteur.html'));  // détecteur public
   if (p.startsWith('/app/') && PUBLIC_ASSETS.has(p.slice(5))) return file(res, path.join(ROOT, 'app', p.slice(5)));
   if (!authed(req)) return askAuth(res);
   if (p === '/' || p === '/app') { res.writeHead(302, { Location: '/app/' }); return res.end(); }
@@ -308,4 +444,4 @@ if (require.main === module) {
   const stop = async () => { try { if (browserP) (await browserP).close(); } catch (_) {} process.exit(0); };
   process.on('SIGINT', stop); process.on('SIGTERM', stop);
 }
-module.exports = { server, normalizeUrl, isPrivateIP, toDetectorFormat, saveReport, loadReport };
+module.exports = { server, normalizeUrl, isPrivateIP, toDetectorFormat, saveReport, loadReport, heatOf, publicSummary, createLead };

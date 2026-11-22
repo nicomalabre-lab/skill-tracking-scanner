@@ -126,6 +126,21 @@ Puis, dans Cloudflare : un enregistrement `CNAME radar → ghs.googlehosted.com`
 
 Variables : `DATA_DIR` (stockage persistant, un bucket monté), `GITHUB_DATA_REPO` (données du cron lues sur GitHub), `PUBLIC_BASE_URL`, `PUBLIC_ORIGINS`, `PUBLIC_SCANS_PER_HOUR`, `REPORT_SALT`.
 
+### Détecteur public (visiteurs) : `/detecteur`
+- Le visiteur tape son adresse : scan profond (~2 min) avec les étapes en direct.
+- Il voit **gratuitement** le verdict (nombre de pannes, 3 premiers feux, outils détectés).
+- Le **rapport complet** (points masqués, preuves, calcul du manque à gagner) se débloque avec prénom + email + budget pub + accord RGPD.
+- Chaque demande crée un **lead** (`leads.json`, visible dans le Radar) et déclenche une alerte « NOUVEAU LEAD ».
+- Lancement direct possible : `/detecteur?url=boutique.fr` (pour un bouton sur skilltracking.fr).
+- Limite : 3 tests par heure et par visiteur, un scan à la fois.
+
+### Alertes « prospect chaud »
+Le rapport public envoie des signaux (sans cookie) : ouverture, retour un autre jour, budget réglé, preuves lues, clic « Réserver un diagnostic » / « Corriger 35 € » / email.
+- Le Radar affiche un bloc **Prospects chauds** (score : tiède < 4, chaud ≥ 4, brûlant ≥ 8).
+- Notification téléphone : installer l'app gratuite **ntfy**, s'abonner à un nom de sujet secret, et mettre ce nom dans la variable `NTFY_TOPIC` du service Cloud Run (ou `WEBHOOK_URL` pour Slack/Make/Zapier).
+- Le bouton « Voir le rapport » du Radar ajoute `?preview=1` : tes propres visites ne comptent pas.
+- Le lien Calendly du rapport porte `utm_campaign=<domaine>` et `utm_content=<id du rapport>`.
+
 ### Manque à gagner (rapport prospect)
 Fourchette = effets moyens **publiés par Meta et Google**, combinés sans double compte (fourchette basse = moitié de l'effet publié) :
 - Conversions API Meta + Pixel : −13 % de coût par acquisition (Meta, 28 tests A/B, 2022)

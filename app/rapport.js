@@ -7,10 +7,20 @@
   const eur = n => n.toLocaleString('fr-FR', { maximumFractionDigits: 0 }) + ' €';
   const root = document.getElementById('root');
   const id = (location.pathname.match(/\/r\/([A-Za-z0-9]+)/) || [])[1];
+  // ?preview=1 : c'est Nicolas qui regarde depuis le Radar, on ne compte rien
+  const preview = /[?&]preview=1/.test(location.search);
+  const track = (type, value) => {
+    if (preview || !id) return;
+    const data = JSON.stringify({ id, type, value });
+    try { if (navigator.sendBeacon && navigator.sendBeacon('/api/event', new Blob([data], { type: 'text/plain' }))) return; } catch (_) {}
+    fetch('/api/event', { method: 'POST', body: data, keepalive: true, headers: { 'Content-Type': 'text/plain' } }).catch(() => {});
+  };
 
   const lamp = (c, conseq) => `<div class="lamp"><span class="dot ${DOT[c.color] || 'x'}"></span><div><b>${esc(c.phrase)}</b>${conseq && c.conseq ? `<div class="st-conseq">${esc(c.conseq)}</div>` : ''}${c.preuve ? `<div class="preuve">${esc(c.preuve)}</div>` : ''}</div></div>`;
 
   function render(r) {
+    const tag = u => u + (u.includes('?') ? '&' : '?') + 'utm_source=rapport&utm_medium=radar&utm_campaign=' + encodeURIComponent(r.host || '') + '&utm_content=' + id;
+    const CALr = tag(CAL.replace('?utm_source=rapport', '')), COMEUPr = COMEUP;
     document.title = `${r.host} · Rapport tracking · Skill Tracking`;
     const ctl = r.controles || [];
     const probs = ctl.filter(c => c.color === 'rouge' || c.color === 'orange');
@@ -57,18 +67,27 @@
         ${chips.length ? `<div class="st-inv"><div class="st-inv-h">Ce que j’ai vu sur votre site</div><div class="st-chips">${chips.map(c => `<span class="st-chip">${esc(c)}</span>`).join('')}</div><div class="st-inv-sub">${r.cmp && r.cmp !== '?' ? 'Consentement : ' + esc(r.cmp) : 'Aucun bandeau cookies détecté'}${(r.serverGtmHost || []).length || (r.firstPartyCollect || []).length || r.stape ? ' · <b>Tracking server-side détecté</b>' : ''}</div></div>` : ''}
         ${probs.map(c => lamp(c, true)).join('')}
         ${oks.length ? `<div class="st-ok-head">Ce qui va bien ou n'a pas pu être vérifié (${oks.length})</div>${oks.map(c => lamp(c, false)).join('')}` : ''}
-        ${(r.payloads || []).length ? `<details class="more"><summary>Preuves techniques : requêtes capturées (${r.payloads.length})</summary><div class="payloads">${r.payloads.map(p => `<b>[${esc(p.step)}] ${esc(p.method)} ${esc(p.vendor || p.kind)}</b>\n${esc(p.url)}${p.body ? '\n' + esc(String(p.body).slice(0, 400)) : ''}`).join('\n\n')}</div></details>` : ''}
+        ${(r.payloads || []).length ? `<details class="more" data-ev-toggle="proofs"><summary>Preuves techniques : requêtes capturées (${r.payloads.length})</summary><div class="payloads">${r.payloads.map(p => `<b>[${esc(p.step)}] ${esc(p.method)} ${esc(p.vendor || p.kind)}</b>\n${esc(p.url)}${p.body ? '\n' + esc(String(p.body).slice(0, 400)) : ''}`).join('\n\n')}</div></details>` : ''}
         <div class="st-cta2" style="margin-top:22px;text-align:center">
           ${probs.length ? `<p class="st-push" style="font-size:15.5px;color:#e9e9e9;max-width:36em;margin:0 auto 14px;line-height:1.5">Je corrige ces points <b>sous 48h pour 35 €</b>, remboursé si je ne trouve rien à corriger.</p>` : ''}
-          <div class="cta-row" style="margin-top:0">${probs.length ? `<a class="btn" href="${COMEUP}" target="_blank" rel="noopener">Corriger mon tracking →</a>` : ''}<a class="btn ${probs.length ? 'btn-ghost' : ''}" href="${CAL}" target="_blank" rel="noopener">Réserver un diagnostic gratuit</a></div>
-          <p style="margin-top:14px"><a style="color:var(--gold);text-decoration:none;font-size:14px" href="mailto:nicolas@skilltracking.fr?subject=${encodeURIComponent('Rapport tracking ' + r.host)}">ou écrivez-moi</a></p>
+          <div class="cta-row" style="margin-top:0">${probs.length ? `<a class="btn" data-ev="comeup" href="${COMEUPr}" target="_blank" rel="noopener">Corriger mon tracking →</a>` : ''}<a class="btn ${probs.length ? 'btn-ghost' : ''}" data-ev="calendly" href="${CALr}" target="_blank" rel="noopener">Réserver un diagnostic gratuit</a></div>
+          <p style="margin-top:14px"><a data-ev="mailto" style="color:var(--gold);text-decoration:none;font-size:14px" href="mailto:nicolas@skilltracking.fr?subject=${encodeURIComponent('Rapport tracking ' + r.host)}">ou écrivez-moi</a></p>
         </div>
       </div>
     </div>
     <div style="height:50px"></div>`;
 
+    // CTA de l'en-tête aussi
+    const head = document.querySelector('.top .btn'); if (head) { head.href = CALr; head.dataset.ev = 'calendly'; }
+    document.addEventListener('click', e => { const a = e.target.closest('[data-ev]'); if (a) track(a.dataset.ev); });
+    document.querySelectorAll('[data-ev-toggle]').forEach(d => d.addEventListener('toggle', () => { if (d.open) track(d.dataset.evToggle); }, { once: true }));
+    track('open');
     const range = document.getElementById('range');
+    let budT = null, budSent = null;
     if (range) {
+      const preB = +(new URLSearchParams(location.search).get('b') || 0);
+      if (preB >= 1000 && preB <= 100000) { range.value = preB; budSent = preB; }
+      range.addEventListener('input', () => { clearTimeout(budT); budT = setTimeout(() => { if (+range.value !== budSent) { budSent = +range.value; track('budget', budSent); } }, 1500); });
       const upd = () => { const b = +range.value; document.getElementById('bud').textContent = eur(b); document.getElementById('eur').innerHTML = `${eur(Math.round(b * imp.low / 100 / 50) * 50)} – ${eur(Math.round(b * imp.high / 100 / 50) * 50)}<small> / mois</small>`; };
       range.addEventListener('input', upd); upd();
     }

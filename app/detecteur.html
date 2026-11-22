@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Votre tracking a-t-il une panne ? · Détecteur gratuit · Skill Tracking</title>
+<meta name="description" content="Testez gratuitement votre tracking. Le détecteur ouvre votre boutique comme un visiteur, refuse puis accepte les cookies, va jusqu'au panier, et vous montre ce qui part trop tôt, ce qui est compté en double et ce qui ne mesure plus rien.">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" href="/app/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/app/style.css">
+<style>
+.leadbox{margin-top:18px;border:1px solid rgba(245,197,24,.3);border-radius:16px;padding:20px;background:rgba(245,197,24,.04)}
+.leadbox h3{font-size:18px;margin-bottom:6px}
+.leadbox .grid-f{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+@media(max-width:560px){.leadbox .grid-f{grid-template-columns:1fr}}
+.leadbox .inp{width:100%;min-height:50px}
+.leadbox .full{grid-column:1/-1}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--mut);margin-top:12px;line-height:1.45;cursor:pointer}
+.consent input{accent-color:var(--gold);width:17px;height:17px;margin-top:2px;flex:none}
+.lead-err{color:#ff8a8a;font-size:14px;margin-top:10px;min-height:1em}
+.unlock li{list-style:none;display:flex;gap:9px;align-items:flex-start;font-size:14.5px;color:#e9e9e9;margin:6px 0}
+.unlock li::before{content:"✓";color:var(--gold);font-weight:700}
+.unlock{padding:0;margin:10px 0 0}
+.blur-row{filter:blur(4px);opacity:.55;user-select:none}
+.timer{font-size:12.5px;color:var(--mut2);margin-top:10px}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"></div>
+<div class="stars" aria-hidden="true"></div>
+<header class="top"><div class="wrap">
+  <a class="wm" href="https://skilltracking.fr/">SKILL<span>TRACKING</span></a>
+  <a class="btn btn-sm" style="margin-left:auto" href="https://calendly.com/nicomalabre/30min?utm_source=detecteur" target="_blank" rel="noopener">Réserver un diagnostic</a>
+</div></header>
+
+<main class="wrap">
+  <section class="hero center">
+    <div class="krow"><span class="eyebrow"><span>✦</span> Gratuit · 2 minutes · Sans inscription</span></div>
+    <h1>Votre tracking a-t-il <em>une panne</em> ?</h1>
+    <p class="lead">Tapez l'adresse de votre boutique. Le détecteur l'ouvre comme un visiteur, refuse puis accepte les cookies, ouvre un produit et va jusqu'au panier. Il vous montre ce qui part trop tôt, ce qui est compté en double et ce qui ne mesure plus rien.</p>
+  </section>
+
+  <div class="console" style="max-width:740px;margin:0 auto">
+    <div class="console-bar"><i></i><i></i><i></i><span class="u" id="bar-u">détecteur · tracking</span><span class="live" id="bar-live"><b></b>prêt</span></div>
+    <div class="console-body">
+      <form class="field" id="st-form" aria-label="Tester une boutique">
+        <input id="st-url" type="text" inputmode="url" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="votre-boutique.fr" aria-label="Adresse de votre boutique" required>
+        <button id="st-go" class="btn" type="submit">Tester ma boutique</button>
+      </form>
+      <p class="fine center" id="st-reassure" style="margin-top:14px">Aucun accès à vos comptes · Ne passe jamais de commande · Ne modifie rien sur votre site</p>
+      <div id="st-out" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <section class="sec center" style="margin-top:48px">
+    <div class="krow"><span class="eyebrow"><span>✦</span> Ce que le détecteur vérifie</span></div>
+    <div class="grid2" style="text-align:left;margin-top:22px;grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr))">
+      <div class="card"><h3>Avant votre accord</h3><p class="fine" style="color:var(--mut);font-size:15px">Pixel Meta, Google, TikTok, Pinterest… qui part avant le clic sur « Accepter » : risque CNIL et données faussées.</p></div>
+      <div class="card"><h3>Après « Refuser »</h3><p class="fine" style="color:var(--mut);font-size:15px">Le refus du visiteur est-il vraiment respecté ? C'est le cas le plus sanctionné.</p></div>
+      <div class="card"><h3>Après « Accepter »</h3><p class="fine" style="color:var(--mut);font-size:15px">La mesure démarre-t-elle ? Le consentement arrive-t-il bien jusqu'à Google ?</p></div>
+      <div class="card"><h3>Le parcours d'achat</h3><p class="fine" style="color:var(--mut);font-size:15px">Vue produit, ajout au panier, début de commande : chaque étape est-elle mesurée, une seule fois, avec la valeur ?</p></div>
+    </div>
+  </section>
+</main>
+<footer class="foot"><div class="wrap">Skill Tracking · Nicolas Malabre, spécialiste du tracking · Le détecteur ne voit pas les achats : cette partie se vérifie à la main. · <a href="https://skilltracking.fr/" style="color:var(--gold);text-decoration:none">skilltracking.fr</a></div></footer>
+<div id="toast" role="status"></div>
+<script src="/app/detecteur.js"></script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 // Tests de l'app : sécurité des URLs du détecteur + API de base (sans navigateur).
 const assert = require('assert');
 const http = require('http');
-const { server, normalizeUrl, isPrivateIP, toDetectorFormat } = require('./server.js');
+const { server, normalizeUrl, isPrivateIP, toDetectorFormat, heatOf } = require('./server.js');
 let pass = 0, fail = 0;
 const check = async (label, fn) => { try { await fn(); pass++; } catch (e) { fail++; console.log('  FAIL:', label, '-', e.message); } };
 const rejects = async (p, re) => { let ok = false; try { await p; } catch (e) { ok = re.test(e.message); } assert(ok, 'devait être refusé'); };
@@ -28,6 +28,11 @@ function req(port, method, path, body) {
     assert.strictEqual(f.lisible, true); assert.strictEqual(f.controles[0].color, 'rouge'); assert(!('hook' in f.controles[0]));
     assert.deepStrictEqual(f.inventaire.outils, ['Meta Pixel']); assert.strictEqual(f.rapport, 'https://radar.skilltracking.fr/r/abc123');
   });
+  await check('score de chaleur : clic RDV = brûlant', () => {
+    const t = new Date().toISOString();
+    const h = heatOf([{ id: 'a1b2c3', t, type: 'open', host: 'x.fr' }, { id: 'a1b2c3', t, type: 'budget', value: 20000 }, { id: 'a1b2c3', t, type: 'calendly' }, { id: 'zz9988', t, type: 'open', host: 'y.fr' }]);
+    assert.strictEqual(h[0].id, 'a1b2c3'); assert.strictEqual(h[0].temp, 'brulant'); assert.strictEqual(h[0].budget, 20000); assert.strictEqual(h[1].temp, 'tiede');
+  });
   await new Promise(r => server.listen(0, '127.0.0.1', r));
   const port = server.address().port;
   await check('GET /api/data', async () => { const r = await req(port, 'GET', '/api/data'); assert.strictEqual(r.code, 200); const j = JSON.parse(r.body); assert(Array.isArray(j.qualified) && j.index && Array.isArray(j.index.days)); });
@@ -37,6 +42,9 @@ function req(port, method, path, body) {
   await check('rapport public : id invalide refusé', async () => { const r = await req(port, 'GET', '/api/report/..%2F..%2Fpackage'); assert.notStrictEqual(r.code, 200); });
   await check('page rapport publique servie', async () => { const r = await req(port, 'GET', '/r/abc123XYZ'); assert.strictEqual(r.code, 200); assert(/rapport\.js/.test(r.body)); });
   await check('POST /scan vers IP privée refusé', async () => { const r = await req(port, 'POST', '/scan', { url: 'http://10.0.0.1' }); assert.strictEqual(r.code, 400); });
+  await check('événement : type inconnu refusé', async () => { const r = await req(port, 'POST', '/api/event', { id: 'abc12345', type: 'hack' }); assert.strictEqual(r.code, 400); });
+  await check('événement : rapport inexistant refusé', async () => { const r = await req(port, 'POST', '/api/event', { id: 'nexistepas1', type: 'open' }); assert.strictEqual(r.code, 404); });
+  await check('événement : mode aperçu ignoré', async () => { const r = await req(port, 'POST', '/api/event', { id: 'abc12345', type: 'open', preview: true }); assert.strictEqual(r.code, 204); });
   await check('scan vers IP privée refusé', async () => { const r = await req(port, 'POST', '/api/scan', { url: 'http://127.0.0.1' }); assert.strictEqual(r.code, 400); });
   await check('statut pipeline inconnu refusé', async () => { const r = await req(port, 'PUT', '/api/pipeline', { host: 'x.fr', status: 'nimporte' }); assert.strictEqual(r.code, 400); });
   server.close();
