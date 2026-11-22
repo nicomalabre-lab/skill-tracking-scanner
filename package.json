@@ -8,6 +8,7 @@
     "scan": "node scan.js candidates.json",
     "app": "node server.js",
     "index": "node build-index.js",
+    "source": "node source-meta.js",
     "test": "node test-scoring.js && node test-deep.js && node test-app.js"
   },
   "dependencies": {

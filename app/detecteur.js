@@ -15,14 +15,26 @@
     running = true; go.disabled = true; go.textContent = 'Analyse…';
     const label = u.replace(/^https?:\/\//, '').replace(/\/$/, '');
     setBar('analyse · ' + label, 'en cours');
-    out.innerHTML = `<div class="st-report" style="margin-top:18px"><div class="st-log2" id="st-log"></div><div class="st-bar"><i id="st-p"></i></div><div class="timer" id="st-timer">Environ 2 minutes : je teste aussi le refus, l'acceptation et le panier. Restez sur la page.</div></div>`;
-    setTimeout(() => { const i = $('#st-p'); if (i) { i.style.transition = 'width 140s cubic-bezier(.1,.6,.3,1)'; i.style.width = '94%'; } }, 60);
+    out.innerHTML = `<div class="st-report" style="margin-top:18px"><div class="st-log2" id="st-log"></div><div class="st-bar"><i id="st-p"></i></div><div class="timer" id="st-timer"><b id="st-pct" style="color:var(--gold);font-size:15px">0 %</b> · environ 2 minutes : je teste aussi le refus, l'acceptation et le panier. Restez sur la page.</div></div>`;
+    let pct = 0, pctAt = Date.now();
+    const bar = () => $('#st-p');
     const log = $('#st-log');
     const step = msg => { log.querySelectorAll('.ln .sp').forEach(s => { s.outerHTML = '<span class="tk">✓</span>'; }); const d = document.createElement('div'); d.className = 'ln'; d.innerHTML = '<span class="sp"></span>' + esc(msg); log.appendChild(d); };
-    const t0 = Date.now(); const tick = setInterval(() => { const s = Math.round((Date.now() - t0) / 1000); const el = $('#st-timer'); if (el) el.textContent = `${s} s écoulées · environ 2 minutes au total. Restez sur la page.`; }, 1000);
+    const t0 = Date.now();
+    // % réel envoyé par le robot à chaque étape ; entre deux étapes on avance doucement (sans jamais dépasser l'étape suivante)
+    let shown = 0;
+    const tick = setInterval(() => {
+      const el = $('#st-timer'); if (!el) return;
+      const target = Math.min(pct + 5, 97);
+      if (shown < target) shown = Math.min(target, shown + 0.35);
+      const b = bar(); if (b) { b.style.transition = 'width .9s linear'; b.style.width = shown.toFixed(1) + '%'; }
+      const el2 = Math.max(1, (Date.now() - t0) / 1000);
+      const left = shown > 8 ? Math.max(5, Math.round(el2 * (100 - shown) / shown / 5) * 5) : null;
+      el.innerHTML = `<b style="color:var(--gold);font-size:15px">${Math.floor(shown)} %</b> · ${left ? 'encore environ ' + (left >= 60 ? Math.floor(left / 60) + ' min ' + (left % 60 ? (left % 60) + ' s' : '') : left + ' s') : 'calcul du temps restant…'} · restez sur la page`;
+    }, 300);
     const done = () => { running = false; go.disabled = false; go.textContent = 'Tester ma boutique'; clearInterval(tick); };
     const es = new EventSource('/api/public/scan?url=' + encodeURIComponent(u));
-    es.addEventListener('step', e => step(JSON.parse(e.data).msg));
+    es.addEventListener('step', e => { const d = JSON.parse(e.data); if (typeof d.pct === 'number' && d.pct > pct) pct = d.pct; step(d.msg); });
     es.addEventListener('result', e => { es.close(); done(); setBar('rapport · ' + label, 'testé à l’instant'); verdict(JSON.parse(e.data)); });
     es.addEventListener('fail', e => { es.close(); done(); setBar('détecteur · tracking', 'prêt'); let m = 'Je n’ai pas pu lire ce site.'; try { m = JSON.parse(e.data).error || m; } catch (_) {} errorCard(m); });
     es.onerror = () => { if (es.readyState === 2) return; es.close(); done(); if (!out.querySelector('.st-verdict')) errorCard('Le détecteur est occupé. Réessayez dans une minute : il ne traite qu’un test à la fois.'); };

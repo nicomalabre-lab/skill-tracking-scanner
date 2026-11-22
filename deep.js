@@ -394,7 +394,9 @@ async function readPage(page) {
 async function deepScan(browser, c, opts = {}) {
   const onStep = opts.onStep || (() => {});
   const res = { name: c.name, url: c.url, startedAt: new Date().toISOString(), phases: {}, steps: [] };
-  const say = (k, msg) => { res.steps.push({ k, msg, t: Date.now() }); onStep(k, msg); };
+  // progression : ~17 étapes au total (les sites sans produit en ont moins : la barre saute alors à 100 %)
+  const TOTAL_STEPS = 17; let nStep = 0;
+  const say = (k, msg) => { nStep++; const pct = k === 'D' ? 97 : Math.min(95, Math.round(nStep / TOTAL_STEPS * 100)); res.steps.push({ k, msg, t: Date.now(), pct }); onStep(k, msg, pct); };
   let origin; try { origin = new URL(c.url).origin; } catch (_) { origin = c.url; }
 
   // A — visiteur neuf

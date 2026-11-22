@@ -236,7 +236,7 @@
     el.innerHTML = `<div class="console" style="margin-bottom:18px"><div class="console-bar"><i></i><i></i><i></i><span class="u">prospects chauds · ils ont ouvert leur rapport</span><span class="live"><b></b>en direct</span></div><div class="console-body" style="padding-top:6px;padding-bottom:6px">${list.map(h => {
       const [dot, lab] = TEMP[h.temp];
       const acts = Object.entries(h.counts).map(([k, n]) => EVL[k] + (n > 1 ? ' ×' + n : '')).join(' · ');
-      return `<div class="lamp"><span class="dot ${dot}"></span><div style="flex:1"><b>${esc(h.name)}</b> <span class="pill ${h.temp === 'brulant' ? 'red' : h.temp === 'chaud' ? 'new' : ''}">${lab} · ${h.score}</span><div class="fine" style="margin-top:4px">${esc(acts)}${h.budget ? ' · budget ' + h.budget.toLocaleString('fr-FR') + ' €/mois' : ''} · ${ago(h.last)}${h.contact ? `<br><b style="color:var(--glow)">${esc(h.contact)}</b>` : ''}</div></div><a class="btn btn-ghost btn-xs" href="${esc((S.publicBase || location.origin) + '/r/' + h.id)}?preview=1" target="_blank" rel="noopener">Rapport ↗</a></div>`;
+      return `<div class="lamp"><span class="dot ${dot}"></span><div style="flex:1"><b>${esc(h.name)}</b> <span class="pill ${h.temp === 'brulant' ? 'red' : h.temp === 'chaud' ? 'new' : ''}">${lab} · ${h.score}</span>${h.qualified === true ? ' <span class="pill green">lead qualifié</span>' : h.qualified === false ? ' <span class="pill">lead tiède</span>' : ''}<div class="fine" style="margin-top:4px">${esc(acts)}${h.budget ? ' · budget ' + h.budget.toLocaleString('fr-FR') + ' €/mois' : ''} · ${ago(h.last)}${h.contact ? `<br><b style="color:var(--glow)">${esc(h.contact)}</b>` : ''}</div></div><a class="btn btn-ghost btn-xs" href="${esc((S.publicBase || location.origin) + '/r/' + h.id)}?preview=1" target="_blank" rel="noopener">Rapport ↗</a></div>`;
     }).join('')}</div></div>`;
   }
 
@@ -288,12 +288,12 @@
     const label = esc(raw.replace(/^https?:\/\//, '').replace(/\/$/, ''));
     const out = $('#scanResult');
     out.innerHTML = `<div class="console st-report" style="margin-top:16px"><div class="console-bar"><i></i><i></i><i></i><span class="u">analyse · ${label}</span><span class="live"><b></b>en cours</span></div><div class="console-body"><div class="st-log2" id="st-log"></div><div class="st-bar"><i id="st-p"></i></div></div></div>`;
-    setTimeout(() => { const i = $('#st-p'); if (i) { i.style.transition = 'width 150s cubic-bezier(.1,.6,.3,1)'; i.style.width = '94%'; } }, 60);
+
     const log = $('#st-log');
     const pushStep = msg => { log.querySelectorAll('.ln .sp').forEach(s => { s.outerHTML = '<span class="tk">✓</span>'; }); const d = document.createElement('div'); d.className = 'ln'; d.innerHTML = '<span class="sp"></span>' + esc(msg); log.appendChild(d); };
     const done = () => { btn.disabled = false; btn.textContent = 'Tester la boutique'; $('#detLive').innerHTML = '<b></b>prêt'; };
     const es = new EventSource('/api/scan/stream?url=' + encodeURIComponent(raw));
-    es.addEventListener('step', ev => pushStep(JSON.parse(ev.data).msg));
+    es.addEventListener('step', ev => { const d = JSON.parse(ev.data); pushStep((typeof d.pct === 'number' ? d.pct + ' % · ' : '') + d.msg); const i = $('#st-p'); if (i && d.pct) { i.style.transition = 'width .8s ease'; i.style.width = d.pct + '%'; } });
     es.addEventListener('result', ev => {
       es.close(); done();
       const r = JSON.parse(ev.data);
