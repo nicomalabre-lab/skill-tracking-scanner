@@ -17,6 +17,8 @@ const GH_REPO = process.env.GITHUB_DATA_REPO || '';            // ex. nicomalabr
 const RADAR_PASSWORD = process.env.RADAR_PASSWORD || '';       // protège le Radar interne (prospects, notes)
 const PUBLIC_ORIGINS = (process.env.PUBLIC_ORIGINS || 'https://skilltracking.fr,https://www.skilltracking.fr').split(',').map(x => x.trim()).filter(Boolean);
 const PUBLIC_SCANS_PER_HOUR = Number(process.env.PUBLIC_SCANS_PER_HOUR) || 3;
+const NTFY_TOPIC = process.env.NTFY_TOPIC || '';           // notifications téléphone via l'app gratuite ntfy (ntfy.sh)
+const WEBHOOK_URL = process.env.WEBHOOK_URL || '';         // ou n'importe quel webhook (Slack, Make, Zapier…)
 try { fs.mkdirSync(path.join(DATA_DIR, 'reports'), { recursive: true }); } catch (_) {}
 const PIPELINE = path.join(DATA_DIR, 'pipeline.json');
 const CANDIDATES = path.join(DATA_DIR === ROOT ? ROOT : DATA_DIR, 'candidates.json');
@@ -143,6 +145,62 @@ function toDetectorFormat(rec, base) {
 }
 const baseUrl = req => process.env.PUBLIC_BASE_URL || `${req.headers['x-forwarded-proto'] || 'http'}://${req.headers.host}`;
 
+// ---- Signaux d'intérêt des prospects (rapport ouvert, budget réglé, clic RDV) ----
+const EVENTS = path.join(DATA_DIR, 'events.json');
+const EV_TYPES = { open: 1, revisit: 2, budget: 3, proofs: 1, calendly: 6, comeup: 6, mailto: 5 };
+const EV_LABEL = { open: 'a ouvert son rapport', revisit: 'est revenu sur son rapport', budget: 'a réglé son budget pub', proofs: 'a ouvert les preuves techniques', calendly: 'a cliqué sur « Réserver un diagnostic »', comeup: 'a cliqué sur « Corriger mon tracking » (35 €)', mailto: 'a cliqué sur « Écrivez-moi »' };
+const evHits = new Map();
+const lastNotif = new Map();
+async function notify(title, msg, url, prio) {
+  const jobs = [];
+  if (NTFY_TOPIC) jobs.push(fetch('https://ntfy.sh/' + encodeURIComponent(NTFY_TOPIC), { method: 'POST', body: msg, headers: { Title: title.replace(/[^\x20-\x7E]/g, ''), Priority: String(prio || 3), Tags: 'fire', ...(url ? { Click: url } : {}) } }).catch(() => {}));
+  if (WEBHOOK_URL) jobs.push(fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title, text: msg, url }) }).catch(() => {}));
+  await Promise.all(jobs);
+  return jobs.length;
+}
+function heatOf(events) {
+  const by = {};
+  for (const e of events) {
+    const h = by[e.id] = by[e.id] || { id: e.id, host: e.host, name: e.name, score: 0, first: e.t, last: e.t, counts: {}, budget: null, days: new Set() };
+    h.counts[e.type] = (h.counts[e.type] || 0) + 1;
+    if (h.counts[e.type] === 1 || e.type === 'revisit') h.score += EV_TYPES[e.type] || 0;
+    if (e.type === 'budget' && e.value) h.budget = e.value;
+    h.last = e.t > h.last ? e.t : h.last; h.days.add(e.t.slice(0, 10));
+  }
+  return Object.values(by).map(h => ({ ...h, days: h.days.size, temp: h.score >= 8 ? 'brulant' : h.score >= 4 ? 'chaud' : 'tiede' })).sort((a, b) => b.score - a.score || (b.last > a.last ? 1 : -1));
+}
+async function recordEvent(req, b) {
+  const ip = String(req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
+  const now = Date.now(), arr = (evHits.get(ip) || []).filter(t => now - t < 3600000);
+  if (arr.length >= 60) return { ok: false, code: 429 };
+  arr.push(now); evHits.set(ip, arr);
+  const id = String(b.id || ''), type = String(b.type || '');
+  if (!/^[A-Za-z0-9]{6,20}$/.test(id) || !(type in EV_TYPES)) return { ok: false, code: 400 };
+  const rep = await loadReport(id);
+  if (!rep) return { ok: false, code: 404 };
+  const value = type === 'budget' ? Math.max(0, Math.min(10000000, Math.round(Number(b.value) || 0))) : null;
+  const all = readJSON(EVENTS, []);
+  const mine = all.filter(e => e.id === id);
+  let t = type;
+  if (type === 'open' && mine.some(e => e.type === 'open' || e.type === 'revisit')) t = 'revisit';
+  const ev = { t: new Date().toISOString(), id, host: rep.host, name: rep.name || rep.host, type: t, value };
+  all.push(ev); writeJSON(EVENTS, all.slice(-5000));
+  // notification : 1re ouverture, retour un autre jour, budget, et chaque clic d'action ; anti-spam 1 h par type
+  const key = id + '|' + t, last = lastNotif.get(key) || 0;
+  const revisitNewDay = t === 'revisit' && !mine.some(e => e.t.slice(0, 10) === ev.t.slice(0, 10));
+  const worth = t === 'open' || revisitNewDay || t === 'budget' || ['calendly', 'comeup', 'mailto'].includes(t);
+  let notified = 0;
+  if (worth && now - last > 3600000) {
+    lastNotif.set(key, now);
+    const h = heatOf([...mine, ev])[0];
+    const hot = ['calendly', 'comeup', 'mailto'].includes(t);
+    const title = (hot ? 'PROSPECT BRULANT : ' : 'Prospect chaud : ') + ev.name;
+    const msg = `${ev.name} (${ev.host}) ${EV_LABEL[t]}${value ? ' : ' + value.toLocaleString('fr-FR') + ' €/mois' : ''}. Score ${h.score}.${hot ? ' Rappelle-le aujourd’hui.' : ''}`;
+    notified = await notify(title, msg, `${process.env.PUBLIC_BASE_URL || ''}/r/${id}?preview=1`, hot ? 5 : 4);
+  }
+  return { ok: true, type: t, notified };
+}
+
 const hostOf = url => { try { return new URL(url).hostname.replace(/^www\./, ''); } catch (_) { return url; } };
 
 // ---- Live scan (scan PROFOND) : un navigateur partagé, un scan à la fois ----
@@ -182,8 +240,18 @@ async function api(req, res, url) {
   const rm = p.match(/^\/api\/report\/([A-Za-z0-9]+)$/);
   if (req.method === 'GET' && rm) { const r = await loadReport(rm[1]); return r ? send(res, 200, r) : send(res, 404, { error: 'Rapport introuvable' }); }
 
+  if (req.method === 'POST' && p === '/api/event') {
+    const b = await body(req, 2000);
+    if (b.preview) return send(res, 204, '');
+    const r = await recordEvent(req, b);
+    return send(res, r.ok ? 200 : r.code, r);
+  }
+
   // ---------- PRIVÉ (Radar) ----------
   if (!authed(req)) return askAuth(res);
+
+  if (req.method === 'GET' && p === '/api/heat') return send(res, 200, heatOf(readJSON(EVENTS, [])));
+  if (req.method === 'POST' && p === '/api/notify-test') { const n = await notify('Test Radar Skill Tracking', 'Les alertes prospects chauds fonctionnent.', null, 3); return send(res, 200, { ok: true, channels: n }); }
 
   if (req.method === 'GET' && p === '/api/data') {
     return send(res, 200, {
@@ -308,4 +376,4 @@ if (require.main === module) {
   const stop = async () => { try { if (browserP) (await browserP).close(); } catch (_) {} process.exit(0); };
   process.on('SIGINT', stop); process.on('SIGTERM', stop);
 }
-module.exports = { server, normalizeUrl, isPrivateIP, toDetectorFormat, saveReport, loadReport };
+module.exports = { server, normalizeUrl, isPrivateIP, toDetectorFormat, saveReport, loadReport, heatOf };
