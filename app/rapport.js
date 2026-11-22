@@ -9,7 +9,8 @@
   const id = (location.pathname.match(/\/r\/([A-Za-z0-9]+)/) || [])[1];
   // ?preview=1 : c'est Nicolas qui regarde depuis le Radar, on ne compte rien
   const preview = /[?&]preview=1/.test(location.search);
-  const hot = /[?&]hot=1/.test(location.search);
+  const qsB = new URLSearchParams(location.search).get('b');
+  let hot = /[?&]hot=1/.test(location.search);
   const track = (type, value) => {
     if (preview || !id) return;
     const data = JSON.stringify({ id, type, value });
@@ -20,6 +21,8 @@
   const lamp = (c, conseq) => `<div class="lamp"><span class="dot ${DOT[c.color] || 'x'}"></span><div><b>${esc(c.phrase)}</b>${conseq && c.conseq ? `<div class="st-conseq">${esc(c.conseq)}</div>` : ''}${c.preuve ? `<div class="preuve">${esc(c.preuve)}</div>` : ''}</div></div>`;
 
   function render(r) {
+    // budget déclaré < 5 000 € = petit compte (version 35 €). Sans budget déclaré : grosse marque qui fait de la pub = version diagnostic.
+    if (!hot && !qsB && r.runsAds && (r.controles || []).some(c => c.color === 'rouge')) hot = true;
     const tag = u => u + (u.includes('?') ? '&' : '?') + 'utm_source=rapport&utm_medium=radar&utm_campaign=' + encodeURIComponent(r.host || '') + '&utm_content=' + id;
     const CALr = tag(CAL.replace('?utm_source=rapport', '')), COMEUPr = COMEUP;
     document.title = `${r.host} · Rapport tracking · Skill Tracking`;
@@ -70,10 +73,10 @@
         ${oks.length ? `<div class="st-ok-head">Ce qui va bien ou n'a pas pu être vérifié (${oks.length})</div>${oks.map(c => lamp(c, false)).join('')}` : ''}
         ${(r.payloads || []).length ? `<details class="more" data-ev-toggle="proofs"><summary>Preuves techniques : requêtes capturées (${r.payloads.length})</summary><div class="payloads">${r.payloads.map(p => `<b>[${esc(p.step)}] ${esc(p.method)} ${esc(p.vendor || p.kind)}</b>\n${esc(p.url)}${p.body ? '\n' + esc(String(p.body).slice(0, 400)) : ''}`).join('\n\n')}</div></details>` : ''}
         <div class="st-cta2" style="margin-top:22px;text-align:center">
-          ${hot ? `<p class="st-push" style="font-size:15.5px;color:#e9e9e9;max-width:36em;margin:0 auto 14px;line-height:1.5">Avec votre budget, ces pannes vous coûtent cher. <b>Je vous offre 30 minutes</b> pour vous montrer quoi corriger en premier, preuves à l’écran.</p>
-          <div class="cta-row" style="margin-top:0"><a class="btn" data-ev="calendly" href="${CALr}" target="_blank" rel="noopener">Réserver mon diagnostic offert</a>${probs.length ? `<a class="btn btn-ghost" data-ev="comeup" href="${COMEUPr}" target="_blank" rel="noopener">Corriger pour 35 €</a>` : ''}</div>` : `
-          ${probs.length ? `<p class="st-push" style="font-size:15.5px;color:#e9e9e9;max-width:36em;margin:0 auto 14px;line-height:1.5">Je corrige ces points <b>sous 48h pour 35 €</b>, remboursé si je ne trouve rien à corriger.</p>` : ''}
-          <div class="cta-row" style="margin-top:0">${probs.length ? `<a class="btn" data-ev="comeup" href="${COMEUPr}" target="_blank" rel="noopener">Corriger mon tracking →</a>` : ''}<a class="btn ${probs.length ? 'btn-ghost' : ''}" data-ev="calendly" href="${CALr}" target="_blank" rel="noopener">Réserver un diagnostic gratuit</a></div>`}
+          ${hot ? `<p class="st-push" style="font-size:15.5px;color:#e9e9e9;max-width:36em;margin:0 auto 14px;line-height:1.5">${qsB ? 'Avec votre budget, ces pannes vous coûtent cher.' : 'Vous faites de la publicité : chaque jour, ces pannes vous coûtent.'} <b>Je vous offre 30 minutes</b> pour vous montrer quoi corriger en premier, preuves à l’écran.</p>
+          <div class="cta-row" style="margin-top:0"><a class="btn" data-ev="calendly" href="${CALr}" target="_blank" rel="noopener">Réserver mon diagnostic offert</a></div>` : `
+          ${probs.length ? `<p class="st-push" style="font-size:15.5px;color:#e9e9e9;max-width:36em;margin:0 auto 14px;line-height:1.5">Je corrige <b>la panne la plus grave sous 48h pour 35 €</b>, remboursé si je ne trouve rien à corriger.</p>` : ''}
+          <div class="cta-row" style="margin-top:0">${probs.length ? `<a class="btn" data-ev="comeup" href="${COMEUPr}" target="_blank" rel="noopener">Corriger la panne la plus grave →</a>` : ''}<a class="btn ${probs.length ? 'btn-ghost' : ''}" data-ev="calendly" href="${CALr}" target="_blank" rel="noopener">Réserver un diagnostic gratuit</a></div>`}
           <p style="margin-top:14px"><a data-ev="mailto" style="color:var(--gold);text-decoration:none;font-size:14px" href="mailto:nicolas@skilltracking.fr?subject=${encodeURIComponent('Rapport tracking ' + r.host)}">ou écrivez-moi</a></p>
         </div>
       </div>
