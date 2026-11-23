@@ -1,0 +1,566 @@
+{
+ "date": "2026-11-23",
+ "keywords": [
+  "livraison offerte",
+  "nouvelle collection",
+  "made in france",
+  "code promo",
+  "boutique en ligne",
+  "fabriqué en france",
+  "commandez",
+  "offre limitée"
+ ],
+ "kept": [
+  {
+   "name": "Stand-prive.com",
+   "url": "https://www.stand-prive.com/",
+   "host": "stand-prive.com",
+   "ads": 14,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "nouvelle collection"
+   ]
+  },
+  {
+   "name": "Zimeo France",
+   "url": "https://zimeo-toile.fr/",
+   "host": "zimeo-toile.fr",
+   "ads": 12,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "fabriqué en france"
+   ]
+  },
+  {
+   "name": "Crève",
+   "url": "https://creveclothing.com/",
+   "host": "creveclothing.com",
+   "ads": 9,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "nouvelle collection"
+   ]
+  },
+  {
+   "name": "Mielle",
+   "url": "https://getmielle.com/",
+   "host": "getmielle.com",
+   "ads": 8,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "livraison offerte",
+    "offre limitée"
+   ]
+  },
+  {
+   "name": "Quickz-it",
+   "url": "https://quickz-it.fr/",
+   "host": "quickz-it.fr",
+   "ads": 6,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "livraison offerte",
+    "made in france",
+    "code promo"
+   ]
+  },
+  {
+   "name": "JOLT France",
+   "url": "https://getjolt.fr/",
+   "host": "getjolt.fr",
+   "ads": 6,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "livraison offerte",
+    "commandez"
+   ]
+  },
+  {
+   "name": "Soya Paris",
+   "url": "https://soya-paris.com/",
+   "host": "soya-paris.com",
+   "ads": 6,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "commandez",
+    "offre limitée"
+   ]
+  },
+  {
+   "name": "Fincut",
+   "url": "https://fincutmen.com/",
+   "host": "fincutmen.com",
+   "ads": 5,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "livraison offerte",
+    "code promo",
+    "offre limitée"
+   ]
+  },
+  {
+   "name": "MAYBE PARIS - Soins Capillaires Naturels",
+   "url": "https://www.maybe-paris.co/",
+   "host": "maybe-paris.co",
+   "ads": 5,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "livraison offerte",
+    "made in france",
+    "fabriqué en france"
+   ]
+  },
+  {
+   "name": "Livingstone.art",
+   "url": "https://livingstone.art/",
+   "host": "livingstone.art",
+   "ads": 5,
+   "platform": null,
+   "why": null,
+   "keywords": [
+    "nouvelle collection"
+   ]
+  },
+  {
+   "name": "Alsabrico",
+   "url": "https://www.alsabrico.fr/",
+   "host": "alsabrico.fr",
+   "ads": 5,
+   "platform": "PrestaShop",
+   "why": null,
+   "keywords": [
+    "boutique en ligne"
+   ]
+  },
+  {
+   "name": "Flytex",
+   "url": "https://flytex.fr/",
+   "host": "flytex.fr",
+   "ads": 5,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "commandez"
+   ]
+  },
+  {
+   "name": "Sahomashop",
+   "url": "https://sahomashop.com/",
+   "host": "sahomashop.com",
+   "ads": 4,
+   "platform": "WooCommerce",
+   "why": null,
+   "keywords": [
+    "livraison offerte"
+   ]
+  },
+  {
+   "name": "My Variations",
+   "url": "https://myvariations.com/",
+   "host": "myvariations.com",
+   "ads": 4,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "livraison offerte"
+   ]
+  },
+  {
+   "name": "Fiido",
+   "url": "https://fr.fiido.com/",
+   "host": "fr.fiido.com",
+   "ads": 4,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "code promo"
+   ]
+  },
+  {
+   "name": "Iconic Puzzles FR",
+   "url": "https://iconic-puzzles.fr/",
+   "host": "iconic-puzzles.fr",
+   "ads": 4,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "fabriqué en france",
+    "commandez"
+   ]
+  },
+  {
+   "name": "Luveon",
+   "url": "https://luveon.com/",
+   "host": "luveon.com",
+   "ads": 3,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "livraison offerte",
+    "code promo",
+    "boutique en ligne"
+   ]
+  },
+  {
+   "name": "RSVP Paris",
+   "url": "https://rsvp-paris.com/",
+   "host": "rsvp-paris.com",
+   "ads": 3,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "made in france"
+   ]
+  },
+  {
+   "name": "Auchan",
+   "url": "https://www.auchan.fr/",
+   "host": "auchan.fr",
+   "ads": 3,
+   "platform": "Magento",
+   "why": null,
+   "keywords": [
+    "code promo"
+   ]
+  },
+  {
+   "name": "Circles",
+   "url": "https://wearecircles.com/",
+   "host": "wearecircles.com",
+   "ads": 3,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "fabriqué en france"
+   ]
+  },
+  {
+   "name": "Jymm",
+   "url": "https://www.jymm.fr/",
+   "host": "jymm.fr",
+   "ads": 3,
+   "platform": "Magento",
+   "why": null,
+   "keywords": [
+    "fabriqué en france"
+   ]
+  },
+  {
+   "name": "Milona Paris",
+   "url": "https://milona-paris.com/",
+   "host": "milona-paris.com",
+   "ads": 2,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "livraison offerte"
+   ]
+  },
+  {
+   "name": "Hello Hossy",
+   "url": "https://hello-hossy.com/",
+   "host": "hello-hossy.com",
+   "ads": 2,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "livraison offerte",
+    "nouvelle collection"
+   ]
+  },
+  {
+   "name": "Françoise Saget",
+   "url": "https://www.francoisesaget.com/",
+   "host": "francoisesaget.com",
+   "ads": 2,
+   "platform": "Magento",
+   "why": null,
+   "keywords": [
+    "nouvelle collection",
+    "offre limitée"
+   ]
+  },
+  {
+   "name": "Geeli House",
+   "url": "https://geelihouse.com/",
+   "host": "geelihouse.com",
+   "ads": 2,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "nouvelle collection",
+    "code promo"
+   ]
+  },
+  {
+   "name": "LBO",
+   "url": "https://www.laboutiqueofficielle.com/",
+   "host": "laboutiqueofficielle.com",
+   "ads": 2,
+   "platform": "Magento",
+   "why": null,
+   "keywords": [
+    "nouvelle collection",
+    "commandez"
+   ]
+  },
+  {
+   "name": "Sapiens",
+   "url": "https://sapiens.co/",
+   "host": "sapiens.co",
+   "ads": 2,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "made in france"
+   ]
+  },
+  {
+   "name": "IPP pharma",
+   "url": "https://www.ipp-pharma.net/",
+   "host": "ipp-pharma.net",
+   "ads": 2,
+   "platform": null,
+   "why": null,
+   "keywords": [
+    "boutique en ligne"
+   ]
+  },
+  {
+   "name": "Roborock Garden",
+   "url": "https://garden.roborock.com/",
+   "host": "garden.roborock.com",
+   "ads": 2,
+   "platform": "Magento",
+   "why": null,
+   "keywords": [
+    "boutique en ligne"
+   ]
+  },
+  {
+   "name": "HOLY France",
+   "url": "https://fr.holy.com/",
+   "host": "fr.weareholy.com",
+   "ads": 1,
+   "platform": "Shopify",
+   "why": null,
+   "keywords": [
+    "livraison offerte"
+   ]
+  }
+ ],
+ "rejected": [
+  {
+   "name": "Minigold Global",
+   "url": "https://minigold.shop/",
+   "host": "minigold.shop",
+   "ads": 10,
+   "platform": "Shopify",
+   "why": "pas francophone",
+   "keywords": [
+    "code promo"
+   ]
+  },
+  {
+   "name": "Epodex - France",
+   "url": "https://www.epodex.com/",
+   "host": "epodex.com",
+   "ads": 7,
+   "platform": "Magento",
+   "why": "pas francophone",
+   "keywords": [
+    "made in france",
+    "fabriqué en france"
+   ]
+  },
+  {
+   "name": "Uber Eats",
+   "url": "https://ubereats.com/",
+   "host": "ubereats.com",
+   "ads": 6,
+   "why": "HTTP 403",
+   "keywords": [
+    "code promo"
+   ]
+  },
+  {
+   "name": "Halara France",
+   "url": "https://thehalara.fr/",
+   "host": "thehalara.fr",
+   "ads": 5,
+   "why": "HTTP 403",
+   "keywords": [
+    "nouvelle collection",
+    "code promo"
+   ]
+  },
+  {
+   "name": "Disney+",
+   "url": "https://www.disneyplus.com/",
+   "host": "disneyplus.com",
+   "ads": 4,
+   "platform": "Magento",
+   "why": "pas francophone",
+   "keywords": [
+    "offre limitée"
+   ]
+  },
+  {
+   "name": "WhatChimp",
+   "url": "https://whatchimp.com/",
+   "host": "whatchimp.com",
+   "ads": 4,
+   "platform": "WooCommerce",
+   "why": "pas francophone",
+   "keywords": [
+    "offre limitée"
+   ]
+  },
+  {
+   "name": "Kenya Airways",
+   "url": "https://www.kenya-airways.com/",
+   "host": "kenya-airways.com",
+   "ads": 3,
+   "platform": "Magento",
+   "why": "pas francophone",
+   "keywords": [
+    "code promo"
+   ]
+  },
+  {
+   "name": "Heuver Tyres",
+   "url": "https://www.heuver.fr/",
+   "host": "heuver.fr",
+   "ads": 3,
+   "platform": null,
+   "why": "pas une boutique",
+   "keywords": [
+    "boutique en ligne"
+   ]
+  },
+  {
+   "name": "Splandidebiz réseautage",
+   "url": "https://splandidebiz.com/",
+   "host": "splandidebiz.com",
+   "ads": 3,
+   "why": "HTTP 403",
+   "keywords": [
+    "commandez"
+   ]
+  },
+  {
+   "name": "Materfrance",
+   "url": "https://materfrance.fr/",
+   "host": "materfrance.fr",
+   "ads": 2,
+   "why": "HTTP 403",
+   "keywords": [
+    "livraison offerte",
+    "commandez"
+   ]
+  },
+  {
+   "name": "Raid: Shadow Legends",
+   "url": "https://lps.plarium.com/",
+   "host": "lps.plarium.com",
+   "ads": 2,
+   "why": "site injoignable",
+   "keywords": [
+    "code promo"
+   ]
+  },
+  {
+   "name": "COVER Connect",
+   "url": "https://www.thecoverconnect.com/",
+   "host": "thecoverconnect.com",
+   "ads": 2,
+   "platform": "Magento",
+   "why": "pas francophone",
+   "keywords": [
+    "code promo"
+   ]
+  },
+  {
+   "name": "Sasie Center Moto",
+   "url": "https://sasiecenter.com/",
+   "host": "sasiecenter.com",
+   "ads": 2,
+   "why": "HTTP 403",
+   "keywords": [
+    "boutique en ligne"
+   ]
+  },
+  {
+   "name": "E-teile.ch",
+   "url": "https://e-teile.ch/",
+   "host": "e-teile.ch",
+   "ads": 2,
+   "platform": "Magento",
+   "why": "pas francophone",
+   "keywords": [
+    "boutique en ligne"
+   ]
+  },
+  {
+   "name": "Journal Bien-être",
+   "url": "https://eu.bonjourdrink.co/",
+   "host": "bonjourdrink.co",
+   "ads": 2,
+   "platform": "Shopify",
+   "why": "pas francophone",
+   "keywords": [
+    "fabriqué en france"
+   ]
+  },
+  {
+   "name": "Carrefour",
+   "url": "https://carrefour.fr/",
+   "host": "carrefour.fr",
+   "ads": 2,
+   "why": "HTTP 403",
+   "keywords": [
+    "commandez"
+   ]
+  },
+  {
+   "name": "PastBook",
+   "url": "https://services.pastbook.com/",
+   "host": "moments.pastbook.com",
+   "ads": 2,
+   "platform": null,
+   "why": "pas une boutique",
+   "keywords": [
+    "commandez"
+   ]
+  },
+  {
+   "name": "Nuance Audio",
+   "url": "https://nuanceaudio.com/",
+   "host": "nuanceaudio.com",
+   "ads": 2,
+   "why": "HTTP 403",
+   "keywords": [
+    "offre limitée"
+   ]
+  },
+  {
+   "name": "Notino",
+   "url": "https://notino.fr/",
+   "host": "notino.fr",
+   "ads": 2,
+   "why": "HTTP 403",
+   "keywords": [
+    "offre limitée"
+   ]
+  }
+ ]
+}
